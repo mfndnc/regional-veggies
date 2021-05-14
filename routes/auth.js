@@ -49,9 +49,7 @@ router.post('/signup', (req, res, next) => {
             }
           });
         })
-        .catch((err) => {
-          res.json(err);
-        });
+        .catch((err) => res.status(400).json({ message: 'An error occured' }));
     }
   });
 });

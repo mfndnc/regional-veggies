@@ -6,7 +6,10 @@ const addressSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-    showoffline: Boolean,
+    showoffline: {
+      type: Boolean,
+      default: 'false',
+    },
     note: String,
     promo: String,
     street: String,

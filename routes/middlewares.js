@@ -4,7 +4,7 @@ const loginCheck = () => {
     if (req.isAuthenticated()) {
       next();
     } else {
-      res.status(404).json({ message: 'You need to be logged in' });
+      res.status(400).json({ message: 'You need to be logged in' });
     }
   };
 };

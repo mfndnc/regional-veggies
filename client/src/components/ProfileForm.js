@@ -4,12 +4,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
+import { phoneRegExp } from '../services/functions';
 
-export default function Login() {
+export default function ProfileForm() {
   let history = useHistory();
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Email is invalid'),
+    phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 

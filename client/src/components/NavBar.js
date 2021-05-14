@@ -9,7 +9,7 @@ export default function Navbar() {
   const rightBar = logged ? (
     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       <li className="nav-item">
-        <NavLink to="/logout" className="nav-link" aria-current="page">
+        <NavLink to="/logout" className="nav-link">
           Logout
         </NavLink>
       </li>
@@ -22,7 +22,7 @@ export default function Navbar() {
   ) : (
     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       <li className="nav-item">
-        <NavLink to="/login" className="nav-link" aria-current="page">
+        <NavLink to="/login" className="nav-link">
           Login
         </NavLink>
       </li>
@@ -58,8 +58,31 @@ export default function Navbar() {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/" className="nav-link">
-              NavLink
+            <NavLink to="/test1" className="nav-link">
+              f user
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/test2" className="nav-link">
+              f addr
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/test2/609ea7f09b161b9914e04e22" className="nav-link">
+              addrID
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to="/test2/609ea7f09b161b9914e04e22/event"
+              className="nav-link"
+            >
+              f event
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/test3/609ea7f09b161b9914e04e22" className="nav-link">
+              eventID
             </NavLink>
           </li>
           <li className="nav-item dropdown">
