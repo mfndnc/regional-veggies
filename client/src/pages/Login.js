@@ -1,13 +1,13 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import auth from '../api/auth';
 import { MyContextData } from '../context/auth';
 
 export default function Login() {
-  const { myState, setMyState } = useContext(MyContextData);
+  const { setMyState } = useContext(MyContextData);
   let history = useHistory();
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('User Name is required'),
@@ -21,10 +21,12 @@ export default function Login() {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors },
   } = useForm(formOptions);
 
   function onSubmit(data, foo) {
+    console.log(foo);
     auth
       .login(data)
       .then((resp) => {
@@ -32,7 +34,15 @@ export default function Login() {
         history.push('/');
       })
       .catch((err) => {
-        //foo.setSubmitting(false);
+        console.log(err.response.data.message);
+        setError('username', {
+          type: 'server',
+          message: err.response.data.message || 'Invalid!',
+        });
+        setError('password', {
+          type: 'server',
+          message: err.response.data.message || 'Invalid!',
+        });
       });
     //foo.setSubmitting(false);
     //history.push('/');
@@ -72,6 +82,7 @@ export default function Login() {
               />
               <div className="invalid-feedback">{errors.password?.message}</div>
             </div>
+            <div className="invalid-feedback">{errors.wholeform?.message}</div>
           </div>
           <div className="form-group">
             <button type="submit" className="btn btn-primary mr-1">
