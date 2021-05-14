@@ -22,26 +22,26 @@ export default function Login() {
     formState: { errors },
   } = useForm(formOptions);
 
-  function onSubmit(data, foo) {
+  function onSubmit(data) {
     api
       .modifyUser(data)
-      .then(() => console.log('what to do here?'))
-      .catch((err) => {
-        console.log(err.response.data.message);
-        setError('name', {
-          type: 'server',
-          message: err.response.data.message || 'Invalid!',
-        });
+      .then(() => setJustSaved(true))
+      .catch(() => setGenError(true))
+      .finally(() => {
+        setTimeout(() => {
+          setJustSaved(false);
+          setGenError(false);
+        }, 2000);
       });
     return false;
   }
 
   const [user, setUser] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
+  const [justSaved, setJustSaved] = useState(false);
+  const [genError, setGenError] = useState(false);
 
   useEffect(() => {
     api.getUser().then((res) => {
-      console.log(res);
       const fields = [
         'name',
         'note',
@@ -57,6 +57,17 @@ export default function Login() {
       setUser(res.data);
     });
   }, []);
+
+  const showSavedMessage = justSaved && (
+    <div className="alert alert-success" role="alert">
+      Saved!
+    </div>
+  );
+  const showGenError = genError && (
+    <div className="alert alert-danger" role="alert">
+      An error occured!!!
+    </div>
+  );
 
   return (
     <div className="card m-3">
@@ -175,6 +186,7 @@ export default function Login() {
           </div>
 
           <div className="form-group">
+            {showSavedMessage} {showGenError}
             <button type="submit" className="btn btn-primary mr-1">
               Save
             </button>
