@@ -7,7 +7,7 @@ const { loginCheck } = require('./middlewares');
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 router.get('/user', loginCheck(), (req, res, next) => {
-console.log("FDDFS")
+console.log("address GET");
   Address.find({user: req.user._id})
     .then((address) => res.status(200).json(address))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
@@ -48,6 +48,7 @@ router.get('/:id', loginCheck(), (req, res, next) => {
 
 router.put('/:id', loginCheck(), (req, res, next) => {
   const { showoffline,note,promo,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
+console.log("address PUT",street);
   Address.findOneAndUpdate(
     {_id: req.params.id, user: req.user},
     { showoffline,note,promo,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter },
@@ -58,6 +59,7 @@ router.put('/:id', loginCheck(), (req, res, next) => {
 });
 
 router.patch('/:id', loginCheck(), (req, res, next) => {
+console.log("address patch");
 	// to update only one item in 
   const { what,newvalue } = req.body;
   Address.findOneAndUpdate(

@@ -31,7 +31,7 @@ export default function AddressForm() {
     console.log('onSubmit', data);
     const doSave = isAddMode
       ? api.insert('address', data)
-      : api.modifyById('address', addressId, { data });
+      : api.modifyById('address', addressId, data);
     doSave
       .then(() => setJustSaved(true))
       .catch(() => setGenError(true))
@@ -44,14 +44,15 @@ export default function AddressForm() {
     return false;
   }
 
-  const [address, setAddress] = useState({});
+  const [fullAddress, setFullAddress] = useState({});
   const [justSaved, setJustSaved] = useState(false);
   const [genError, setGenError] = useState(false);
 
   useEffect(() => {
+    console.log('useEffect AddressForm', addressId);
     if (!isAddMode) {
       api.getById('address', addressId).then((res) => {
-        console.log('useEffect', res.data);
+        console.log('useEffect address', res.data);
         const fields = [
           'note',
           'promo',
@@ -66,7 +67,7 @@ export default function AddressForm() {
           'twitter',
         ];
         fields.forEach((field) => setValue(field, res.data[field]));
-        setAddress(res.data);
+        setFullAddress(res.data);
       });
     }
   }, []);

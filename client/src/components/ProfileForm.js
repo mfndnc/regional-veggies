@@ -44,6 +44,7 @@ export default function ProfileForm() {
 
   useEffect(() => {
     api.getUser().then((res) => {
+      console.log('useEffect user', res.data);
       const fields = [
         'name',
         'note',

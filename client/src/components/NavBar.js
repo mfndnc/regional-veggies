@@ -81,7 +81,7 @@ export default function Navbar() {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/test3/609ea7f09b161b9914e04e22" className="nav-link">
+            <NavLink to="/test3/609ebf473eab2535e8c145a2" className="nav-link">
               eventID
             </NavLink>
           </li>

@@ -15,8 +15,9 @@ router.get('/user', loginCheck(), (req, res, next) => {
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 router.post('/', loginCheck(), (req, res, next) => {
-  const { user,showoffline,note,promo,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
-  Event.create({user: req.user,showoffline,note,promo,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter })
+console.log("event POST",req.body);
+  const { address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange } = req.body;
+  Event.create({user: req.user,address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange})
     .then((events) => res.status(201).json(events))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
@@ -39,10 +40,10 @@ router.get('/:id', loginCheck(), (req, res, next) => {
 });
 
 router.put('/:id', loginCheck(), (req, res, next) => {
-  const { showoffline,note,promo,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
+  const { address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange } = req.body;
   Event.findOneAndUpdate(
     {_id: req.params.id, user: req.user},
-    { showoffline,note,promo,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter },
+    { address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange },
     { new: true }
   )
     .then((event) => res.status(200).json(event))

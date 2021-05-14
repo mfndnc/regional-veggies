@@ -6,14 +6,14 @@ import * as Yup from 'yup';
 import api from '../api';
 import { phoneRegExp } from '../services/functions';
 
-export default function AddressForm() {
+export default function EventForm() {
   let { addressId, eventId } = useParams();
   const isAddMode = !eventId;
   let history = useHistory();
 
   // const validationSchema = Yup.object().shape({});
   //const formOptions = { resolver: yupResolver(validationSchema) };
-  const formOptions = null;
+  //const formOptions = null;
 
   const {
     register,
@@ -22,13 +22,15 @@ export default function AddressForm() {
     setValue,
     setError,
     formState: { errors },
-  } = useForm(formOptions);
+  } = useForm();
 
   function onSubmit(data) {
-    console.log(data);
+    let { calendar, ...rest } = data;
+    const calArr = [calendar];
+    console.log('onSubmit data addressId', data, addressId);
     const doSave = isAddMode
-      ? api.insert('event', data)
-      : api.modifyById('event', eventId, { data });
+      ? api.insert('event', { ...data, address: addressId, calendar: calArr })
+      : api.modifyById('event', eventId, data);
     doSave
       .then(() => setJustSaved(true))
       .catch(() => setGenError(true))
@@ -41,16 +43,18 @@ export default function AddressForm() {
     return false;
   }
 
-  const [user, setUser] = useState({});
+  const [fullEvent, setFullEvent] = useState({});
   const [justSaved, setJustSaved] = useState(false);
   const [genError, setGenError] = useState(false);
 
   useEffect(() => {
+    console.log('useEffect EventForm', addressId, eventId);
     if (!isAddMode) {
       api.getById('event', eventId).then((res) => {
+        console.log('useEffect event', res.data);
         const fields = ['note', 'promo'];
         fields.forEach((field) => setValue(field, res.data[field]));
-        setUser(res.data);
+        setFullEvent(res.data);
       });
     }
   }, []);
@@ -102,7 +106,7 @@ export default function AddressForm() {
               <label>Calendar</label>
               <input
                 name="calendar"
-                type="text"
+                type="date"
                 {...register('calendar')}
                 className={`form-control ${
                   errors.calendar ? 'is-invalid' : ''
