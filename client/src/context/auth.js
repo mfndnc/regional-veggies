@@ -1,17 +1,17 @@
 import { createContext, useEffect, useState } from 'react';
 import auth from '../api/auth';
 
-export const MyContextData = createContext(null);
+export const authContext = createContext(null);
 
-export const MyContextProvider = (props) => {
-  const [myState, setMyState] = useState({});
+export const authProvider = (props) => {
+  const [authObj, setAuthObj] = useState({});
   useEffect(() => {
-    auth.loggedContext(setMyState);
+    auth.loggedContext(setAuthObj);
   }, []);
 
   return (
-    <MyContextData.Provider value={{ myState, setMyState }}>
+    <authContext.Provider value={{ authObj, setAuthObj }}>
       {props.children}
-    </MyContextData.Provider>
+    </authContext.Provider>
   );
 };

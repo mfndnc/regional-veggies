@@ -1,14 +1,14 @@
 import { useContext, useEffect } from 'react';
-import { MyContextData } from '../context/auth';
+import { authContext } from '../context/auth';
 import { useHistory } from 'react-router-dom';
 import auth from '../api/auth';
 export default function Logout() {
-  const { myState, setMyState } = useContext(MyContextData);
+  const { authObj, setAuthObj } = useContext(authContext);
   let history = useHistory();
   useEffect(() => {
-    if (!myState.logged) history.push('/');
-  }, [myState, history]);
+    if (!authObj.logged) history.push('/');
+  }, [authObj, history]);
 
-  auth.logout().finally(() => auth.loggedContext(setMyState));
+  auth.logout().finally(() => auth.loggedContext(setAuthObj));
   return <></>;
 }

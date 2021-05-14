@@ -4,15 +4,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import auth from '../api/auth';
-import { MyContextData } from '../context/auth';
+import { authContext } from '../context/auth';
 
 export default function Login() {
-  const { myState, setMyState } = useContext(MyContextData);
+  const { authObj, setAuthObj } = useContext(authContext);
   let history = useHistory();
 
   useEffect(() => {
-    if (myState.logged) history.push('/');
-  }, [myState, history]);
+    if (authObj.logged) history.push('/');
+  }, [authObj, history]);
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('User Name is required'),
@@ -34,7 +34,7 @@ export default function Login() {
     console.log(foo);
     auth
       .login(data)
-      .then(() => auth.loggedContext(setMyState))
+      .then(() => auth.loggedContext(setAuthObj))
       .catch((err) => {
         console.log(err.response.data.message);
         setError('username', {
