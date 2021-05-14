@@ -1,14 +1,16 @@
-// https://jasonwatmore.com/post/2021/04/21/react-hook-form-7-form-validation-example
-
-import React from 'react';
+import { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { Link, useParams, useHistory } from 'react-router-dom';
+import auth from '../api/auth';
+import { MyContextData } from '../context/auth';
 
-export default function App() {
-  // form validation rules
+export default function Login() {
+  const { myState, setMyState } = useContext(MyContextData);
+  let history = useHistory();
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required('First Name is required'),
+    username: Yup.string().required('User Name is required'),
     password: Yup.string()
       .min(6, 'Password must be at least 6 characters')
       .required('Password is required'),
@@ -19,13 +21,23 @@ export default function App() {
     register,
     handleSubmit,
     reset,
-    formState,
     formState: { errors },
   } = useForm(formOptions);
 
-  function onSubmit(data) {
+  function onSubmit(data, foo) {
+    auth
+      .login(data)
+      .then((resp) => {
+        auth.loggedContext(setMyState);
+        history.push('/');
+      })
+      .catch((err) => {
+        //foo.setSubmitting(false);
+      });
+    //foo.setSubmitting(false);
+    //history.push('/');
     // display form data on success
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(data, null, 4));
+    //alert('SUCCESS!! :-)\n\n' + JSON.stringify(data, null, 4));
     return false;
   }
 
@@ -40,6 +52,7 @@ export default function App() {
               <input
                 name="username"
                 type="text"
+                {...register('username')}
                 className={`form-control ${
                   errors.username ? 'is-invalid' : ''
                 }`}
@@ -52,6 +65,7 @@ export default function App() {
               <input
                 name="password"
                 type="password"
+                {...register('password')}
                 className={`form-control ${
                   errors.password ? 'is-invalid' : ''
                 }`}
@@ -61,7 +75,7 @@ export default function App() {
           </div>
           <div className="form-group">
             <button type="submit" className="btn btn-primary mr-1">
-              Register
+              Login
             </button>
             <button
               type="button"

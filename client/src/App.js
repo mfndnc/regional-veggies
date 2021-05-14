@@ -1,23 +1,28 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { MyContextProvider } from './context/auth';
 
-import { NavBar } from './components/';
-import { HomePage } from './pages/';
+import NavBar from './components/NavBar';
+import HomePage from './pages/HomePage';
+import Login from './pages/Login';
+import Logout from './pages/Logout';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <BrowserRouter>
-      <MyContextProvider>
-        <NavBar />
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-        </Switch>
-      </MyContextProvider>
+      <NavBar />
+      <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/logout">
+          <Logout />
+        </Route>
+      </Switch>
     </BrowserRouter>
   );
 }

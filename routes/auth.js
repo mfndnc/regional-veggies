@@ -79,9 +79,14 @@ router.post('/login', (req, res, next) => {
 router.get('/loggedin', (req, res) => {
   console.log('this is the user from the session: ', req.user);
   // if we don't use passport but express session it would be: req.session.user
-
-  const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = req.user;
-  const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+  	let exportuser;
+	if(req.user) {
+  		const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = req.user;
+  		exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+	} else {
+		exportuser = null;
+	}
+  console.log('this is what we are sending: ', exportuser);
   res.json(exportuser);
 });
 
