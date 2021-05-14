@@ -12,7 +12,6 @@ export const islogged = () => api.get('/loggedin');
 export const logout = () => api.delete('/logout');
 
 export const loggedContext = async (dispatch) => {
-  console.log('loggedContext');
   try {
     const resp = await islogged();
     if (resp.data && resp.data.username) {

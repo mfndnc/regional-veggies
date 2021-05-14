@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
-import { phoneRegExp } from '../services/functions';
 
 export default function EventForm() {
   let { addressId, eventId } = useParams();
@@ -27,7 +26,7 @@ export default function EventForm() {
   function onSubmit(data) {
     let { calendar, ...rest } = data;
     const calArr = [calendar];
-    console.log('onSubmit data addressId', data, addressId);
+    console.log('onSubmit EventForm', data, eventId, addressId);
     const doSave = isAddMode
       ? api.insert('event', { ...data, address: addressId, calendar: calArr })
       : api.modifyById('event', eventId, data);
@@ -48,10 +47,10 @@ export default function EventForm() {
   const [genError, setGenError] = useState(false);
 
   useEffect(() => {
-    console.log('useEffect EventForm', addressId, eventId);
+    console.log('useEffect EventForm', eventId, addressId);
     if (!isAddMode) {
       api.getById('event', eventId).then((res) => {
-        console.log('useEffect event', res.data);
+        console.log('getById EventForm', res.data);
         const fields = ['note', 'promo'];
         fields.forEach((field) => setValue(field, res.data[field]));
         setFullEvent(res.data);

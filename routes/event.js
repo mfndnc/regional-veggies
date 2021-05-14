@@ -40,6 +40,7 @@ router.get('/:id', loginCheck(), (req, res, next) => {
 });
 
 router.put('/:id', loginCheck(), (req, res, next) => {
+console.log("event PUT",req.body);
   const { address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange } = req.body;
   Event.findOneAndUpdate(
     {_id: req.params.id, user: req.user},
@@ -51,6 +52,7 @@ router.put('/:id', loginCheck(), (req, res, next) => {
 });
 
 router.patch('/:id', loginCheck(), (req, res, next) => {
+console.log("event PATCH",req.body);
 	// to update only one item in 
   const { what,newvalue } = req.body;
   Event.findOneAndUpdate(

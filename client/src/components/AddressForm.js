@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
-import { phoneRegExp } from '../services/functions';
 
 export default function AddressForm() {
   let { addressId } = useParams();
@@ -28,7 +27,7 @@ export default function AddressForm() {
   } = useForm(formOptions);
 
   function onSubmit(data) {
-    console.log('onSubmit', data);
+    console.log('onSubmit AddressForm', data, addressId);
     const doSave = isAddMode
       ? api.insert('address', data)
       : api.modifyById('address', addressId, data);
@@ -52,7 +51,7 @@ export default function AddressForm() {
     console.log('useEffect AddressForm', addressId);
     if (!isAddMode) {
       api.getById('address', addressId).then((res) => {
-        console.log('useEffect address', res.data);
+        console.log('getById AddressForm', res.data);
         const fields = [
           'note',
           'promo',

@@ -35,7 +35,6 @@ export default function Login() {
       .login(data)
       .then(() => auth.loggedContext(setAuthObj))
       .catch((err) => {
-        console.log(err.response.data.message);
         setError('username', {
           type: 'server',
           message: err.response.data.message || 'Invalid!',
