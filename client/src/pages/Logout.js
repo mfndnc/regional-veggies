@@ -6,12 +6,9 @@ export default function Logout() {
   const { myState, setMyState } = useContext(MyContextData);
   let history = useHistory();
   useEffect(() => {
-    console.log('Login useEffect', myState);
-  }, [myState]);
+    if (!myState.logged) history.push('/');
+  }, [myState, history]);
 
-  auth.logout().then(() => {
-    auth.loggedContext(setMyState);
-    history.push('/');
-  });
+  auth.logout().finally(() => auth.loggedContext(setMyState));
   return <></>;
 }

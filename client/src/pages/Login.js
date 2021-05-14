@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -7,8 +7,13 @@ import auth from '../api/auth';
 import { MyContextData } from '../context/auth';
 
 export default function Login() {
-  const { setMyState } = useContext(MyContextData);
+  const { myState, setMyState } = useContext(MyContextData);
   let history = useHistory();
+
+  useEffect(() => {
+    if (myState.logged) history.push('/');
+  }, [myState, history]);
+
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('User Name is required'),
     password: Yup.string()
@@ -29,10 +34,7 @@ export default function Login() {
     console.log(foo);
     auth
       .login(data)
-      .then((resp) => {
-        auth.loggedContext(setMyState);
-        history.push('/');
-      })
+      .then(() => auth.loggedContext(setMyState))
       .catch((err) => {
         console.log(err.response.data.message);
         setError('username', {
@@ -44,10 +46,6 @@ export default function Login() {
           message: err.response.data.message || 'Invalid!',
         });
       });
-    //foo.setSubmitting(false);
-    //history.push('/');
-    // display form data on success
-    //alert('SUCCESS!! :-)\n\n' + JSON.stringify(data, null, 4));
     return false;
   }
 
