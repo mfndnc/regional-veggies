@@ -19,6 +19,9 @@ export default function Login() {
     password: Yup.string()
       .min(6, 'Password must be at least 6 characters')
       .required('Password is required'),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Passwords must match')
+      .required('Confirm Password is required'),
   });
   const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -32,15 +35,11 @@ export default function Login() {
 
   function onSubmit(data, foo) {
     auth
-      .login(data)
+      .signup(data)
       .then(() => auth.loggedContext(setAuthObj))
       .catch((err) => {
         console.log(err.response.data.message);
         setError('username', {
-          type: 'server',
-          message: err.response.data.message || 'Invalid!',
-        });
-        setError('password', {
           type: 'server',
           message: err.response.data.message || 'Invalid!',
         });
@@ -54,7 +53,7 @@ export default function Login() {
       <div className="card-body">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-row">
-            <div className="form-group col-5">
+            <div className="form-group col">
               <label>User Name</label>
               <input
                 name="username"
@@ -68,6 +67,23 @@ export default function Login() {
             </div>
 
             <div className="form-group col">
+              <label>Name</label>
+              <input
+                name="name"
+                type="text"
+                {...register('name')}
+                className={`form-control ${
+                  errors && errors.name ? 'is-invalid' : ''
+                }`}
+              />
+              <div className="invalid-feedback">
+                {errors && errors.name?.message}
+              </div>
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group col">
               <label>Password</label>
               <input
                 name="password"
@@ -79,11 +95,24 @@ export default function Login() {
               />
               <div className="invalid-feedback">{errors.password?.message}</div>
             </div>
-            <div className="invalid-feedback">{errors.wholeform?.message}</div>
+            <div className="form-group col">
+              <label>Confirm Password</label>
+              <input
+                name="confirmPassword"
+                type="password"
+                {...register('confirmPassword')}
+                className={`form-control ${
+                  errors.confirmPassword ? 'is-invalid' : ''
+                }`}
+              />
+              <div className="invalid-feedback">
+                {errors.confirmPassword?.message}
+              </div>
+            </div>
           </div>
           <div className="form-group">
             <button type="submit" className="btn btn-primary mr-1">
-              Login
+              Sign Up
             </button>
             <button
               type="button"

@@ -20,6 +20,19 @@ router.get('/', loginCheck(), (req, res, next) => {
     .catch((err) => res.json(err));
 });
 
+/* ***** SPECIAL to this router - actions on the logged user * no id required */
+router.get('/user', loginCheck(), (req, res, next) => {
+  User.findOne({_id: req.user._id})
+    .then((user) => {
+      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = user;
+      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+      res.status(200).json(exportuser);
+    })
+    .catch((err) => res.json(err));
+});
+/* ***** SPECIAL to this router - actions on the logged user * no id required */
+
+
 router.get('/:id', loginCheck(), (req, res, next) => {
   User.findById(req.params.id).then((user) => {
     if (!user) {
@@ -74,11 +87,13 @@ router.delete('/:id', loginCheck(), (req, res) => {
 
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
+
+
 router.put('/', loginCheck(), (req, res, next) => {
-  const { name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role } = req.body;
+  const { name,note,email,phone,phonesecond,website,skype,whatsapp,twitter } = req.body;
   User.findOneAndUpdate(
     {_id: req.user._id},
-    { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role },
+    { name,note,email,phone,phonesecond,website,skype,whatsapp,twitter },
     { new: true }
   )
     .then((user) => {

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../context/auth';
 
 export default function Navbar() {
@@ -9,35 +9,35 @@ export default function Navbar() {
   const rightBar = logged ? (
     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       <li className="nav-item">
-        <Link to="/logout" className="nav-link active" aria-current="page">
+        <NavLink to="/logout" className="nav-link" aria-current="page">
           Logout
-        </Link>
+        </NavLink>
       </li>
       <li className="nav-item">
-        <Link to="/profile" className="nav-link">
+        <NavLink to="/profile" className="nav-link">
           Profile
-        </Link>
+        </NavLink>
       </li>
     </ul>
   ) : (
     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       <li className="nav-item">
-        <Link to="/login" className="nav-link active" aria-current="page">
+        <NavLink to="/login" className="nav-link" aria-current="page">
           Login
-        </Link>
+        </NavLink>
       </li>
       <li className="nav-item">
-        <Link to="/signup" className="nav-link">
+        <NavLink to="/signup" className="nav-link">
           Signup
-        </Link>
+        </NavLink>
       </li>
     </ul>
   );
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link to="/" className="navbar-brand">
+      <NavLink to="/" className="navbar-brand">
         Navbar
-      </Link>
+      </NavLink>
       <button
         className="navbar-toggler"
         type="button"
@@ -53,17 +53,17 @@ export default function Navbar() {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
-            <Link to="/" className="nav-link">
+            <NavLink to="/" className="nav-link">
               Home <span className="sr-only">(current)</span>
-            </Link>
+            </NavLink>
           </li>
           <li className="nav-item">
-            <Link to="/" className="nav-link">
-              Link
-            </Link>
+            <NavLink to="/" className="nav-link">
+              NavLink
+            </NavLink>
           </li>
           <li className="nav-item dropdown">
-            <Link
+            <NavLink
               to="/"
               className="nav-link dropdown-toggle"
               id="navbarDropdown"
@@ -73,29 +73,29 @@ export default function Navbar() {
               aria-expanded="false"
             >
               Dropdown
-            </Link>
+            </NavLink>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <Link to="/" className="dropdown-item">
+              <NavLink to="/" className="dropdown-item">
                 Action
-              </Link>
-              <Link to="/" className="dropdown-item">
+              </NavLink>
+              <NavLink to="/" className="dropdown-item">
                 Another action
-              </Link>
+              </NavLink>
               <div className="dropdown-divider"></div>
-              <Link to="/" className="dropdown-item">
+              <NavLink to="/" className="dropdown-item">
                 Something else here
-              </Link>
+              </NavLink>
             </div>
           </li>
           <li className="nav-item">
-            <Link
+            <NavLink
               to="/"
               className="nav-link disabled"
               tabIndex="-1"
               aria-disabled="true"
             >
               Disabled
-            </Link>
+            </NavLink>
           </li>
         </ul>
         {rightBar}
