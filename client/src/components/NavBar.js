@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { authContext } from '../context/auth';
+import { AuthContext } from '../context/auth';
 
 export default function Navbar() {
   const {
     authObj: { logged },
-  } = useContext(authContext);
+  } = useContext(AuthContext);
   const rightBar = logged ? (
     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
       <li className="nav-item">

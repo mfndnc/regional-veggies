@@ -4,10 +4,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import auth from '../api/auth';
-import { authContext } from '../context/auth';
+import { AuthContext } from '../context/auth';
 
 export default function Login() {
-  const { authObj, setAuthObj } = useContext(authContext);
+  const { authObj, setAuthObj } = useContext(AuthContext);
   let history = useHistory();
 
   useEffect(() => {
