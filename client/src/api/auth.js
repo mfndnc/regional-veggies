@@ -12,15 +12,16 @@ export const islogged = () => api.get('/loggedin');
 export const logout = () => api.delete('/logout');
 
 export const loggedContext = async (dispatch) => {
+	dispatch({ loading: true});
   try {
     const resp = await islogged();
     if (resp.data && resp.data.username) {
-      dispatch({ ...resp.data, logged: true, error: false });
+      dispatch({ ...resp.data, loading: false, logged: true, error: false });
     } else {
-      dispatch({ username: '', logged: false, error: false });
+      dispatch({ username: '', loading: false, logged: false, error: false });
     }
   } catch (err) {
-    dispatch({ username: '', logged: false, error: true });
+    dispatch({ username: '', loading: false, logged: false, error: true });
   }
 };
 
