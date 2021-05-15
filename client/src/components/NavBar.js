@@ -47,7 +47,7 @@ export default function NavbarApp() {
           <NavDropdown.Item as={NavLink} to="/test3/609ebf473eab2535e8c145a2">
             eventID id1
           </NavDropdown.Item>
-          <NavDropdown.Item as={NavLink} to="/test3/609ec048c09c4e8a8005dd59">
+          <NavDropdown.Item as={NavLink} to="/test3/609fe93413ec3859d4e9ca16">
             eventID id2
           </NavDropdown.Item>
 

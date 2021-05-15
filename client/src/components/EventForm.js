@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
@@ -10,11 +10,41 @@ export default function EventForm() {
   const isAddMode = !eventId;
   let history = useHistory();
 
-  // const validationSchema = Yup.object().shape({});
-  //const formOptions = { resolver: yupResolver(validationSchema) };
-  //const formOptions = null;
+  const innerSchema = {
+    val: Yup.date().required('form.required_message'),
+  };
+  const fieldsSchema = Yup.object().shape({
+    note: Yup.string().required(),
+    calarr: Yup.array()
+      .of(Yup.object().shape(innerSchema))
+      .required('Must have fields'),
+  });
+  const otherformOptions = {
+    defaultValues: {
+      note: '',
+      promo: '',
+      calarr: [{ val: '' }],
+    },
+    validationSchema: fieldsSchema,
+  };
+  const validationSchema = Yup.object().shape({
+    note: Yup.string().required(),
+    calarr: Yup.array()
+      .of(Yup.object().shape(innerSchema))
+      .required('Must have fields')
+      .min(1, 'Minimum of 1 field'),
+  });
+  const formOptions = {
+    defaultValues: {
+      note: '',
+      promo: '',
+      calarr: [{ val: '' }],
+    },
+    resolver: yupResolver(validationSchema),
+  };
 
   const {
+    control,
     register,
     handleSubmit,
     reset,
@@ -22,15 +52,24 @@ export default function EventForm() {
     setError,
     formState,
     formState: { errors },
-  } = useForm();
+  } = useForm(formOptions);
+
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control,
+      name: 'calarr',
+    }
+  );
 
   function onSubmit(data) {
-    let { calendar, ...rest } = data;
-    const calArr = [calendar];
-    console.log('onSubmit EventForm', data, eventId, addressId);
+    let { calarr, ...rest } = data;
+    const calendar = calarr.map((cal) => cal.val);
+    const submitdata = { ...data, calendar, address: addressId };
+    //alert('SUCCESS!! :-)\n\n' + JSON.stringify(submitdata, null, 4));
+    console.log('onSubmit EventForm', submitdata, eventId, addressId);
     const doSave = isAddMode
-      ? api.insert('event', { ...data, address: addressId, calendar: calArr })
-      : api.modifyById('event', eventId, data);
+      ? api.insert('event', submitdata)
+      : api.modifyById('event', eventId, submitdata);
     doSave
       .then(() => setJustSaved(true))
       .catch(() => setGenError(true))
@@ -52,11 +91,16 @@ export default function EventForm() {
     if (!isAddMode) {
       api.getById('event', eventId).then((res) => {
         console.log('getById EventForm', res.data);
-        const fields = ['note', 'promo'];
-        fields.forEach((field) => setValue(field, res.data[field]));
+        ['note', 'promo'].forEach((field) => setValue(field, res.data[field]));
+        remove(0);
+        res.data['calendar'].forEach((el) => append({ val: el }));
+        //alert('LOAD!! :-)\n\n' + JSON.stringify(res.data['calendar'], null, 4));
         setFullEvent(res.data);
       });
+      // } else if (fields.length === 0) {
+      //   append({ id: 1, val: '' });
     }
+    console.log('fields', fields);
   }, [eventId]);
 
   const showSavedMessage = justSaved && (
@@ -101,20 +145,50 @@ export default function EventForm() {
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group col">
-              <label>Calendar</label>
-              <input
-                name="calendar"
-                type="date"
-                {...register('calendar')}
-                className={`form-control ${
-                  errors.calendar ? 'is-invalid' : ''
-                }`}
-              />
-              <div className="invalid-feedback">{errors.calendar?.message}</div>
+          <div className="form-row mb-2 mt-2">
+            <div className="col-sm-10">Calendar Event</div>
+            <div className="col-sm-2 pl-4">
+              <button
+                type="button"
+                className="btn btn-primary mr-1"
+                onClick={() => append({ val: '' })}
+              >
+                Add date
+              </button>
             </div>
           </div>
+          {fields.map((item, index) => (
+            <div className="form-row" key={item.id}>
+              <div className="form-group col">
+                <div className="form-group row">
+                  <div className="col-sm-10">
+                    <input
+                      type="datetime-local"
+                      {...register(`calarr.${index}.val`)}
+                      defaultValue={item.val}
+                      className={`form-control ${
+                        errors[`calarr.${index}.val`] ? 'is-invalid' : ''
+                      }`}
+                    />
+                    <div className="invalid-feedback">
+                      {errors[`calarr.${index}.val`]?.message}
+                    </div>
+                  </div>
+                  <div className="col-sm-2">
+                    {index > 0 && (
+                      <button
+                        type="button"
+                        className="btn btn-primary mr-1"
+                        onClick={() => remove(index)}
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
 
           <div className="form-group">
             {showSavedMessage} {showGenError}
