@@ -1,128 +1,95 @@
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import {
+  Nav,
+  Navbar,
+  NavDropdown,
+  Form,
+  FormControl,
+  Button,
+} from 'react-bootstrap';
 import { AuthContext } from '../context/auth';
 
-export default function Navbar() {
+export default function NavbarApp() {
   const {
     authObj: { logged },
   } = useContext(AuthContext);
-  const rightBar = logged ? (
-    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-      <li className="nav-item">
-        <NavLink to="/logout" className="nav-link">
+  const navMainBody = logged ? (
+    <Navbar.Collapse id="basic-navbar-nav">
+      <Nav className="mr-auto">
+        <Nav.Link as={NavLink} to="/">
+          Home
+        </Nav.Link>
+        <Nav.Link as={NavLink} to="/test2/609ea7f09b161b9914e04e22/event">
+          add event addr1
+        </Nav.Link>
+        <Nav.Link as={NavLink} to="/test2/609ead8ebedaaab1943e778e/event">
+          add event addr2
+        </Nav.Link>
+        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+          <NavDropdown.Item as={NavLink} to="/test1">
+            f User
+          </NavDropdown.Item>
+          <NavDropdown.Item as={NavLink} to="/test2">
+            f addr
+          </NavDropdown.Item>
+          <NavDropdown.Item as={NavLink} to="/test2/609ea7f09b161b9914e04e22">
+            addrID 1
+          </NavDropdown.Item>
+          <NavDropdown.Item as={NavLink} to="/test2/609ead8ebedaaab1943e778e">
+            addrID 2
+          </NavDropdown.Item>
+
+          <NavDropdown.Item as={NavLink} to="/test2/609ea7f09b161b9914e04e22">
+            addrID
+          </NavDropdown.Item>
+
+          <NavDropdown.Item as={NavLink} to="/test3/609ebf473eab2535e8c145a2">
+            eventID id1
+          </NavDropdown.Item>
+          <NavDropdown.Item as={NavLink} to="/test3/609ec048c09c4e8a8005dd59">
+            eventID id2
+          </NavDropdown.Item>
+
+          <NavDropdown.Divider />
+          <NavDropdown.Item as={NavLink} to="/">
+            Separated link
+          </NavDropdown.Item>
+        </NavDropdown>
+      </Nav>
+      <Nav>
+        <Nav.Link as={NavLink} to="/logout">
           Logout
-        </NavLink>
-      </li>
-      <li className="nav-item">
-        <NavLink to="/profile" className="nav-link">
+        </Nav.Link>
+        <Nav.Link as={NavLink} to="/profile">
           Profile
-        </NavLink>
-      </li>
-    </ul>
+        </Nav.Link>
+      </Nav>
+    </Navbar.Collapse>
   ) : (
-    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-      <li className="nav-item">
-        <NavLink to="/login" className="nav-link">
+    <Navbar.Collapse id="basic-navbar-nav">
+      <Nav className="mr-auto">
+        <Nav.Link as={NavLink} to="/">
+          Home
+        </Nav.Link>
+      </Nav>
+      <Nav>
+        <Nav.Link as={NavLink} to="/login">
           Login
-        </NavLink>
-      </li>
-      <li className="nav-item">
-        <NavLink to="/signup" className="nav-link">
+        </Nav.Link>
+        <Nav.Link as={NavLink} to="/signup">
           Signup
-        </NavLink>
-      </li>
-    </ul>
+        </Nav.Link>
+      </Nav>
+    </Navbar.Collapse>
   );
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <NavLink to="/" className="navbar-brand">
-        Navbar
-      </NavLink>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            <NavLink to="/" className="nav-link">
-              Home <span className="sr-only">(current)</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/test1" className="nav-link">
-              f user
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/test2" className="nav-link">
-              f addr
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/test2/609ea7f09b161b9914e04e22" className="nav-link">
-              addrID
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              to="/test2/609ea7f09b161b9914e04e22/event"
-              className="nav-link"
-            >
-              f event
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/test3/609ebf473eab2535e8c145a2" className="nav-link">
-              eventID
-            </NavLink>
-          </li>
-          <li className="nav-item dropdown">
-            <NavLink
-              to="/"
-              className="nav-link dropdown-toggle"
-              id="navbarDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Dropdown
-            </NavLink>
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <NavLink to="/" className="dropdown-item">
-                Action
-              </NavLink>
-              <NavLink to="/" className="dropdown-item">
-                Another action
-              </NavLink>
-              <div className="dropdown-divider"></div>
-              <NavLink to="/" className="dropdown-item">
-                Something else here
-              </NavLink>
-            </div>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              to="/"
-              className="nav-link disabled"
-              tabIndex="-1"
-              aria-disabled="true"
-            >
-              Disabled
-            </NavLink>
-          </li>
-        </ul>
-        {rightBar}
-      </div>
-    </nav>
+    <Navbar collapseOnSelect bg="light" expand="lg">
+      <Navbar.Brand as={Link} to="/">
+        LOGO
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      {navMainBody}
+    </Navbar>
   );
 }

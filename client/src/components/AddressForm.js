@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -23,6 +23,7 @@ export default function AddressForm() {
     reset,
     setValue,
     setError,
+    formState,
     formState: { errors },
   } = useForm(formOptions);
 
@@ -69,7 +70,7 @@ export default function AddressForm() {
         setFullAddress(res.data);
       });
     }
-  }, []);
+  }, [addressId]);
 
   const showSavedMessage = justSaved && (
     <div className="alert alert-success" role="alert">
@@ -219,15 +220,35 @@ export default function AddressForm() {
 
           <div className="form-group">
             {showSavedMessage} {showGenError}
-            <button type="submit" className="btn btn-primary mr-1">
+            <button
+              disabled={formState.isSubmitting}
+              type="submit"
+              className="btn btn-primary mr-1"
+            >
+              {formState.isSubmitting && (
+                <span className="spinner-border spinner-border-sm mr-1"></span>
+              )}
               Save
+            </button>
+            <Link to={isAddMode ? '.' : '..'} className="btn btn-secondary">
+              Cancel link
+            </Link>
+            <Link to="." className="btn btn-secondary">
+              down 1
+            </Link>
+            <button
+              type="button"
+              onClick={() => reset()}
+              className="btn btn-secondary"
+            >
+              useform Reset
             </button>
             <button
               type="button"
               onClick={() => reset()}
               className="btn btn-secondary"
             >
-              Reset
+              minimise card
             </button>
           </div>
         </form>

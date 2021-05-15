@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -20,6 +20,7 @@ export default function EventForm() {
     reset,
     setValue,
     setError,
+    formState,
     formState: { errors },
   } = useForm();
 
@@ -56,7 +57,7 @@ export default function EventForm() {
         setFullEvent(res.data);
       });
     }
-  }, []);
+  }, [eventId]);
 
   const showSavedMessage = justSaved && (
     <div className="alert alert-success" role="alert">
@@ -71,7 +72,7 @@ export default function EventForm() {
 
   return (
     <div className="card m-3">
-      <h5 className="card-header">Hallo {user.username}</h5>
+      <h5 className="card-header">Event</h5>
       <div className="card-body">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-row">
@@ -117,16 +118,19 @@ export default function EventForm() {
 
           <div className="form-group">
             {showSavedMessage} {showGenError}
-            <button type="submit" className="btn btn-primary mr-1">
+            <button
+              disabled={formState.isSubmitting}
+              type="submit"
+              className="btn btn-primary mr-1"
+            >
+              {formState.isSubmitting && (
+                <span className="spinner-border spinner-border-sm mr-1"></span>
+              )}
               Save
             </button>
-            <button
-              type="button"
-              onClick={() => reset()}
-              className="btn btn-secondary"
-            >
-              Reset
-            </button>
+            <Link to={isAddMode ? '.' : '..'} className="btn btn-secondary">
+              Cancel
+            </Link>
           </div>
         </form>
       </div>

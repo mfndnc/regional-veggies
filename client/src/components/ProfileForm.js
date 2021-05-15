@@ -19,6 +19,7 @@ export default function ProfileForm() {
     reset,
     setValue,
     setError,
+    formState,
     formState: { errors },
   } = useForm(formOptions);
 
@@ -36,6 +37,7 @@ export default function ProfileForm() {
     return false;
   }
 
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({});
   const [justSaved, setJustSaved] = useState(false);
   const [genError, setGenError] = useState(false);
@@ -56,6 +58,7 @@ export default function ProfileForm() {
       ];
       fields.forEach((field) => setValue(field, res.data[field]));
       setUser(res.data);
+      setLoading(false);
     });
   }, []);
 
@@ -70,6 +73,7 @@ export default function ProfileForm() {
     </div>
   );
 
+  if (loading) return <div>Loading ...</div>;
   return (
     <div className="card m-3">
       <h5 className="card-header">Hallo {user.username}</h5>
@@ -188,7 +192,14 @@ export default function ProfileForm() {
 
           <div className="form-group">
             {showSavedMessage} {showGenError}
-            <button type="submit" className="btn btn-primary mr-1">
+            <button
+              disabled={formState.isSubmitting}
+              type="submit"
+              className="btn btn-primary mr-1"
+            >
+              {formState.isSubmitting && (
+                <span className="spinner-border spinner-border-sm mr-1"></span>
+              )}
               Save
             </button>
             <button
