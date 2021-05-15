@@ -20,11 +20,11 @@ export default function NavbarApp() {
         <Nav.Link as={NavLink} to="/">
           Home
         </Nav.Link>
-        <Nav.Link as={NavLink} to="/test2/609ea7f09b161b9914e04e22/event">
-          add event addr1
+        <Nav.Link as={NavLink} to="/test1">
+          test1
         </Nav.Link>
-        <Nav.Link as={NavLink} to="/test2/609ead8ebedaaab1943e778e/event">
-          add event addr2
+        <Nav.Link as={NavLink} to="/test2">
+          test2
         </Nav.Link>
         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
           <NavDropdown.Item as={NavLink} to="/test1">
@@ -50,7 +50,12 @@ export default function NavbarApp() {
           <NavDropdown.Item as={NavLink} to="/test3/609fe93413ec3859d4e9ca16">
             eventID id2
           </NavDropdown.Item>
-
+          <Nav.Link as={NavLink} to="/test2/609ea7f09b161b9914e04e22/event">
+            add event addr1
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/test2/609ead8ebedaaab1943e778e/event">
+            add event addr2
+          </Nav.Link>
           <NavDropdown.Divider />
           <NavDropdown.Item as={NavLink} to="/">
             Separated link

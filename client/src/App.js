@@ -10,6 +10,8 @@ import AddressForm from './components/AddressForm';
 import ProfileForm from './components/ProfileForm';
 import EventForm from './components/EventForm';
 
+import ProtectedRoute from './components/ProtectedRoute';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -29,21 +31,20 @@ function App() {
         <Route exact path="/signup">
           <Signup />
         </Route>
-        <Route exact path="/test1">
+        <ProtectedRoute exact path="/test1">
           <ProfileForm />
-        </Route>
-        <Route exact path="/test2">
+        </ProtectedRoute>
+        <ProtectedRoute path="/test2" component={AddressForm} />
+
+        <ProtectedRoute exact path="/test2/:addressId">
           <AddressForm />
-        </Route>
-        <Route exact path="/test2/:addressId">
-          <AddressForm />
-        </Route>
-        <Route exact path="/test2/:addressId/event">
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/test2/:addressId/event">
           <EventForm />
-        </Route>
-        <Route exact path="/test3/:eventId">
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/test3/:eventId">
           <EventForm />
-        </Route>
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   );
