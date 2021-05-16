@@ -2,6 +2,40 @@ const router = require('express').Router();
 const Address = require('../models/Address');
 
 const { loginCheck } = require('./middlewares');
+const { gGeoCode } = require('./googleGeo');
+
+function setGeoCode(address, forgoogle = '') {
+  if (!forgoogle.length) {
+    forgoogle = `${address.street}, ${address.zipcode} ${address.city}`;
+  }
+  if (forgoogle.length > 0) {
+    gGeoCode(forgoogle).then((el) => {
+      console.log(el.data);
+      if (
+        el &&
+        el.data &&
+        el.data.results &&
+        el.data.results[0] &&
+        el.data.results[0].formatted_address
+      ) {
+        const {
+          results: {
+            0: {
+              geometry: { location: geo },
+              formatted_address: googleaddress,
+            },
+          },
+        } = el.data;
+        Address.findByIdAndUpdate(
+          address._id,
+          { geo, googleaddress },
+          { new: true }
+        ).then((res) => res);
+      }
+    });
+  }
+  return;
+}
 
 
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
@@ -22,10 +56,13 @@ router.get('/user/:userid', loginCheck(), (req, res, next) => {
 
 
 router.post('/', loginCheck(), (req, res, next) => {
-console.log("address POST",req.body);
+  console.log('address POST', req.body);
   const { user,showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
   Address.create({user: req.user,showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter })
-    .then((address) => res.status(201).json(address))
+    .then((address) => {
+      setGeoCode(address);
+      return res.status(201).json(address);
+    })
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
@@ -51,10 +88,20 @@ console.log("address PUT",req.body);
   const { showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
   Address.findOneAndUpdate(
     {_id: req.params.id, user: req.user},
-    { showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter },
-    { new: true }
+    { showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter }
   )
-    .then((address) => res.status(201).json(address))
+    .then((address) => {
+      // getting former document to compare with request
+      if (
+        (address.street && street && address.street !== street) ||
+        (address.zipcode && zipcode && address.zipcode !== zipcode) ||
+        (address.city && city && address.city !== city)
+      ) {
+		const forgoogle = `${street}, ${zipcode} ${city}`;
+        setGeoCode(address,forgoogle);
+      }
+      return res.status(201).json(address);
+    })
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
