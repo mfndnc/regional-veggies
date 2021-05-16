@@ -5,8 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
 
-export default function AddressForm() {
-  let { addressId } = useParams();
+export default function AddressForm(props) {
+  let { addressIdParam } = useParams();
+  let addressId = props.addressId || addressIdParam || false;
   const isAddMode = !addressId;
   let history = useHistory();
 
@@ -84,8 +85,9 @@ export default function AddressForm() {
   );
 
   return (
-    <div className="card m-3">
-      <h5 className="card-header">Address</h5>
+    <div className={props.accordion ? 'col' : 'card m-3'}>
+      {!props.accordion && <h5 className="card-header">Address</h5>}
+
       <div className="card-body">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-row">

@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
 
-export default function ProfileForm() {
+export default function ProfileForm(props) {
   let history = useHistory();
 
   const validationSchema = Yup.object().shape({
@@ -75,8 +75,10 @@ export default function ProfileForm() {
 
   if (loading) return <div>Loading ...</div>;
   return (
-    <div className="card m-3">
-      <h5 className="card-header">Hallo {user.username}</h5>
+    <div className={props.accordion ? 'col' : 'card m-3'}>
+      {!props.accordion && (
+        <h5 className="card-header">Hallo {user.username}</h5>
+      )}
       <div className="card-body">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-row">
