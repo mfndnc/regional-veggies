@@ -30,18 +30,18 @@ export default function Profile() {
   const addressAccordion = fullAddress.map((addr, idx) => {
     let ddd = `id${idx}`;
     return (
-      <div class="col-lg-6" key={`addr${idx}`}>
-        <div class="card ">
+      <div className="col-lg-6" key={`addr${idx}`}>
+        <div className="card ">
           <Collapse in={!openAddressObj[`id${idx}`]}>
             <div id={`collapseAddressY${idx}`}>
-              <div class="card-header">Address {idx + 1}</div>
-              <div class="card-body">
-                <h5 class="card-title">Foo</h5>
-                <p class="card-text">Bar</p>
+              <div className="card-header">Address {idx + 1}</div>
+              <div className="card-body">
+                <h5 className="card-title">Foo</h5>
+                <p className="card-text">Bar</p>
               </div>
             </div>
           </Collapse>
-          <div class={`card-${openAddressObj[ddd] ? 'header' : 'footer'}`}>
+          <div className={`card-${openAddressObj[ddd] ? 'header' : 'footer'}`}>
             <Button
               onClick={() =>
                 setOpenAddressObj((prevSt) => ({
@@ -71,14 +71,14 @@ export default function Profile() {
   return (
     <div className="container">
       <div className="row">
-        <div class="col-lg-6">
-          <div class="card ">
+        <div className="col-lg-6">
+          <div className="card ">
             <Collapse in={!openProfile}>
               <div id="collapseProfileY">
-                <div class="card-header">Personal Data</div>
-                <div class="card-body">
-                  <h5 class="card-title">Foo</h5>
-                  <p class="card-text">Bar</p>
+                <div className="card-header">Personal Data</div>
+                <div className="card-body">
+                  <h5 className="card-title">Foo</h5>
+                  <p className="card-text">Bar</p>
                   {!openAddress && (
                     <Button
                       onClick={() => setOpenAddress(!openAddress)}
@@ -91,7 +91,7 @@ export default function Profile() {
                 </div>
               </div>
             </Collapse>
-            <div class={`card-${openProfile ? 'header' : 'footer'}`}>
+            <div className={`card-${openProfile ? 'header' : 'footer'}`}>
               <Button
                 onClick={() => setOpenProfile(!openProfile)}
                 aria-controls="collapseProfile collapseProfileY"
@@ -109,10 +109,10 @@ export default function Profile() {
         </div>
       </div>
       <Collapse in={openAddress}>
-        <div id="collapseAddressCard" class="col-lg-12">
-          <div class="card ">
-            <div class="card-header">New Address</div>
-            <div class="card-body">
+        <div id="collapseAddressCard" className="col-lg-12">
+          <div className="card ">
+            <div className="card-header">New Address</div>
+            <div className="card-body">
               {openAddress && <AddressForm accordion />}
             </div>
           </div>
