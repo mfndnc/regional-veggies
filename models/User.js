@@ -28,6 +28,16 @@ const userSchema = new Schema(
   }
 );
 
+
+userSchema.static(
+  'findOneOrCreate',
+  async function findOneOrCreate(condition, user) {
+    const one = await this.findOne(condition);
+
+    return one || this.create(user);
+  }
+);
+
 const User = model('User', userSchema);
 
 module.exports = User;

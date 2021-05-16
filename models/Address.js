@@ -30,9 +30,20 @@ const addressSchema = new Schema(
       lat: { type: Number },
       lng: { type: Number },
     },
+    googleid: String,
+    googleaddress: String,
   },
   {
     timestamps: true,
+  }
+);
+
+addressSchema.static(
+  'findOneOrCreate',
+  async function findOneOrCreate(condition, address) {
+    const one = await this.findOne(condition);
+
+    return one || this.create(address);
   }
 );
 
