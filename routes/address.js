@@ -23,8 +23,8 @@ router.get('/user/:userid', loginCheck(), (req, res, next) => {
 
 router.post('/', loginCheck(), (req, res, next) => {
 console.log("address POST",req.body);
-  const { user,showoffline,note,promo,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
-  Address.create({user: req.user,showoffline,note,promo,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter })
+  const { user,showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
+  Address.create({user: req.user,showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter })
     .then((address) => res.status(201).json(address))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
@@ -48,10 +48,10 @@ router.get('/:id', loginCheck(), (req, res, next) => {
 
 router.put('/:id', loginCheck(), (req, res, next) => {
 console.log("address PUT",req.body);
-  const { showoffline,note,promo,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
+  const { showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
   Address.findOneAndUpdate(
     {_id: req.params.id, user: req.user},
-    { showoffline,note,promo,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter },
+    { showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter },
     { new: true }
   )
     .then((address) => res.status(201).json(address))

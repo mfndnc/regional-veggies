@@ -28,6 +28,14 @@ export default function AddressForm(props) {
     formState: { errors },
   } = useForm(formOptions);
 
+  const doCloseAccordion = () => {
+    if (props.closeAccordionArgs) {
+      props.closeAccordion(props.closeAccordionArgs);
+    } else {
+      props.closeAccordion(false);
+    }
+  };
+
   function onSubmit(data) {
     console.log('onSubmit AddressForm', data, addressId);
     const doSave = isAddMode
@@ -37,10 +45,15 @@ export default function AddressForm(props) {
       .then(() => setJustSaved(true))
       .catch(() => setGenError(true))
       .finally(() => {
-        setTimeout(() => {
-          setJustSaved(false);
-          setGenError(false);
-        }, 2000);
+        if (props.accordion) {
+          props.onSave('address');
+          doCloseAccordion();
+        } else {
+          setTimeout(() => {
+            setJustSaved(false);
+            setGenError(false);
+          }, 2000);
+        }
       });
     return false;
   }
@@ -138,6 +151,28 @@ export default function AddressForm(props) {
 
           <div className="form-row">
             <div className="form-group col">
+              <label>Identifier</label>
+              <input
+                name="name"
+                type="text"
+                {...register('name')}
+                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+              />
+              <div className="invalid-feedback">{errors.name?.message}</div>
+            </div>
+            <div className="form-group col">
+              <label>Phone</label>
+              <input
+                name="phone"
+                type="text"
+                {...register('phone')}
+                className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+              />
+              <div className="invalid-feedback">{errors.phone?.message}</div>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group col">
               <label>Website</label>
               <input
                 name="website"
@@ -150,16 +185,6 @@ export default function AddressForm(props) {
           </div>
 
           <div className="form-row">
-            <div className="form-group col">
-              <label>Phone</label>
-              <input
-                name="phone"
-                type="text"
-                {...register('phone')}
-                className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
-              />
-              <div className="invalid-feedback">{errors.phone?.message}</div>
-            </div>
             <div className="form-group col">
               <label>Skype</label>
               <input
@@ -247,7 +272,7 @@ export default function AddressForm(props) {
             </button>
             <button
               type="button"
-              onClick={() => reset()}
+              onClick={() => doCloseAccordion()}
               className="btn btn-secondary"
             >
               minimise card

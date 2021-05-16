@@ -10,6 +10,7 @@ const addressSchema = new Schema(
       type: Boolean,
       default: 'false',
     },
+    name: String,
     note: String,
     promo: String,
     street: String,

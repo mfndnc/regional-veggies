@@ -5,8 +5,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
 
-export default function EventForm() {
-  let { addressId, eventId } = useParams();
+export default function EventForm(props) {
+  let { addressIdParam, eventIdParam } = useParams();
+  let addressId = props.addressId || addressIdParam || false;
+  let eventId = props.eventId || eventIdParam || false;
   const isAddMode = !eventId;
   let history = useHistory();
 
@@ -74,10 +76,15 @@ export default function EventForm() {
       .then(() => setJustSaved(true))
       .catch(() => setGenError(true))
       .finally(() => {
-        setTimeout(() => {
-          setJustSaved(false);
-          setGenError(false);
-        }, 2000);
+        if (props.accordion) {
+          props.onSave('address');
+          doCloseAccordion();
+        } else {
+          setTimeout(() => {
+            setJustSaved(false);
+            setGenError(false);
+          }, 2000);
+        }
       });
     return false;
   }
@@ -102,6 +109,14 @@ export default function EventForm() {
     }
     console.log('fields', fields);
   }, [eventId]);
+
+  const doCloseAccordion = () => {
+    if (props.closeAccordionArgs) {
+      props.closeAccordion(props.closeAccordionArgs);
+    } else {
+      props.closeAccordion(false);
+    }
+  };
 
   const showSavedMessage = justSaved && (
     <div className="alert alert-success" role="alert">
@@ -205,6 +220,16 @@ export default function EventForm() {
             <Link to={isAddMode ? '.' : '..'} className="btn btn-secondary">
               Cancel
             </Link>
+            <Link to="." className="btn btn-secondary">
+              down 1
+            </Link>
+            <button
+              type="button"
+              onClick={() => doCloseAccordion()}
+              className="btn btn-secondary"
+            >
+              minimise card
+            </button>
           </div>
         </form>
       </div>

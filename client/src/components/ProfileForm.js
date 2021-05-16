@@ -23,16 +23,25 @@ export default function ProfileForm(props) {
     formState: { errors },
   } = useForm(formOptions);
 
+  const doCloseAccordion = () => {
+    props.closeAccordion(false);
+  };
+
   function onSubmit(data) {
     api
       .modifyUser(data)
       .then(() => setJustSaved(true))
       .catch(() => setGenError(true))
       .finally(() => {
-        setTimeout(() => {
-          setJustSaved(false);
-          setGenError(false);
-        }, 2000);
+        if (props.accordion) {
+          props.onSave('user');
+          doCloseAccordion();
+        } else {
+          setTimeout(() => {
+            setJustSaved(false);
+            setGenError(false);
+          }, 2000);
+        }
       });
     return false;
   }
@@ -62,6 +71,8 @@ export default function ProfileForm(props) {
     });
   }, []);
 
+  if (loading) return <div>Loading ...</div>;
+
   const showSavedMessage = justSaved && (
     <div className="alert alert-success" role="alert">
       Saved!
@@ -73,7 +84,23 @@ export default function ProfileForm(props) {
     </div>
   );
 
-  if (loading) return <div>Loading ...</div>;
+  const resetButton = props.accordion ? (
+    <button
+      type="button"
+      onClick={() => {
+        reset();
+        doCloseAccordion();
+      }}
+      className="btn btn-secondary"
+    >
+      Close
+    </button>
+  ) : (
+    <button type="button" onClick={() => reset()} className="btn btn-secondary">
+      Reset
+    </button>
+  );
+
   return (
     <div className={props.accordion ? 'col' : 'card m-3'}>
       {!props.accordion && (
@@ -204,13 +231,7 @@ export default function ProfileForm(props) {
               )}
               Save
             </button>
-            <button
-              type="button"
-              onClick={() => reset()}
-              className="btn btn-secondary"
-            >
-              Reset
-            </button>
+            {resetButton}
           </div>
         </form>
       </div>
