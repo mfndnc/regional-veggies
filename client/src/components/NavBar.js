@@ -20,6 +20,9 @@ export default function NavbarApp() {
         <Nav.Link as={NavLink} to="/">
           Home
         </Nav.Link>
+        <Nav.Link as={NavLink} to="/explore">
+          explore
+        </Nav.Link>
         <Nav.Link as={NavLink} to="/test1">
           test1
         </Nav.Link>

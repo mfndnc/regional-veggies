@@ -23,6 +23,7 @@ function setGeoCode(address, forgoogle = '') {
             0: {
               geometry: { location: geo },
               formatted_address: googleaddress,
+              place_id: googleid,
             },
           },
         } = el.data;

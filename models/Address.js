@@ -47,6 +47,20 @@ addressSchema.static(
   }
 );
 
+addressSchema.static(
+  'updateOneOrCreate',
+  async function findOneOrCreate(condition, address) {
+    const one = await this.findOne(condition);
+    if (one) {
+      const two = await this.findOneAndUpdate(condition, address, {
+        new: true,
+      });
+    }
+
+    return two || one || this.create(address);
+  }
+);
+
 const Address = model('Address', addressSchema);
 
 module.exports = Address;
