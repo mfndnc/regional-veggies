@@ -14,3 +14,6 @@ a:hover {
 a:active {
   text-decoration: none;
 }
+.card-img-top-replacement {
+  height: 2em;
+}
