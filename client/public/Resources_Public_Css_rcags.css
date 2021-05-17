@@ -1,0 +1,141 @@
+
+body {
+	font-family: 'Istok Web',arial,sans-serif;
+}
+
+p a {
+	color: #b41312;
+}
+
+p a:hover {
+	color: #f59d9d;
+}
+
+.btn-primary {
+	background-color: #2e0f24;
+	border-color: #2e0f24;
+}
+
+/*nav*/
+.dropdown-item.show,
+.dropdown-item.active,
+.dropdown-item:active{
+	background-color: #800d0c;
+}
+
+.dropdown-submenu .dropdown-item.active,
+.dropdown-submenu .dropdown-item:active{
+	background-color: #b41312;
+}
+
+nav.bg-dark {
+	background-color: #2e0f24 !important;
+}
+
+/*Cookie message*/
+.cc-window {
+	background-color: #fff !important;
+	webkit-box-shadow: 0 0 20px 0 rgba(0,0,0,.3);
+	-moz-box-shadow: 0 0 20px 0 rgba(0,0,0,.3);
+	box-shadow: 0 0 20px 0 rgba(0,0,0,.3);
+}
+
+.cc-message {
+	color: #000 !important;
+}
+
+.cc-link {
+	color: #000 !important;
+}
+
+.cc-btn {
+	color: rgb(255, 255, 255) !important;
+	background-color: rgb(186, 0, 9) !important;
+}
+
+/*Toast*/
+.toast .toast-header {
+	background-color: #b41312 !important;
+}
+
+.toast-header .close {
+	transition: opacity .2s linear;
+}
+
+.toast-header .close:hover {
+	color: #fff !important;
+	opacity: 1 !important;
+}
+
+/*quote*/
+blockquote {
+	border-left: 3px solid #753B63 !important;
+}
+
+blockquote:after {
+	color: #753B63 !important;
+}
+
+/*card*/
+.card a {
+	color: #b41312 !important;
+	transition: color .2s linear;
+}
+
+.card a:hover {
+	color: #f59d9d !important;
+}
+
+/*download*/
+.download-element a {
+	color: #b41312;
+}
+
+.card h4 {
+	color: #b41312;
+}
+
+.download-element a:hover {
+	color: #f59d9d;
+}
+
+/*form*/
+.form-navigation .btn-primary {
+	border: 1px solid #b41312;
+	background-color: #b41312;
+}
+
+.form-navigation .btn-primary:hover,
+.form-navigation .btn-primary:active {
+	background-color: #f59d9d !important;
+	border: 1px solid #f59d9d !important;
+}
+
+/*metanav*/
+footer .metanav a:hover {
+	color: rgba(0,0,0,.75);
+}
+
+/*Scrolltop + Contactc2a*/
+.scrollbuttons .phone-overlay button,
+.scroll-top {
+	background-color: #381B2F !important;
+	border: 1px solid #381B2F;
+}
+/*
+.contactOverlayWrap .contactOverlay .contact-areas .mail,
+.contactOverlayWrap .contactOverlay .contact-areas .tel {
+background-color: #2e0f24 !important;
+color: #fff !important;
+border: 1px solid #2e0f24 !important;
+}*/
+
+.contactOverlayWrap .contactOverlay .text {
+	background-color: #2e0f24;
+	color: #fff;
+}
+
+/*accordion*/
+.accordion .btn-link {
+	color: #b41312 !important;
+}

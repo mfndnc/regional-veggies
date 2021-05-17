@@ -4,7 +4,7 @@ const axios = require('axios');
 const qs = require('qs');
 const key = process.env.GOOGLEKEY;
 
-const gGeoCode = async (address) => {
+const geoCodeApi = async (address) => {
   const URL = 'https://maps.googleapis.com/maps/api/geocode/json';
   const options = { address, key };
   const optionStr = qs.stringify(options);
@@ -13,5 +13,5 @@ const gGeoCode = async (address) => {
 };
 
 module.exports = {
-  gGeoCode,
+  geoCodeApi,
 };

@@ -13,20 +13,20 @@ const containerStyle = {
 export default function Explore() {
   const [loading, setLoading] = useState(true);
   const [fullAddress, setFullAddress] = useState([]);
-
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    if (!fullAddress.length)
-      api
-        .getAlls('address')
-        .then((res) => {
-          setFullAddress(res.data);
-        })
-        .finally(() => setLoading(false));
-  }, [selected]);
+    api
+      .getAlls('address')
+      .then((res) => {
+        setFullAddress(res.data);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   const doChildtoParent = (args) => {
     console.log(args);
+    setSelected(args);
   };
   const clickNameList = (e) => {
     console.log(e.target.dataset.id);
@@ -37,6 +37,7 @@ export default function Explore() {
   };
 
   if (loading) return <h3>Loading...</h3>;
+
   return (
     <div className="container-xl">
       <div className="row">
@@ -56,7 +57,7 @@ export default function Explore() {
             </ul>
           </div>
         </div>
-        <div className="col">fdsfddfs</div>
+        <div className="col">{selected && <div>{selected.name}</div>}</div>
       </div>
       <div className="row">
         <div className="col" style={containerStyle}></div>

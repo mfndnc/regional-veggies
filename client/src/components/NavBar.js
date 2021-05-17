@@ -10,6 +10,11 @@ import {
 } from 'react-bootstrap';
 import { AuthContext } from '../context/auth';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+
+const elfahome = <FontAwesomeIcon icon={faHome} />;
+
 export default function NavbarApp() {
   const {
     authObj: { logged },
@@ -17,9 +22,6 @@ export default function NavbarApp() {
   const navMainBody = logged ? (
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">
-        <Nav.Link as={NavLink} to="/">
-          Home
-        </Nav.Link>
         <Nav.Link as={NavLink} to="/explore">
           explore
         </Nav.Link>
@@ -36,27 +38,27 @@ export default function NavbarApp() {
           <NavDropdown.Item as={NavLink} to="/test2">
             f addr
           </NavDropdown.Item>
-          <NavDropdown.Item as={NavLink} to="/test2/609ea7f09b161b9914e04e22">
+          <NavDropdown.Item as={NavLink} to="/test2/60a13dc2c63cd551eca2150a">
             addrID 1
           </NavDropdown.Item>
-          <NavDropdown.Item as={NavLink} to="/test2/609ead8ebedaaab1943e778e">
+          <NavDropdown.Item as={NavLink} to="/test2/60a144a4ef25851fccd0acb9">
             addrID 2
           </NavDropdown.Item>
 
-          <NavDropdown.Item as={NavLink} to="/test2/609ea7f09b161b9914e04e22">
+          <NavDropdown.Item as={NavLink} to="/test2/60a13dc2c63cd551eca2150a">
             addrID
           </NavDropdown.Item>
 
-          <NavDropdown.Item as={NavLink} to="/test3/609ebf473eab2535e8c145a2">
+          <NavDropdown.Item as={NavLink} to="/test3/60a244b285d2cc2234d3b45f">
             eventID id1
           </NavDropdown.Item>
-          <NavDropdown.Item as={NavLink} to="/test3/609fe93413ec3859d4e9ca16">
+          <NavDropdown.Item as={NavLink} to="/test3/60a24539570bca64c4f2def8">
             eventID id2
           </NavDropdown.Item>
-          <Nav.Link as={NavLink} to="/test2/609ea7f09b161b9914e04e22/event">
+          <Nav.Link as={NavLink} to="/test2/60a13dc2c63cd551eca2150a/event">
             add event addr1
           </Nav.Link>
-          <Nav.Link as={NavLink} to="/test2/609ead8ebedaaab1943e778e/event">
+          <Nav.Link as={NavLink} to="/test2/60a144a4ef25851fccd0acb9/event">
             add event addr2
           </Nav.Link>
           <NavDropdown.Divider />
@@ -78,7 +80,7 @@ export default function NavbarApp() {
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">
         <Nav.Link as={NavLink} to="/">
-          Home
+          Regional Veggies
         </Nav.Link>
       </Nav>
       <Nav>
@@ -92,9 +94,9 @@ export default function NavbarApp() {
     </Navbar.Collapse>
   );
   return (
-    <Navbar collapseOnSelect bg="light" expand="lg">
+    <Navbar collapseOnSelect bg="dark" variant="dark" expand="lg">
       <Navbar.Brand as={Link} to="/">
-        LOGO
+        {elfahome}
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       {navMainBody}

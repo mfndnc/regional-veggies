@@ -2,14 +2,14 @@ const router = require('express').Router();
 const Address = require('../models/Address');
 
 const { loginCheck } = require('./middlewares');
-const { gGeoCode } = require('./googleGeo');
+const { geoCodeApi } = require('./googleGeo');
 
 function setGeoCode(address, forgoogle = '') {
   if (!forgoogle.length) {
     forgoogle = `${address.street}, ${address.zipcode} ${address.city}`;
   }
   if (forgoogle.length > 0) {
-    gGeoCode(forgoogle).then((el) => {
+    geoCodeApi(forgoogle).then((el) => {
       console.log(el.data);
       if (
         el &&

@@ -6,10 +6,15 @@ import * as Yup from 'yup';
 import api from '../api';
 
 export default function AddressForm(props) {
-  let { addressIdParam } = useParams();
+  let { addressId: addressIdParam } = useParams();
   let addressId = props.addressId || addressIdParam || false;
   const isAddMode = !addressId;
   let history = useHistory();
+
+  const [loading, setLoading] = useState(true);
+  const [fullAddress, setFullAddress] = useState({});
+  const [justSaved, setJustSaved] = useState(false);
+  const [genError, setGenError] = useState(false);
 
   const validationSchema = Yup.object().shape({
     street: Yup.string().required(),
@@ -58,10 +63,6 @@ export default function AddressForm(props) {
     return false;
   }
 
-  const [fullAddress, setFullAddress] = useState({});
-  const [justSaved, setJustSaved] = useState(false);
-  const [genError, setGenError] = useState(false);
-
   useEffect(() => {
     console.log('useEffect AddressForm', addressId);
     if (!isAddMode) {
@@ -82,9 +83,14 @@ export default function AddressForm(props) {
         ];
         fields.forEach((field) => setValue(field, res.data[field]));
         setFullAddress(res.data);
+        setLoading(false);
       });
+    } else {
+      setLoading(false);
     }
-  }, [addressId]);
+  }, [addressId, isAddMode, setValue]);
+
+  if (loading) return <div>Loading ...</div>;
 
   const showSavedMessage = justSaved && (
     <div className="alert alert-success" role="alert">

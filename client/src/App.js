@@ -23,10 +23,15 @@ import './App.css';
 function App() {
   const { authObj } = useContext(AuthContext);
 
-  // important for the refresh, since it takes that mili second for cookes to be detected
+  // important - since it takes that mili second for cookes to be detected - on page refresh it was redirecting to home
   let notReadyToStart = true;
+  console.log('notReadyToStart');
+  if (authObj.logged === true || authObj.logged === false) {
+    notReadyToStart = false;
+    console.log('can START');
+  }
 
-  if (authObj.loading === true) {
+  /*if (authObj.loading === true) {
     console.log('AUTH LOADING', authObj.error);
   } else if (authObj.logged === true) {
     console.log('AUTH logged', authObj.error);
@@ -36,7 +41,7 @@ function App() {
     notReadyToStart = false;
   } else {
     console.log('AUTH REST');
-  }
+  }*/
 
   if (notReadyToStart) return <div>...loading</div>;
 

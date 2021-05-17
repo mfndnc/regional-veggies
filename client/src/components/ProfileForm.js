@@ -8,6 +8,11 @@ import api from '../api';
 export default function ProfileForm(props) {
   let history = useHistory();
 
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState({});
+  const [justSaved, setJustSaved] = useState(false);
+  const [genError, setGenError] = useState(false);
+
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Email is invalid'),
   });
@@ -46,11 +51,6 @@ export default function ProfileForm(props) {
     return false;
   }
 
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState({});
-  const [justSaved, setJustSaved] = useState(false);
-  const [genError, setGenError] = useState(false);
-
   useEffect(() => {
     api.getUser().then((res) => {
       console.log('useEffect getUser', res.data);
@@ -69,7 +69,7 @@ export default function ProfileForm(props) {
       setUser(res.data);
       setLoading(false);
     });
-  }, []);
+  }, [setValue]);
 
   if (loading) return <div>Loading ...</div>;
 

@@ -6,11 +6,16 @@ import * as Yup from 'yup';
 import api from '../api';
 
 export default function EventForm(props) {
-  let { addressIdParam, eventIdParam } = useParams();
+  let { addressId: addressIdParam, eventId: eventIdParam } = useParams();
   let addressId = props.addressId || addressIdParam || false;
   let eventId = props.eventId || eventIdParam || false;
   const isAddMode = !eventId;
   let history = useHistory();
+
+  const [loading, setLoading] = useState(true);
+  const [fullEvent, setFullEvent] = useState({});
+  const [justSaved, setJustSaved] = useState(false);
+  const [genError, setGenError] = useState(false);
 
   const innerSchema = {
     val: Yup.date().required('form.required_message'),
@@ -63,6 +68,14 @@ export default function EventForm(props) {
     }
   );
 
+  const doCloseAccordion = () => {
+    if (props.closeAccordionArgs) {
+      props.closeAccordion(props.closeAccordionArgs);
+    } else {
+      props.closeAccordion(false);
+    }
+  };
+
   function onSubmit(data) {
     let { calarr, ...rest } = data;
     const calendar = calarr.map((cal) => cal.val);
@@ -89,10 +102,6 @@ export default function EventForm(props) {
     return false;
   }
 
-  const [fullEvent, setFullEvent] = useState({});
-  const [justSaved, setJustSaved] = useState(false);
-  const [genError, setGenError] = useState(false);
-
   useEffect(() => {
     console.log('useEffect EventForm', eventId, addressId);
     if (!isAddMode) {
@@ -103,20 +112,17 @@ export default function EventForm(props) {
         res.data['calendar'].forEach((el) => append({ val: el }));
         //alert('LOAD!! :-)\n\n' + JSON.stringify(res.data['calendar'], null, 4));
         setFullEvent(res.data);
+        setLoading(false);
       });
       // } else if (fields.length === 0) {
       //   append({ id: 1, val: '' });
+    } else {
+      setLoading(false);
     }
     console.log('fields', fields);
-  }, [eventId]);
+  }, [addressId, eventId, isAddMode, setValue]);
 
-  const doCloseAccordion = () => {
-    if (props.closeAccordionArgs) {
-      props.closeAccordion(props.closeAccordionArgs);
-    } else {
-      props.closeAccordion(false);
-    }
-  };
+  if (loading) return <div>Loading ...</div>;
 
   const showSavedMessage = justSaved && (
     <div className="alert alert-success" role="alert">
@@ -130,8 +136,8 @@ export default function EventForm(props) {
   );
 
   return (
-    <div className="card m-3">
-      <h5 className="card-header">Event</h5>
+    <div className={props.accordion ? 'col' : 'card m-3'}>
+      {!props.accordion && <h5 className="card-header">Event</h5>}
       <div className="card-body">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-row">
