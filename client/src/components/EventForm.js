@@ -186,7 +186,7 @@ export default function EventForm(props) {
                     <input
                       type="datetime-local"
                       {...register(`calarr.${index}.val`)}
-                      defaultValue={item.val}
+                      defaultValue={item.val.slice(0, 16)}
                       className={`form-control ${
                         errors[`calarr.${index}.val`] ? 'is-invalid' : ''
                       }`}
