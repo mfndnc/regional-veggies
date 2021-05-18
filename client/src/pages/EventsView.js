@@ -46,6 +46,9 @@ export default function EventsView() {
 
   const eventList = fullEvent.map((ev, idx) => {
     let ddd = `id${idx}`;
+    const dateDOMnotworking = ev.calendar.map((dt) => (
+      <p className="card-text">{dt}</p>
+    ));
     return (
       <div className="col mb-4" key={`ev${ev._id}`}>
         <div className="card h-100">
@@ -57,9 +60,6 @@ export default function EventsView() {
               <h5 className="card-title">Lorem, ipsum.</h5>
               <p className="card-text">{ev.note}</p>
               <p className="card-text">{ev.promo}</p>
-              {ev.calendar.map((dt) => (
-                <p className="card-text">{dt}</p>
-              ))}
             </div>
 
             <div className="card-footer">

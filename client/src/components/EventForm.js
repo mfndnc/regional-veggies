@@ -41,6 +41,13 @@ export default function EventForm(props) {
       .required('Must have fields')
       .min(1, 'Minimum of 1 field'),
   });
+  const validationSchemaNODATE = Yup.object().shape({
+    note: Yup.string().required(),
+    calarr: Yup.array()
+      .of(Yup.object().shape(innerSchema))
+      .required('Must have fields')
+      .min(1, 'Minimum of 1 field'),
+  });
   const formOptions = {
     defaultValues: {
       note: '',
@@ -48,6 +55,13 @@ export default function EventForm(props) {
       calarr: [{ val: '' }],
     },
     resolver: yupResolver(validationSchema),
+  };
+  const formOptionsNODATE = {
+    defaultValues: {
+      note: '',
+      promo: '',
+    },
+    resolver: yupResolver(validationSchemaNODATE),
   };
 
   const {
@@ -59,7 +73,7 @@ export default function EventForm(props) {
     setError,
     formState,
     formState: { errors },
-  } = useForm(formOptions);
+  } = useForm(formOptionsNODATE);
 
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
@@ -108,8 +122,8 @@ export default function EventForm(props) {
       api.getById('event', eventId).then((res) => {
         console.log('getById EventForm', res.data);
         ['note', 'promo'].forEach((field) => setValue(field, res.data[field]));
-        remove(0);
-        res.data['calendar'].forEach((el) => append({ val: el }));
+        ////////remove(0);
+        ////////res.data['calendar'].forEach((el) => append({ val: el }));
         //alert('LOAD!! :-)\n\n' + JSON.stringify(res.data['calendar'], null, 4));
         setFullEvent(res.data);
         setLoading(false);
@@ -135,6 +149,54 @@ export default function EventForm(props) {
     </div>
   );
 
+  const dateDOMnotworking = (
+    <>
+      <div className="form-row mb-2 mt-2">
+        <div className="col-sm-10">Calendar Event</div>
+        <div className="col-sm-2 pl-4">
+          <button
+            type="button"
+            className="btn btn-primary mr-1"
+            onClick={() => append({ val: '' })}
+          >
+            Add date
+          </button>
+        </div>
+      </div>
+      {fields.map((item, index) => (
+        <div className="form-row" key={item.id}>
+          <div className="form-group col">
+            <div className="form-group row">
+              <div className="col-sm-10">
+                <input
+                  type="date"
+                  {...register(`calarr.${index}.val`)}
+                  defaultValue={item.val.slice(0, 10)}
+                  className={`form-control ${
+                    errors[`calarr.${index}.val`] ? 'is-invalid' : ''
+                  }`}
+                />
+                <div className="invalid-feedback">
+                  {errors[`calarr.${index}.val`]?.message}
+                </div>
+              </div>
+              <div className="col-sm-2">
+                {index > 0 && (
+                  <button
+                    type="button"
+                    className="btn btn-primary mr-1"
+                    onClick={() => remove(index)}
+                  >
+                    Delete
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </>
+  );
   return (
     <div className={props.accordion ? 'col' : 'card m-3'}>
       {!props.accordion && <h5 className="card-header">Event</h5>}
@@ -165,51 +227,6 @@ export default function EventForm(props) {
               <div className="invalid-feedback">{errors.promo?.message}</div>
             </div>
           </div>
-
-          <div className="form-row mb-2 mt-2">
-            <div className="col-sm-10">Calendar Event</div>
-            <div className="col-sm-2 pl-4">
-              <button
-                type="button"
-                className="btn btn-primary mr-1"
-                onClick={() => append({ val: '' })}
-              >
-                Add date
-              </button>
-            </div>
-          </div>
-          {fields.map((item, index) => (
-            <div className="form-row" key={item.id}>
-              <div className="form-group col">
-                <div className="form-group row">
-                  <div className="col-sm-10">
-                    <input
-                      type="datetime-local"
-                      {...register(`calarr.${index}.val`)}
-                      defaultValue={item.val.slice(0, 16)}
-                      className={`form-control ${
-                        errors[`calarr.${index}.val`] ? 'is-invalid' : ''
-                      }`}
-                    />
-                    <div className="invalid-feedback">
-                      {errors[`calarr.${index}.val`]?.message}
-                    </div>
-                  </div>
-                  <div className="col-sm-2">
-                    {index > 0 && (
-                      <button
-                        type="button"
-                        className="btn btn-primary mr-1"
-                        onClick={() => remove(index)}
-                      >
-                        Delete
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
 
           <div className="form-group">
             {showSavedMessage} {showGenError}

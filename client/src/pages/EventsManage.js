@@ -46,6 +46,11 @@ export default function EventsManage() {
 
   const eventAccordion = fullEvent.map((ev, idx) => {
     let ddd = `id${idx}`;
+    const dateDOMnotworking = ev.calendar.map((dt, k) => (
+      <p className="card-text" key={`calendar${k}`}>
+        {dt}
+      </p>
+    ));
     return (
       <div className="col mb-4" key={`ev${ev._id}`}>
         <div className="card h-100">
@@ -59,11 +64,6 @@ export default function EventsManage() {
                   <h5 className="card-title">Lorem, ipsum.</h5>
                   <p className="card-text">{ev.note}</p>
                   <p className="card-text">{ev.promo}</p>
-                  {ev.calendar.map((dt, k) => (
-                    <p className="card-text" key={`calendar${k}`}>
-                      {dt}
-                    </p>
-                  ))}
                 </div>
               </div>
             </Collapse>
