@@ -11,6 +11,7 @@ const addressSchema = new Schema(
       default: 'false',
     },
     name: String,
+    nickname: String,
     note: String,
     promo: String,
     street: String,
@@ -22,6 +23,7 @@ const addressSchema = new Schema(
     skype: String,
     whatsapp: String,
     twitter: String,
+    addrtype: String,
     country: {
       type: String,
       default: 'Germany',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -10,7 +10,7 @@ export default function EventForm(props) {
   let addressId = props.addressId || addressIdParam || false;
   let eventId = props.eventId || eventIdParam || false;
   const isAddMode = !eventId;
-  let history = useHistory();
+  //let history = useHistory();
 
   const [loading, setLoading] = useState(true);
   const [fullEvent, setFullEvent] = useState({});

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User');
 
-const { loginCheck } = require('./middlewares');
+const { loginCheck } = require('./midlware/middlewares');
 
 
 /* ***** SPECIAL to this router - actions on the logged user * no id required */

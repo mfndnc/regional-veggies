@@ -2,16 +2,11 @@ import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Collapse, Button } from 'react-bootstrap';
 import api from '../api';
-import auth from '../api/auth';
-import { AuthContext } from '../context/auth';
-import ProfileForm from '../components/ProfileForm';
 import AddressForm from '../components/AddressForm';
 
-export default function Profile() {
-  const { authObj, setAuthObj } = useContext(AuthContext);
+export default function EventsManStart() {
   const [loading, setLoading] = useState(true);
   const [fullAddress, setFullAddress] = useState([]);
-  const [openProfile, setOpenProfile] = useState(false);
   const [openAddress, setOpenAddress] = useState(false);
   const [openAddressObj, setOpenAddressObj] = useState({});
   const [childTriggeredSave, setChildTriggeredSave] = useState(false);
@@ -20,14 +15,9 @@ export default function Profile() {
       .getAlls('address/user')
       .then((res) => {
         setFullAddress(res.data);
-        const tmpaddr = {};
-        res.data.forEach((addr, idx) => {
-          tmpaddr[`id${idx}`] = false;
-        });
-        setOpenAddressObj(tmpaddr);
       })
       .finally(() => setLoading(false));
-  }, [authObj, childTriggeredSave]);
+  }, [childTriggeredSave]);
 
   const doCloseAccordionAddress = (args) => {
     setOpenAddressObj((prevSt) => ({
@@ -36,11 +26,7 @@ export default function Profile() {
     }));
   };
   const afterChildSave = (args) => {
-    if (args === 'user') {
-      auth.loggedContext(setAuthObj);
-    } else {
-      setChildTriggeredSave(!childTriggeredSave);
-    }
+    setChildTriggeredSave(!childTriggeredSave);
   };
 
   const addressAccordion = fullAddress.map((addr, idx) => {
@@ -119,59 +105,35 @@ export default function Profile() {
         <div className="colgrid col">
           <div className="card-group modern row row-cols-1 row-cols-md-1">
             <div className="col mb-4">
-              <div className="card h-100">
-                <div className="card-body-wrap h-100 no-image ">
-                  <Collapse in={!openProfile}>
-                    <div id="collapseProfileY">
-                      <div className="card-header">Personal Data</div>
-                      <div className="card-body">
-                        <h5 className="card-title">{authObj.name}</h5>
-                        <p className="card-text">{authObj.note}</p>
-                        <p className="card-text">
-                          {authObj.email} {authObj.phone} ...
-                        </p>
-                        {!openAddress && (
-                          <Button
-                            variant="info"
-                            size="sm"
-                            onClick={() => setOpenAddress(!openAddress)}
-                            aria-controls="collapseAddressCard"
-                            aria-expanded={openAddress}
-                          >
-                            New Address
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </Collapse>
-                  <div className={`card-${openProfile ? 'header' : 'footer'}`}>
+              <div className="card classic h-100 text-left">
+                <div className="card-body">
+                  <h5 className="card-subtitle mb-2 text-muted">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quas, perspiciatis.
                     <Button
-                      variant="secondary"
-                      onClick={() => setOpenProfile(!openProfile)}
-                      aria-controls="collapseProfile collapseProfileY"
-                      aria-expanded={openProfile}
+                      variant="info"
+                      size="sm"
+                      onClick={() => setOpenAddress(!openAddress)}
+                      aria-controls="collapseAddressCard"
+                      aria-expanded={openAddress}
                     >
-                      {openProfile ? 'Close' : 'Mofidy'}
+                      New Address
                     </Button>
+                  </h5>
+                  <div className="card-text">
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Error, repellat id at natus dolorum aliquam quae vitae.
+                      Quam, nihil labore nemo, ex ipsum delectus a illo,
+                      doloribus eaque repellat nobis!
+                    </p>
                   </div>
-                  <Collapse in={openProfile}>
-                    <div id="collapseProfile">
-                      {openProfile && (
-                        <ProfileForm
-                          accordion
-                          onSave={afterChildSave}
-                          closeAccordion={setOpenProfile}
-                        />
-                      )}
-                    </div>
-                  </Collapse>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
+      </div>{' '}
       <Collapse in={openAddress}>
         <div id="collapseAddressCard" className="row">
           <div className="colgrid col">
@@ -196,7 +158,6 @@ export default function Profile() {
           </div>
         </div>
       </Collapse>
-
       <div className="row">
         <div className="colgrid col">
           <div className="card-group modern row row-cols-1 row-cols-md-2">

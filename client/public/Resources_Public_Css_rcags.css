@@ -78,12 +78,12 @@ blockquote:after {
 
 /*card*/
 .card a {
-	color: #b41312 !important;
+	color: #b41312;
 	transition: color .2s linear;
 }
 
 .card a:hover {
-	color: #f59d9d !important;
+	color: #f59d9d;
 }
 
 /*download*/

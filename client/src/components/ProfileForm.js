@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+//import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
 
 export default function ProfileForm(props) {
-  let history = useHistory();
+  //let history = useHistory();
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({});
@@ -23,7 +23,6 @@ export default function ProfileForm(props) {
     handleSubmit,
     reset,
     setValue,
-    setError,
     formState,
     formState: { errors },
   } = useForm(formOptions);

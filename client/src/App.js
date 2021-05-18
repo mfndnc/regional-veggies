@@ -8,6 +8,10 @@ import Logout from './pages/Logout';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import Explore from './pages/Explore';
+import EventsManStart from './pages/EventsManStart';
+import EventsManage from './pages/EventsManage';
+import EventsVwStart from './pages/EventsVwStart';
+import EventsView from './pages/EventsView';
 
 import AddressForm from './components/AddressForm';
 import ProfileForm from './components/ProfileForm';
@@ -67,6 +71,20 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute exact path="/explore">
           <Explore />
+        </ProtectedRoute>
+
+        <ProtectedRoute exact path="/eventsview">
+          <EventsVwStart />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/eventsview/:addressId">
+          <EventsView />
+        </ProtectedRoute>
+
+        <ProtectedRoute exact path="/eventsmanage">
+          <EventsManStart />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/eventsmanage/:addressId">
+          <EventsManage />
         </ProtectedRoute>
 
         <ProtectedRoute exact path="/test1">

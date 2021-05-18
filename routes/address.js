@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const Address = require('../models/Address');
 
-const { loginCheck } = require('./middlewares');
-const { geoCodeApi } = require('./googleGeo');
+const { loginCheck } = require('./midlware/middlewares');
+const { geoCodeApi } = require('./midlware/googleGeo');
 
 function setGeoCode(address, forgoogle = '') {
   if (!forgoogle.length) {
@@ -53,13 +53,30 @@ router.get('/user/:userid', loginCheck(), (req, res, next) => {
     .then((address) => res.status(200).json(address))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
+
+router.get('/business', loginCheck(), (req, res, next) => {
+  console.log('address business GET', req.query);
+  Address.find({
+    $and: [
+      {
+        $nor: [
+          { addrtype: { $regex: 'user' } },
+          { addrtype: { $regex: 'private' } },
+        ],
+      },
+      { name: { $exists: true, $ne: null, $ne: '' } },
+    ],
+  })
+    .then((address) => res.status(200).json(address))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 
 router.post('/', loginCheck(), (req, res, next) => {
   console.log('address POST', req.body);
-  const { user,showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
-  Address.create({user: req.user,showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter })
+  const { user,showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
+  Address.create({user: req.user,showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter })
     .then((address) => {
       setGeoCode(address);
       return res.status(201).json(address);
@@ -68,6 +85,7 @@ router.post('/', loginCheck(), (req, res, next) => {
 });
 
 router.get('/', loginCheck(), (req, res, next) => {
+  console.log('address GET', req.query);
   Address.find()
     .then((address) => res.status(200).json(address))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
@@ -86,10 +104,10 @@ router.get('/:id', loginCheck(), (req, res, next) => {
 
 router.put('/:id', loginCheck(), (req, res, next) => {
 console.log("address PUT",req.body);
-  const { showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
+  const { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
   Address.findOneAndUpdate(
     {_id: req.params.id, user: req.user},
-    { showoffline,note,promo,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter }
+    { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter }
   )
     .then((address) => {
       // getting former document to compare with request

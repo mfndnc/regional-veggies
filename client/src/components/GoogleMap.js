@@ -8,7 +8,7 @@ import {
 
 const containerStyle = {
   width: '100vw',
-  height: '60vh',
+  height: '50vh',
 };
 const libraries = ['places'];
 

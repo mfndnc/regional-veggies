@@ -8,6 +8,8 @@ module.exports = (app) => {
 
   app.use('/api/event', require('../routes/event'));
 
+  app.use('/api/misc', require('../routes/misc'));
+
   if (process.env.ENVLOCAL && process.env.ENVLOCAL === 'local') {
     console.log('local app');
     app.get('/', (req, res) => {

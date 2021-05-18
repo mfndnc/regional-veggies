@@ -1,13 +1,6 @@
 import { useContext } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import {
-  Nav,
-  Navbar,
-  NavDropdown,
-  Form,
-  FormControl,
-  Button,
-} from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { AuthContext } from '../context/auth';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,15 +16,12 @@ export default function NavbarApp() {
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">
         <Nav.Link as={NavLink} to="/explore">
-          explore
+          Explore
         </Nav.Link>
-        <Nav.Link as={NavLink} to="/test1">
-          test1
+        <Nav.Link as={NavLink} to="/eventsview">
+          Events View
         </Nav.Link>
-        <Nav.Link as={NavLink} to="/test2">
-          test2
-        </Nav.Link>
-        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+        <NavDropdown title="test links" id="basic-nav-dropdown">
           <NavDropdown.Item as={NavLink} to="/test1">
             f User
           </NavDropdown.Item>
@@ -68,11 +58,14 @@ export default function NavbarApp() {
         </NavDropdown>
       </Nav>
       <Nav>
-        <Nav.Link as={NavLink} to="/logout">
-          Logout
+        <Nav.Link as={NavLink} to="/eventsmanage">
+          Events
         </Nav.Link>
         <Nav.Link as={NavLink} to="/profile">
           Profile
+        </Nav.Link>
+        <Nav.Link as={NavLink} to="/logout">
+          Logout
         </Nav.Link>
       </Nav>
     </Navbar.Collapse>

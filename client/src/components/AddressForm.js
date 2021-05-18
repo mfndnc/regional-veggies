@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -9,14 +9,16 @@ export default function AddressForm(props) {
   let { addressId: addressIdParam } = useParams();
   let addressId = props.addressId || addressIdParam || false;
   const isAddMode = !addressId;
-  let history = useHistory();
+  //let history = useHistory();
 
   const [loading, setLoading] = useState(true);
-  const [fullAddress, setFullAddress] = useState({});
+  //const [fullAddress, setFullAddress] = useState({});
   const [justSaved, setJustSaved] = useState(false);
   const [genError, setGenError] = useState(false);
+  const [addressTypes, setAddressTypes] = useState([]);
 
   const validationSchema = Yup.object().shape({
+    addrtype: Yup.string().required(),
     street: Yup.string().required(),
     city: Yup.string().required(),
     zipcode: Yup.string().required(),
@@ -28,7 +30,6 @@ export default function AddressForm(props) {
     handleSubmit,
     reset,
     setValue,
-    setError,
     formState,
     formState: { errors },
   } = useForm(formOptions);
@@ -65,29 +66,40 @@ export default function AddressForm(props) {
 
   useEffect(() => {
     console.log('useEffect AddressForm', addressId);
-    if (!isAddMode) {
-      api.getById('address', addressId).then((res) => {
-        console.log('getById AddressForm', res.data);
-        const fields = [
-          'note',
-          'promo',
-          'street',
-          'suite',
-          'city',
-          'zipcode',
-          'phone',
-          'website',
-          'skype',
-          'whatsapp',
-          'twitter',
-        ];
-        fields.forEach((field) => setValue(field, res.data[field]));
-        setFullAddress(res.data);
-        setLoading(false);
+    api
+      .getAlls('misc/addrtypes')
+      .then((addrtypes) => {
+        console.log(addrtypes);
+        setAddressTypes(addrtypes.data);
+      })
+      .finally(() => {
+        if (!isAddMode) {
+          api.getById('address', addressId).then((res) => {
+            console.log('getById AddressForm', res.data);
+            const fields = [
+              'note',
+              'promo',
+              'street',
+              'suite',
+              'city',
+              'zipcode',
+              'phone',
+              'website',
+              'skype',
+              'whatsapp',
+              'twitter',
+              'name',
+              'nickname',
+              'addrtype',
+            ];
+            fields.forEach((field) => setValue(field, res.data[field]));
+            //setFullAddress(res.data);
+            setLoading(false);
+          });
+        } else {
+          setLoading(false);
+        }
       });
-    } else {
-      setLoading(false);
-    }
   }, [addressId, isAddMode, setValue]);
 
   if (loading) return <div>Loading ...</div>;
@@ -110,6 +122,51 @@ export default function AddressForm(props) {
       <div className="card-body">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-row">
+            <div className="form-group col-8">
+              <label>Main purpose of address</label>
+              <select
+                name="addrtype"
+                {...register('addrtype')}
+                className={`form-control ${
+                  errors.addrtype ? 'is-invalid' : ''
+                }`}
+              >
+                {isAddMode && <option value="">-- please select --</option>}
+                {addressTypes.map((addressType) => (
+                  <option key={addressType._id} value={addressType.abr}>
+                    {addressType.text}
+                  </option>
+                ))}
+              </select>
+              <div className="invalid-feedback">{errors.addrtype?.message}</div>
+            </div>
+            <div className="form-group col">
+              <label>Identifier</label>
+              <input
+                name="nickname"
+                type="text"
+                {...register('nickname')}
+                className={`form-control ${
+                  errors.nickname ? 'is-invalid' : ''
+                }`}
+              />
+              <div className="invalid-feedback">{errors.nickname?.message}</div>
+            </div>
+          </div>{' '}
+          <div className="form-row">
+            {' '}
+            <div className="form-group col">
+              <label>Name</label>
+              <input
+                name="name"
+                type="text"
+                {...register('name')}
+                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+              />
+              <div className="invalid-feedback">{errors.name?.message}</div>
+            </div>
+          </div>{' '}
+          <div className="form-row">
             <div className="form-group col-9">
               <label>Street</label>
               <input
@@ -131,7 +188,6 @@ export default function AddressForm(props) {
               <div className="invalid-feedback">{errors.suite?.message}</div>
             </div>
           </div>
-
           <div className="form-row">
             <div className="form-group col-7">
               <label>City</label>
@@ -154,29 +210,6 @@ export default function AddressForm(props) {
               <div className="invalid-feedback">{errors.zipcode?.message}</div>
             </div>
           </div>
-
-          <div className="form-row">
-            <div className="form-group col">
-              <label>Identifier</label>
-              <input
-                name="name"
-                type="text"
-                {...register('name')}
-                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-              />
-              <div className="invalid-feedback">{errors.name?.message}</div>
-            </div>
-            <div className="form-group col">
-              <label>Phone</label>
-              <input
-                name="phone"
-                type="text"
-                {...register('phone')}
-                className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
-              />
-              <div className="invalid-feedback">{errors.phone?.message}</div>
-            </div>
-          </div>
           <div className="form-row">
             <div className="form-group col">
               <label>Website</label>
@@ -189,7 +222,18 @@ export default function AddressForm(props) {
               <div className="invalid-feedback">{errors.website?.message}</div>
             </div>
           </div>
-
+          <div className="form-row">
+            <div className="form-group col">
+              <label>Phone</label>
+              <input
+                name="phone"
+                type="text"
+                {...register('phone')}
+                className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+              />
+              <div className="invalid-feedback">{errors.phone?.message}</div>
+            </div>
+          </div>
           <div className="form-row">
             <div className="form-group col">
               <label>Skype</label>
@@ -224,7 +268,6 @@ export default function AddressForm(props) {
               <div className="invalid-feedback">{errors.twitter?.message}</div>
             </div>
           </div>
-
           <div className="form-row">
             <div className="form-group col">
               <label>Note</label>
@@ -237,7 +280,6 @@ export default function AddressForm(props) {
               <div className="invalid-feedback">{errors.note?.message}</div>
             </div>
           </div>
-
           <div className="form-row">
             <div className="form-group col">
               <label>Promo</label>
@@ -250,7 +292,6 @@ export default function AddressForm(props) {
               <div className="invalid-feedback">{errors.promo?.message}</div>
             </div>
           </div>
-
           <div className="form-group">
             {showSavedMessage} {showGenError}
             <button

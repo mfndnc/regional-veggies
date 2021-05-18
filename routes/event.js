@@ -1,13 +1,20 @@
 const router = require('express').Router();
 const Event = require('../models/Event');
 
-const { loginCheck } = require('./middlewares');
+const { loginCheck } = require('./midlware/middlewares');
 
 
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 router.get('/user', loginCheck(), (req, res, next) => {
   Event.find({user: req.user})
+    .then((events) => res.status(200).json(events))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
+router.get('/address/:addrid', loginCheck(), (req, res, next) => {
+  console.log('event for address GET', req.params , req.query );
+  Event.find({address: req.params.addrid})
     .then((events) => res.status(200).json(events))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
