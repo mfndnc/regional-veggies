@@ -59,8 +59,10 @@ export default function EventsManage() {
                   <h5 className="card-title">Lorem, ipsum.</h5>
                   <p className="card-text">{ev.note}</p>
                   <p className="card-text">{ev.promo}</p>
-                  {ev.calendar.map((dt) => (
-                    <p className="card-text">{dt}</p>
+                  {ev.calendar.map((dt, k) => (
+                    <p className="card-text" key={`calendar${k}`}>
+                      {dt}
+                    </p>
                   ))}
                 </div>
               </div>
