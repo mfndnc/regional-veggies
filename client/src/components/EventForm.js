@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -10,7 +10,7 @@ export default function EventForm(props) {
   let addressId = props.addressId || addressIdParam || false;
   let eventId = props.eventId || eventIdParam || false;
   const isAddMode = !eventId;
-  //let history = useHistory();
+  let history = useHistory();
 
   const [loading, setLoading] = useState(true);
   const [fullEvent, setFullEvent] = useState({});
@@ -43,10 +43,6 @@ export default function EventForm(props) {
   });
   const validationSchemaNODATE = Yup.object().shape({
     note: Yup.string().required(),
-    calarr: Yup.array()
-      .of(Yup.object().shape(innerSchema))
-      .required('Must have fields')
-      .min(1, 'Minimum of 1 field'),
   });
   const formOptions = {
     defaultValues: {
@@ -104,7 +100,7 @@ export default function EventForm(props) {
       .catch(() => setGenError(true))
       .finally(() => {
         if (props.accordion) {
-          props.onSave('address');
+          props.onSave('event');
           doCloseAccordion();
         } else {
           setTimeout(() => {
@@ -115,7 +111,17 @@ export default function EventForm(props) {
       });
     return false;
   }
-
+  function doDelete() {
+    api.deleteById('event', eventId).then((res) => {
+      console.log('DELETED', eventId, res.data);
+      if (props.accordion) {
+        props.onSave('event');
+        doCloseAccordion();
+      } else {
+        history.push('/eventsmanage');
+      }
+    });
+  }
   useEffect(() => {
     console.log('useEffect EventForm', eventId, addressId);
     if (!isAddMode) {
@@ -197,6 +203,41 @@ export default function EventForm(props) {
       ))}
     </>
   );
+
+  const testbuttons = (
+    <>
+      <Link to={isAddMode ? '.' : '..'} className="btn btn-secondary">
+        Cancel
+      </Link>
+      <Link to="." className="btn btn-secondary">
+        down 1
+      </Link>
+    </>
+  );
+
+  const resetButton = props.accordion ? (
+    <button
+      type="button"
+      onClick={() => doCloseAccordion()}
+      className="btn btn-secondary"
+    >
+      Close
+    </button>
+  ) : (
+    <button type="button" onClick={() => reset()} className="btn btn-secondary">
+      Reset
+    </button>
+  );
+  const deletebutton = !isAddMode && (
+    <button
+      type="button"
+      onClick={() => doDelete()}
+      className="btn btn-secondary mr-1"
+    >
+      Delete
+    </button>
+  );
+
   return (
     <div className={props.accordion ? 'col' : 'card m-3'}>
       {!props.accordion && <h5 className="card-header">Event</h5>}
@@ -240,19 +281,8 @@ export default function EventForm(props) {
               )}
               Save
             </button>
-            <Link to={isAddMode ? '.' : '..'} className="btn btn-secondary">
-              Cancel
-            </Link>
-            <Link to="." className="btn btn-secondary">
-              down 1
-            </Link>
-            <button
-              type="button"
-              onClick={() => doCloseAccordion()}
-              className="btn btn-secondary"
-            >
-              minimise card
-            </button>
+            {deletebutton}
+            {resetButton}
           </div>
         </form>
       </div>

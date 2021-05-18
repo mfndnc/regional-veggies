@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -9,7 +9,7 @@ export default function AddressForm(props) {
   let { addressId: addressIdParam } = useParams();
   let addressId = props.addressId || addressIdParam || false;
   const isAddMode = !addressId;
-  //let history = useHistory();
+  let history = useHistory();
 
   const [loading, setLoading] = useState(true);
   //const [fullAddress, setFullAddress] = useState({});
@@ -64,6 +64,18 @@ export default function AddressForm(props) {
     return false;
   }
 
+  function doDelete() {
+    api.deleteById('address', addressId).then((res) => {
+      console.log('DELETED addressId', addressId, res.data);
+      if (props.accordion) {
+        props.onSave('address');
+        doCloseAccordion();
+      } else {
+        history.push('/profile');
+      }
+    });
+  }
+
   useEffect(() => {
     console.log('useEffect AddressForm', addressId);
     api
@@ -113,6 +125,29 @@ export default function AddressForm(props) {
     <div className="alert alert-danger" role="alert">
       An error occured!!!
     </div>
+  );
+
+  const resetButton = props.accordion ? (
+    <button
+      type="button"
+      onClick={() => doCloseAccordion()}
+      className="btn btn-secondary"
+    >
+      Close
+    </button>
+  ) : (
+    <button type="button" onClick={() => reset()} className="btn btn-secondary">
+      Reset
+    </button>
+  );
+  const deletebutton = !isAddMode && (
+    <button
+      type="button"
+      onClick={() => doDelete()}
+      className="btn btn-secondary mr-1"
+    >
+      Delete
+    </button>
   );
 
   return (
@@ -304,26 +339,8 @@ export default function AddressForm(props) {
               )}
               Save
             </button>
-            <Link to={isAddMode ? '.' : '..'} className="btn btn-secondary">
-              Cancel link
-            </Link>
-            <Link to="." className="btn btn-secondary">
-              down 1
-            </Link>
-            <button
-              type="button"
-              onClick={() => reset()}
-              className="btn btn-secondary"
-            >
-              useform Reset
-            </button>
-            <button
-              type="button"
-              onClick={() => doCloseAccordion()}
-              className="btn btn-secondary"
-            >
-              minimise card
-            </button>
+            {deletebutton}
+            {resetButton}
           </div>
         </form>
       </div>
