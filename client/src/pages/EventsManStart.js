@@ -75,7 +75,7 @@ export default function EventsManStart() {
                   className="btn btn-secondary text-white ml-4"
                   to={`/eventsmanage/${addr._id}`}
                 >
-                  Events
+                  Offers
                 </Link>
               )}
             </div>

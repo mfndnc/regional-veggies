@@ -163,7 +163,7 @@ export default function Explore() {
                             className="btn btn-secondary text-white"
                             to={`/eventsview/${selected._id}`}
                           >
-                            Events
+                            Offers
                           </Link>
                         )}
                       </div>

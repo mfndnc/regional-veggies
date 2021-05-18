@@ -57,7 +57,7 @@ export default function EventsViewStart() {
                   className="btn btn-secondary text-white"
                   to={`/eventsview/${addr._id}`}
                 >
-                  Events
+                  Offers
                 </Link>
               )}
             </div>

@@ -19,7 +19,7 @@ export default function NavbarApp() {
           Explore
         </Nav.Link>
         <Nav.Link as={NavLink} to="/eventsview">
-          Events View
+          Offers View
         </Nav.Link>
         <NavDropdown title="test links" id="basic-nav-dropdown">
           <NavDropdown.Item as={NavLink} to="/test1">
@@ -59,7 +59,7 @@ export default function NavbarApp() {
       </Nav>
       <Nav>
         <Nav.Link as={NavLink} to="/eventsmanage">
-          Events
+          Offers
         </Nav.Link>
         <Nav.Link as={NavLink} to="/profile">
           Profile

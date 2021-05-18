@@ -89,7 +89,7 @@ export default function Profile() {
                   className="btn btn-secondary text-white ml-4"
                   to={`/eventsmanage/${addr._id}`}
                 >
-                  Events
+                  Offers
                 </Link>
               )}
             </div>
