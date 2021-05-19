@@ -27,6 +27,13 @@ export const searchAddresses = (options) => {
   return api.get(fullURL);
 };
 
+export const findDelete = (base, options) => {
+  const optionStr = qs.stringify(options);
+  const fullURL = '/' + base + (options ? ['?', optionStr].join('') : '');
+  console.log(base, options, fullURL);
+  return api.delete(fullURL);
+};
+
 const apis = {
   insert,
   modifyById,
@@ -39,6 +46,7 @@ const apis = {
   getUserAddresses,
   getEventForAddress,
   searchAddresses,
+  findDelete,
 };
 
 export default apis;

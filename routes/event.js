@@ -7,7 +7,7 @@ const { loginCheck } = require('./midlware/middlewares');
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 router.get('/user', loginCheck(), (req, res, next) => {
-  Event.find({user: req.user})
+  Event.find({user: req.user._id})
     .then((events) => res.status(200).json(events))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
@@ -24,7 +24,13 @@ router.get('/address/:addrid', loginCheck(), (req, res, next) => {
 router.post('/', loginCheck(), (req, res, next) => {
 console.log("event POST",req.body);
   const { address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange } = req.body;
-  Event.create({user: req.user,address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange})
+  const savedata = {address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange};
+  if (req.body.user) {
+    savedata.user = req.body.user;
+  } else if (req.body.event) {
+    savedata.user = req.user._id;
+  }
+  Event.create(savedata)
     .then((events) => res.status(201).json(events))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
@@ -50,7 +56,7 @@ router.put('/:id', loginCheck(), (req, res, next) => {
 console.log("event PUT",req.body);
   const { address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange } = req.body;
   Event.findOneAndUpdate(
-    {_id: req.params.id, user: req.user},
+    {_id: req.params.id, user: req.user._id},
     { address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange },
     { new: true }
   )
@@ -63,7 +69,7 @@ console.log("event PATCH",req.body);
 	// to update only one item in 
   const { what,newvalue } = req.body;
   Event.findOneAndUpdate(
-    {_id: req.params.id, user: req.user},
+    {_id: req.params.id, user: req.user._id},
     {[what]: newvalue},
     { new: true }
   )
@@ -72,7 +78,7 @@ console.log("event PATCH",req.body);
 });
 
 router.delete('/:id', loginCheck(), (req, res) => {
-  Event.findOneAndDelete({_id: req.params.id, user: req.user})
+  Event.findOneAndDelete({_id: req.params.id, user: req.user._id})
     .then(() => res.status(200).json({ message: 'event deleted' }))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });

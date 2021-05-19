@@ -10,6 +10,10 @@ module.exports = (app) => {
 
   app.use('/api/misc', require('../routes/misc'));
 
+  app.use('/api/bookmark', require('../routes/bookmark'));
+
+  app.use('/api/chat', require('../routes/chat'));
+
   if (process.env.ENVLOCAL && process.env.ENVLOCAL === 'local') {
     console.log('local app');
     app.get('/', (req, res) => {

@@ -34,8 +34,8 @@ export default function GoogleMapComp(props) {
   const [selected, setSelected] = useState(iniSelected);
 
   const selectMarker = (marker) => {
-    console.log(marker);
-    props.doChildtoParent(marker);
+    console.log('GGGGGGGGG', marker, props.selectedMarker);
+    props.childtoParent(marker);
     setSelected(marker);
   };
 
@@ -54,7 +54,7 @@ export default function GoogleMapComp(props) {
           key={marker._id}
           position={{ lat: marker.geo.lat, lng: marker.geo.lng }}
           onClick={() => {
-            setSelected(marker);
+            selectMarker(marker);
           }}
         />
       ))}

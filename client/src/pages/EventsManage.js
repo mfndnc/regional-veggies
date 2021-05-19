@@ -118,7 +118,7 @@ export default function EventsManage() {
                       aria-controls="collapseEventCard"
                       aria-expanded={openEvent}
                     >
-                      New Event
+                      New Offer
                     </Button>
                   </h5>
                   <div className="card-text">
@@ -140,7 +140,7 @@ export default function EventsManage() {
               <div className="col mb-4">
                 <div className="card h-100">
                   <div className="card-body-wrap h-100 no-image">
-                    <div className="card-header">New Event</div>
+                    <div className="card-header">New Offer</div>
                     <div className="card-body">
                       {openEvent && (
                         <EventForm

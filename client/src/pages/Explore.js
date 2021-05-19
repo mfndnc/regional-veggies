@@ -116,12 +116,12 @@ export default function Explore() {
               </div>
             </div>{' '}
             {selected && (
-              <div className="col mb-4">
+              <div className="col mb-4 order-first order-md-last">
                 <div className="card h-100 text-left">
                   <div className="card-body-wrap h-100 no-image">
                     <div className="card-body">
                       <h4 className="card-title">
-                        {selected.name}
+                        Selected
                         <button
                           type="button"
                           className="close float-right"
@@ -133,6 +133,7 @@ export default function Explore() {
                       </h4>
 
                       <h5 className="card-subtitle mb-2 text-muted">
+                        {selected.name} <br />
                         <FontAwesomeIcon icon={faAddressCard} />
                         <br />
                         {selected.street} {selected.suite}
@@ -180,5 +181,5 @@ export default function Explore() {
 }
 
 // <div className="col" style={containerStyle}></div>
-// <div className="col"><GoogleMap markers={fullAddress} childtoParent={doChildtoParent} selectedMarker={selected} /></div>
+// <div className="col"> <GoogleMap markers={fullAddress} childtoParent={doChildtoParent} selectedMarker={selected} /> </div>
 //<GoogleMap markers={fullAddress} childtoParent={doChildtoParent} selectedMarker={selected} />

@@ -11,41 +11,56 @@ export default function EventsView() {
   const [loading, setLoading] = useState(true);
   const [oneAddress, setOneAddress] = useState({});
   const [fullEvent, setFullEvent] = useState({});
-  const [openEvent, setOpenEvent] = useState(false);
-  const [openEventObj, setOpenEventObj] = useState({});
+  const [bookmarks, setBookmarks] = useState({});
+
+  const [reserveObj, setReserveObj] = useState({});
   const [childTriggeredSave, setChildTriggeredSave] = useState(false);
 
+  const [justSaved, setJustSaved] = useState(false);
+
   useEffect(() => {
-    api.getById('address', addressId).then((res) => {
-      setOneAddress(res.data);
-      api
-        .getAlls(`event/address/${addressId}`)
-        .then((res) => {
-          setFullEvent(res.data);
-          const tmpev = {};
-          res.data.forEach((ev, idx) => {
-            tmpev[`id${idx}`] = false;
-          });
-          setOpenEventObj(tmpev);
-        })
-        .finally(() => setLoading(false));
-    });
+    Promise.all([
+      api.getById('address', addressId),
+      api.getAlls(`event/address/${addressId}`),
+      api.getAlls(`bookmark/user/address/${addressId}`),
+    ])
+      .then(([addr, ev, bookm]) => {
+        console.log(addr, ev, bookm);
+        const tmpev = {};
+        ev.data.forEach((event) => {
+          tmpev[`ev${event._id}`] = false;
+        });
+        bookm.data.forEach((bookmark) => {
+          tmpev[`ev${bookmark.event}`] = true;
+        });
+
+        setReserveObj(tmpev);
+        setOneAddress(addr.data);
+        setFullEvent(ev.data);
+        setBookmarks(bookm.data);
+      })
+      .finally(() => setLoading(false));
   }, [childTriggeredSave]);
 
-  const doCloseAccordionEvent = (args) => {
-    setOpenEventObj((prevSt) => ({
+  const handleReserve = (checked, eventid) => {
+    console.log('handleReserve', checked, eventid);
+    const doSave = checked
+      ? api.insert('bookmark', { event: eventid, address: oneAddress._id })
+      : api.findDelete('bookmark', { event: eventid });
+    doSave.then(() => setJustSaved(true));
+    const evid = `ev${eventid}`;
+    setReserveObj((prevSt) => ({
       ...prevSt,
-      [args]: !prevSt[args],
+      [evid]: !prevSt[evid],
     }));
-  };
-  const afterChildSave = (args) => {
-    setChildTriggeredSave(!childTriggeredSave);
   };
 
   if (loading) return <div>Loading ...</div>;
 
   const eventList = fullEvent.map((ev, idx) => {
     let ddd = `id${idx}`;
+    let evid = `ev${ev._id}`;
+    let isSaved = reserveObj[evid];
     const dateDOMnotworking = ev.calendar.map((dt) => (
       <p className="card-text">{dt}</p>
     ));
@@ -61,9 +76,15 @@ export default function EventsView() {
               <p className="card-text">{ev.note}</p>
               <p className="card-text">{ev.promo}</p>
             </div>
-
             <div className="card-footer">
-              Lorem, ipsum dolor. put here reserve
+              <input
+                type="checkbox"
+                name={`reserve${ev._id}`}
+                id={`reserve${ev._id}`}
+                checked={isSaved}
+                onChange={(e) => handleReserve(e.target.checked, ev._id)}
+              />
+              <label className="ml-1">Bookmark</label>
             </div>
           </div>
         </div>

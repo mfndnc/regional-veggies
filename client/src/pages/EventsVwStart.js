@@ -52,7 +52,7 @@ export default function EventsViewStart() {
             </div>
 
             <div className="card-header">
-              {addr.addrtype.indexOf('user') === -1 && (
+              {addr.addrtype && addr.addrtype.indexOf('user') === -1 && (
                 <Link
                   className="btn btn-secondary text-white"
                   to={`/eventsview/${addr._id}`}

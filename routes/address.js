@@ -75,8 +75,8 @@ router.get('/business', loginCheck(), (req, res, next) => {
 
 router.post('/', loginCheck(), (req, res, next) => {
   console.log('address POST', req.body);
-  const { user,showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
-  Address.create({user: req.user,showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter })
+  const { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
+  Address.create({user: req.user._id,showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter })
     .then((address) => {
       setGeoCode(address);
       return res.status(201).json(address);
@@ -106,7 +106,7 @@ router.put('/:id', loginCheck(), (req, res, next) => {
 console.log("address PUT",req.body);
   const { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
   Address.findOneAndUpdate(
-    {_id: req.params.id, user: req.user},
+    {_id: req.params.id, user: req.user._id},
     { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter }
   )
     .then((address) => {
@@ -129,7 +129,7 @@ console.log("address patch",req.body);
 	// to update only one item in 
   const { what,newvalue } = req.body;
   Address.findOneAndUpdate(
-    {_id: req.params.id, user: req.user},
+    {_id: req.params.id, user: req.user._id},
     {[what]: newvalue},
     { new: true }
   )
@@ -138,7 +138,7 @@ console.log("address patch",req.body);
 });
 
 router.delete('/:id', loginCheck(), (req, res) => {
-  Address.findOneAndDelete({_id: req.params.id, user: req.user})
+  Address.findOneAndDelete({_id: req.params.id, user: req.user._id})
     .then(() => res.status(200).json({ message: 'address deleted' }))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
