@@ -4,6 +4,7 @@ import { Collapse, Button } from 'react-bootstrap';
 import api from '../api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { formatDate, timeConverter } from '../services/functions';
 
 export default function Chat(props) {
   const [message, setMessage] = useState('');
@@ -21,11 +22,12 @@ export default function Chat(props) {
     props &&
     props.messages &&
     props.messages.map((mess, idx) => {
+      const dateshow = mess.time > 0 ? formatDate(mess.time) : '';
       return mess.origin === props.writer ? (
         <div className="outgoing_msg" key={`out${idx}`}>
           <div className="sent_msg">
             <p>{mess.message}</p>
-            <span className="time_date"> 11:01 AM | Today</span>
+            <span className="time_date">{dateshow}</span>
           </div>
         </div>
       ) : (
@@ -33,7 +35,7 @@ export default function Chat(props) {
           <div className="received_msg">
             <div className="received_withd_msg">
               <p>{mess.message}</p>
-              <span className="time_date"> 11:01 AM | Today</span>
+              <span className="time_date">{dateshow}</span>
             </div>
           </div>
         </div>
