@@ -12,6 +12,7 @@ import EventsManStart from './pages/EventsManStart';
 import EventsManage from './pages/EventsManage';
 import EventsVwStart from './pages/EventsVwStart';
 import EventsView from './pages/EventsView';
+import BookMarkView from './pages/BookMarkView';
 
 import AddressForm from './components/AddressForm';
 import ProfileForm from './components/ProfileForm';
@@ -85,6 +86,13 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute exact path="/eventsmanage/:addressId">
           <EventsManage />
+        </ProtectedRoute>
+
+        <ProtectedRoute exact path="/bookmarkview">
+          <BookMarkView />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/bookmarkview/:bookmarkId">
+          <BookMarkView />
         </ProtectedRoute>
 
         <ProtectedRoute exact path="/test1">

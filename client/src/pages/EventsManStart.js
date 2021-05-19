@@ -12,9 +12,21 @@ export default function EventsManStart() {
   const [childTriggeredSave, setChildTriggeredSave] = useState(false);
   useEffect(() => {
     api
-      .getAlls('address/user')
+      .getUserAddresses()
       .then((res) => {
         setFullAddress(res.data);
+        if (res && res.data && res.data.length > 0) {
+          const arrapis = res.data.map((el) =>
+            api.getAlls(`bookmark/address/${el._id}/count`)
+          );
+          Promise.all(arrapis).then((arrres) => {
+            const fullarr = res.data.map((el, idx) => {
+              return { ...el, countclientbookmarks: arrres[idx].data };
+            });
+            setFullAddress(fullarr);
+            console.log(fullarr);
+          });
+        }
       })
       .finally(() => setLoading(false));
   }, [childTriggeredSave]);
@@ -38,7 +50,12 @@ export default function EventsManStart() {
             <Collapse in={!openAddressObj[`id${idx}`]}>
               <div id={`collapseAddressY${idx}`}>
                 <div className="card-header">
-                  Address - {addr.nickname ? addr.nickname : idx + 1}
+                  Address - {addr.nickname ? addr.nickname : idx + 1}{' '}
+                  {addr.countclientbookmarks > 0 && (
+                    <span className="badge badge-info">
+                      {addr.countclientbookmarks}
+                    </span>
+                  )}
                 </div>
                 <div className="card-body">
                   <h5 className="card-title">{addr.city}</h5>

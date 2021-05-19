@@ -26,15 +26,15 @@ export default function EventsView() {
     ])
       .then(([addr, ev, bookm]) => {
         console.log(addr, ev, bookm);
-        const tmpev = {};
+        const tmpdt = {};
         ev.data.forEach((event) => {
-          tmpev[`ev${event._id}`] = false;
+          tmpdt[`ev${event._id}`] = false;
         });
         bookm.data.forEach((bookmark) => {
-          tmpev[`ev${bookmark.event}`] = true;
+          tmpdt[`ev${bookmark.event}`] = true;
         });
 
-        setReserveObj(tmpev);
+        setReserveObj(tmpdt);
         setOneAddress(addr.data);
         setFullEvent(ev.data);
         setBookmarks(bookm.data);

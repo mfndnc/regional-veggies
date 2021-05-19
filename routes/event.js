@@ -19,6 +19,12 @@ router.get('/address/:addrid', loginCheck(), (req, res, next) => {
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
+router.get('/address/:addrid/count', loginCheck(), (req, res, next) => {
+  Event.countDocuments({address: req.params.addrid})
+    .then((count) => res.status(200).json(count))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 router.post('/', loginCheck(), (req, res, next) => {

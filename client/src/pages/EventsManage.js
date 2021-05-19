@@ -16,20 +16,32 @@ export default function EventsManage() {
   const [childTriggeredSave, setChildTriggeredSave] = useState(false);
 
   useEffect(() => {
-    api.getById('address', addressId).then((res) => {
-      setOneAddress(res.data);
-      api
-        .getAlls(`event/address/${addressId}`)
-        .then((res) => {
-          setFullEvent(res.data);
-          const tmpev = {};
-          res.data.forEach((ev, idx) => {
-            tmpev[`id${idx}`] = false;
+    Promise.all([
+      api.getById('address', addressId),
+      api.getEventForAddress(addressId),
+    ])
+      .then(([oneaddr, event]) => {
+        setOneAddress(oneaddr.data);
+        setFullEvent(event.data);
+        if (event && event.data && event.data.length > 0) {
+          const arrapis = event.data.map((el) =>
+            api.getAlls(`bookmark/event/${el._id}/count`)
+          );
+          Promise.all(arrapis).then((arrres) => {
+            const fullarr = event.data.map((el, idx) => {
+              return { ...el, countclientbookmarks: arrres[idx].data };
+            });
+            setFullEvent(fullarr);
+            const tmpdt = {};
+            event.data.forEach((ev, idx) => {
+              tmpdt[`id${idx}`] = false;
+            });
+            setOpenEventObj(tmpdt);
+            console.log('fullarr', fullarr);
           });
-          setOpenEventObj(tmpev);
-        })
-        .finally(() => setLoading(false));
-    });
+        }
+      })
+      .finally(() => setLoading(false));
   }, [childTriggeredSave]);
 
   const doCloseAccordionEvent = (args) => {
@@ -58,7 +70,12 @@ export default function EventsManage() {
             <Collapse in={!openEventObj[`id${idx}`]}>
               <div id={`collapseEventY${idx}`}>
                 <div className="card-header">
-                  Event - {ev.nickname ? ev.nickname : idx + 1}
+                  Event - {ev.nickname ? ev.nickname : idx + 1}{' '}
+                  {ev.countclientbookmarks > 0 && (
+                    <span className="badge badge-info">
+                      {ev.countclientbookmarks}
+                    </span>
+                  )}
                 </div>
                 <div className="card-body">
                   <h5 className="card-title">Lorem, ipsum.</h5>

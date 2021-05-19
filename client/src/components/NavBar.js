@@ -21,6 +21,9 @@ export default function NavbarApp() {
         <Nav.Link as={NavLink} to="/eventsview">
           Offers View
         </Nav.Link>
+        <Nav.Link as={NavLink} to="/bookmarkview">
+          Bookmarked
+        </Nav.Link>
         <NavDropdown title="test links" id="basic-nav-dropdown">
           <NavDropdown.Item as={NavLink} to="/test1">
             f User
@@ -57,6 +60,7 @@ export default function NavbarApp() {
           </NavDropdown.Item>
         </NavDropdown>
       </Nav>
+      <NavDropdown.Divider />
       <Nav>
         <Nav.Link as={NavLink} to="/eventsmanage">
           Offers

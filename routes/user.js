@@ -16,8 +16,6 @@ router.get('/user', loginCheck(), (req, res, next) => {
 });
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
-
-
 router.post('/', loginCheck(), (req, res, next) => {
   // not allowed here
   res.status(400).json({});

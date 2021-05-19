@@ -47,6 +47,12 @@ router.get('/user', loginCheck(), (req, res, next) => {
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
+router.get('/user/count', loginCheck(), (req, res, next) => {
+  Address.countDocuments({user: req.user._id})
+    .then((count) => res.status(200).json(count))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
 router.get('/user/:userid', loginCheck(), (req, res, next) => {
   Address.find({user: req.params.userid})
     .populate('user', ['name', 'email'])
@@ -71,6 +77,7 @@ router.get('/business', loginCheck(), (req, res, next) => {
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
+
 
 
 router.post('/', loginCheck(), (req, res, next) => {

@@ -7,7 +7,15 @@ const { loginCheck } = require('./midlware/middlewares');
 
 router.get('/user', loginCheck(), (req, res, next) => {
   BookMark.find({ user: req.user._id })
+    .populate('address')
+    .populate('event')
     .then((bookmarks) => res.status(200).json(bookmarks))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
+router.get('/user/count', loginCheck(), (req, res, next) => {
+  BookMark.countDocuments({ user: req.user._id })
+    .then((count) => res.status(200).json(count))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
@@ -32,6 +40,31 @@ router.get('/save', loginCheck(), (req, res, next) => {
   } else {
     res.status(400).json({ message: 'Not wnough information' });
   }
+});
+
+
+router.get('/address/:addrid', loginCheck(), (req, res, next) => {
+  BookMark.find({ address: req.params.addrid })
+    .then((bookmarks) => res.status(200).json(bookmarks))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
+router.get('/address/:addrid/count', loginCheck(), (req, res, next) => {
+  BookMark.countDocuments({ address: req.params.addrid })
+    .then((count) => res.status(200).json(count))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
+router.get('/event/:eventid', loginCheck(), (req, res, next) => {
+  BookMark.find({ event: req.params.eventid })
+    .then((bookmarks) => res.status(200).json(bookmarks))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
+router.get('/event/:eventid/count', loginCheck(), (req, res, next) => {
+  BookMark.countDocuments({ event: req.params.eventid })
+    .then((count) => res.status(200).json(count))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
 router.delete('/', loginCheck(), (req, res, next) => {

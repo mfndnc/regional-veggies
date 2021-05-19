@@ -20,11 +20,11 @@ export default function Profile() {
       .getAlls('address/user')
       .then((res) => {
         setFullAddress(res.data);
-        const tmpaddr = {};
+        const tmpdt = {};
         res.data.forEach((addr, idx) => {
-          tmpaddr[`id${idx}`] = false;
+          tmpdt[`id${idx}`] = false;
         });
-        setOpenAddressObj(tmpaddr);
+        setOpenAddressObj(tmpdt);
       })
       .finally(() => setLoading(false));
   }, [authObj, childTriggeredSave]);

@@ -67,7 +67,14 @@ export default function Explore() {
     <div className="container-fluid">
       {''}
       <div className="row">
-        <div className="col" style={containerStyle}></div>
+        <div className="col">
+          {' '}
+          <GoogleMap
+            markers={fullAddress}
+            childtoParent={doChildtoParent}
+            selectedMarker={selected}
+          />{' '}
+        </div>
       </div>{' '}
       <div className="row">
         <div className="colgrid col">
