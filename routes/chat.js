@@ -6,55 +6,40 @@ const { loginCheck } = require('./midlware/middlewares');
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 router.get('/user', loginCheck(), (req, res, next) => {
-  Chat.find({ user: req.user._id })
+  Chat.find({ userclient: req.user._id })
     .then((chats) => res.status(200).json(chats))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
 router.get('/user/address/:addrid', loginCheck(), (req, res, next) => {
-  Chat.find({ user: req.user._id, address: req.params.addrid })
+  Chat.find({ userclient: req.user._id, address: req.params.addrid })
     .then((chats) => res.status(200).json(chats))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
 router.get('/user/event/:eventid', loginCheck(), (req, res, next) => {
-  Chat.findOne({ user: req.user._id, event: req.params.eventid })
+  Chat.findOne({ userclient: req.user._id, event: req.params.eventid })
     .then((chats) => res.status(200).json(chats))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
-router.get('/save', loginCheck(), (req, res, next) => {
-  console.log('sabe chat with url queries GET', req.params, req.query);
-  if (req.query.eventid) {
-    Chat.findOneOrCreate({ user: req.user._id, event: req.query.eventid })
-      .then((chats) => res.status(200).json(chats))
-      .catch((err) => res.status(400).json({ message: 'An error occured' }));
-  } else {
-    res.status(400).json({ message: 'Not wnough information' });
-  }
-});
-
-router.delete('/', loginCheck(), (req, res, next) => {
-  console.log('chat DELETE', req.query);
-  if (req.query.event) {
-    const deletedata = { event: req.query.event, user: req.user._id };
-    Chat.findOneAndDelete(deletedata)
-      .then(() => res.status(200).json({ message: 'chat deleted' }))
-      .catch((err) => res.status(400).json({ message: 'An error occured' }));
-  } else {
-    res.status(400).json({ message: 'Not wnough information' });
-  }
+router.get('/user/bookmark/:bookmarkid', loginCheck(), (req, res, next) => {
+  Chat.findOne({ userclient: req.user._id, bookmark: req.params.bookmarkid })
+    .then((chats) => res.status(200).json(chats))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 router.post('/', loginCheck(), (req, res, next) => {
   console.log('chat POST', req.body);
-  const { TODO } = req.body;
-  const savedata = { TODO };
+  const { message, origin, _id, __v, ...rest } = req.body;
+  const conversation = [{ message, origin, time: Date.now(), read: false }];
+  console.log('chat POST', rest, conversation);
+  const savedata = { ...rest, conversation };
   Chat.findOneOrCreate(savedata)
-  .then((chats) => res.status(200).json(chats))
-  .catch((err) => res.status(400).json({ message: 'An error occured' }));
+    .then((chats) => res.status(200).json(chats))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
 router.get('/', loginCheck(), (req, res, next) => {

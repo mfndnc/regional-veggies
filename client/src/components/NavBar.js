@@ -25,6 +25,9 @@ export default function NavbarApp() {
           Bookmarked
         </Nav.Link>
         <NavDropdown title="test links" id="basic-nav-dropdown">
+          <NavDropdown.Item as={NavLink} to="/testchat">
+            test chat
+          </NavDropdown.Item>
           <NavDropdown.Item as={NavLink} to="/test1">
             f User
           </NavDropdown.Item>

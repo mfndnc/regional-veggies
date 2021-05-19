@@ -13,10 +13,12 @@ import EventsManage from './pages/EventsManage';
 import EventsVwStart from './pages/EventsVwStart';
 import EventsView from './pages/EventsView';
 import BookMarkView from './pages/BookMarkView';
+import ChatClient from './pages/ChatClient';
 
 import AddressForm from './components/AddressForm';
 import ProfileForm from './components/ProfileForm';
 import EventForm from './components/EventForm';
+import ChatTemplate from './aaaaaaaaa/ChatTemplate';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthContext } from './context/auth';
@@ -24,6 +26,7 @@ import { AuthContext } from './context/auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.css';
+import './components/Chat.css';
 
 function App() {
   const { authObj } = useContext(AuthContext);
@@ -92,9 +95,12 @@ function App() {
           <BookMarkView />
         </ProtectedRoute>
         <ProtectedRoute exact path="/bookmarkview/:bookmarkId">
-          <BookMarkView />
+          <ChatClient />
         </ProtectedRoute>
 
+        <ProtectedRoute exact path="/testchat">
+          <ChatTemplate />
+        </ProtectedRoute>
         <ProtectedRoute exact path="/test1">
           <ProfileForm />
         </ProtectedRoute>

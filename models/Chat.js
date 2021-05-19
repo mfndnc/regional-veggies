@@ -14,9 +14,9 @@ const chatSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Address',
     },
-    chat: {
+    event: {
       type: Schema.Types.ObjectId,
-      ref: 'Chat',
+      ref: 'Event',
     },
     bookmark: {
       type: Schema.Types.ObjectId,
@@ -27,7 +27,10 @@ const chatSchema = new Schema(
       default: 'false',
     },
     conversation: [Schema.Types.Mixed],
-    initiatedby: String,
+    initiatedby: {
+      type: String,
+      default: 'client',
+    },
     closed: {
       type: Boolean,
       default: 'false',

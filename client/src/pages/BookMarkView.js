@@ -118,7 +118,14 @@ export default function BookMarkView() {
                 </form>
               </div>
             </div>
-            <div className="card-footer">???</div>
+            <div className="card-footer">
+              <Link
+                className="btn btn-secondary text-white"
+                to={`/bookmarkview/${book._id}`}
+              >
+                Communicate
+              </Link>
+            </div>
           </div>
         </div>
       </div>
