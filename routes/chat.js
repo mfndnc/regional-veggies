@@ -29,6 +29,40 @@ router.get('/user/bookmark/:bookmarkid', loginCheck(), (req, res, next) => {
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
 
+router.get('/address/:addrid', loginCheck(), (req, res, next) => {
+  Chat.find({ userowner: req.user._id, address: req.params.addrid }, null, {
+    sort: { updatedAt: -1 },
+  })
+    .populate('address')
+    .populate('event')
+    .populate('userclient', ['name', 'email', 'phone'])
+    .then((chats) => res.status(200).json(chats))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
+router.get('/event/:eventid', loginCheck(), (req, res, next) => {
+  Chat.find({ userowner: req.user._id, event: req.params.eventid }, null, {
+    sort: { updatedAt: -1 },
+  })
+    .populate('address')
+    .populate('event')
+    .populate('userclient', ['name', 'email', 'phone'])
+    .then((chats) => res.status(200).json(chats))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
+router.get('/address/:addrid/count', loginCheck(), (req, res, next) => {
+  Chat.countDocuments({ userowner: req.user._id, address: req.params.addrid })
+    .then((count) => res.status(200).json(count))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
+router.get('/event/:eventid/count', loginCheck(), (req, res, next) => {
+  Chat.countDocuments({ userowner: req.user._id, event: req.params.eventid })
+    .then((count) => res.status(200).json(count))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 router.post('/', loginCheck(), (req, res, next) => {
@@ -38,6 +72,14 @@ router.post('/', loginCheck(), (req, res, next) => {
   console.log('chat POST', rest, conversation);
   const savedata = { ...rest, conversation };
   Chat.findOneOrCreate(savedata)
+    .then((chats) => res.status(200).json(chats))
+    .catch((err) => res.status(400).json({ message: 'An error occured' }));
+});
+
+router.put('/push/:id', (req, res, next) => {
+  const { message, origin } = req.body;
+  const conversation = [{ message, origin, time: Date.now(), read: false }];
+  Chat.findByIdAndUpdate(req.params.id, { $push: { conversation } })
     .then((chats) => res.status(200).json(chats))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });

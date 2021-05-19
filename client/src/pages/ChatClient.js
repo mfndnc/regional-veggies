@@ -12,7 +12,6 @@ export default function ChatClient() {
   const [messages, setMessages] = useState([]);
   const [chatId, setChatId] = useState(null);
   const [justSaved, setJustSaved] = useState(false);
-
   const [error, setError] = useState(false);
 
   const doChildtoParent = (message) => {
@@ -37,8 +36,12 @@ export default function ChatClient() {
   };
   const getMessageFromFullChat = (getMessageFromFullChat, aaaaaaaaa) => {
     console.log(getMessageFromFullChat, aaaaaaaaa);
-    if (getMessageFromFullChat && getMessageFromFullChat.conversation)
-      setMessages(getMessageFromFullChat.conversation);
+    if (getMessageFromFullChat) {
+      if (getMessageFromFullChat.conversation)
+        setMessages(getMessageFromFullChat.conversation);
+      if (chatId === null && getMessageFromFullChat._id)
+        setChatId(getMessageFromFullChat._id);
+    }
   };
 
   useEffect(() => {

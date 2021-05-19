@@ -9,6 +9,8 @@ import EventForm from '../components/EventForm';
 export default function EventsManage() {
   let { addressId } = useParams();
   const [loading, setLoading] = useState(true);
+  const [hasChat, setHasChat] = useState(false);
+
   const [oneAddress, setOneAddress] = useState({});
   const [fullEvent, setFullEvent] = useState({});
   const [openEvent, setOpenEvent] = useState(false);
@@ -19,17 +21,28 @@ export default function EventsManage() {
     Promise.all([
       api.getById('address', addressId),
       api.getEventForAddress(addressId),
+      api.countAlls(`chat/address/${addressId}`),
     ])
-      .then(([oneaddr, event]) => {
+      .then(([oneaddr, event, chats]) => {
         setOneAddress(oneaddr.data);
         setFullEvent(event.data);
+        if (chats.data > 0) setHasChat(true);
+        console.log('chats', chats.data);
         if (event && event.data && event.data.length > 0) {
-          const arrapis = event.data.map((el) =>
-            api.getAlls(`bookmark/event/${el._id}/count`)
-          );
-          Promise.all(arrapis).then((arrres) => {
+          const apiscount2d = event.data.map((el) => [
+            api.countAlls(`bookmark/event/${el._id}`),
+            api.countAlls(`chat/event/${el._id}`),
+          ]);
+          const apiscount1d = [].concat(...apiscount2d);
+          Promise.all(apiscount1d).then((arrres) => {
+            const arrpair = [];
+            while (arrres.length) arrpair.push(arrres.splice(0, 2));
             const fullarr = event.data.map((el, idx) => {
-              return { ...el, countclientbookmarks: arrres[idx].data };
+              return {
+                ...el,
+                countclientbookmarks: arrpair[idx][0].data,
+                countclientchats: arrpair[idx][1].data,
+              };
             });
             setFullEvent(fullarr);
             const tmpdt = {};
@@ -98,6 +111,14 @@ export default function EventsManage() {
               >
                 {openEventObj[ddd] ? 'Close' : 'Mofidy'}
               </Button>
+              {ev.countclientchats > 0 && (
+                <Link
+                  className="btn btn-secondary text-white ml-4"
+                  to={`/eventsmanage/${oneAddress._id}/${ev._id}`}
+                >
+                  Communicate
+                </Link>
+              )}
             </div>
             <Collapse in={openEventObj[`id${idx}`]}>
               <div id={`collapseEvent${idx}`}>
@@ -137,6 +158,14 @@ export default function EventsManage() {
                     >
                       New Offer
                     </Button>
+                    {hasChat > 0 && (
+                      <Link
+                        className="btn btn-secondary text-white ml-4 btn-sm"
+                        to={`/eventsmanage/${oneAddress._id}/allchats`}
+                      >
+                        Communicate
+                      </Link>
+                    )}
                   </h5>
                   <div className="card-text">
                     <p>

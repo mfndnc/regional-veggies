@@ -14,6 +14,8 @@ import EventsVwStart from './pages/EventsVwStart';
 import EventsView from './pages/EventsView';
 import BookMarkView from './pages/BookMarkView';
 import ChatClient from './pages/ChatClient';
+import ChatOwner from './pages/ChatOwner';
+import ChatOwnerList from './pages/ChatOwnerList';
 
 import AddressForm from './components/AddressForm';
 import ProfileForm from './components/ProfileForm';
@@ -89,6 +91,19 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute exact path="/eventsmanage/:addressId">
           <EventsManage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/eventsmanage/:addressId/allchats">
+          <ChatOwnerList />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/eventsmanage/:addressId/:eventId">
+          <ChatOwnerList />
+        </ProtectedRoute>
+
+        <ProtectedRoute exact path="/eventsmanage/:addressId/allchats/:chatId">
+          <ChatOwner />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/eventsmanage/:addressId/:eventId/:chatId">
+          <ChatOwner />
         </ProtectedRoute>
 
         <ProtectedRoute exact path="/bookmarkview">

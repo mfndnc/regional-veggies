@@ -7,7 +7,6 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 export default function Chat(props) {
   const [message, setMessage] = useState('');
-  console.log('DFSdsf', props);
 
   const handleSubmit = (e) => {
     console.log('handleSubmit', message);
@@ -21,16 +20,16 @@ export default function Chat(props) {
   const messageList =
     props &&
     props.messages &&
-    props.messages.map((mess) => {
+    props.messages.map((mess, idx) => {
       return mess.origin === props.writer ? (
-        <div className="outgoing_msg" key={mess._id}>
+        <div className="outgoing_msg" key={`out${idx}`}>
           <div className="sent_msg">
             <p>{mess.message}</p>
             <span className="time_date"> 11:01 AM | Today</span>
           </div>
         </div>
       ) : (
-        <div className="incoming_msg" key={mess._id}>
+        <div className="incoming_msg" key={`in${idx}`}>
           <div className="received_msg">
             <div className="received_withd_msg">
               <p>{mess.message}</p>
@@ -40,8 +39,6 @@ export default function Chat(props) {
         </div>
       );
     });
-
-  console.log('aaaaaaaaa', messageList);
 
   return (
     <div className="container">

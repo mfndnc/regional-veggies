@@ -17,7 +17,7 @@ export default function EventsManStart() {
         setFullAddress(res.data);
         if (res && res.data && res.data.length > 0) {
           const arrapis = res.data.map((el) =>
-            api.getAlls(`bookmark/address/${el._id}/count`)
+            api.countAlls(`bookmark/address/${el._id}`)
           );
           Promise.all(arrapis).then((arrres) => {
             const fullarr = res.data.map((el, idx) => {
