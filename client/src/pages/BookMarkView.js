@@ -64,73 +64,75 @@ export default function BookMarkView() {
   };
   if (loading) return <div>Loading ...</div>;
 
-  const bookmarkList = bookmarks.map((book, idx) => {
-    const ddd = `book${book._id}`;
-    const comment = commentObj[ddd];
-    const showMessage = saved && messErrTarget === ddd && (
-      <div className="alert alert-success" role="alert">
-        Saved!
-      </div>
-    );
-    const notsaved = error && messErrTarget === ddd && (
-      <div className="alert alert-danger" role="alert">
-        An error occured!!!
-      </div>
-    );
-    return (
-      <div className="col mb-4" key={ddd}>
-        <div className="card h-100">
-          <div className="card-body-wrap h-100 no-image">
-            <div className="card-header">Bookmark</div>
-            <div className="card-body">
-              <h5 className="card-title">{book.address.name}</h5>
-              <div className="card-text">
-                <p>
-                  {book.address.street} {book.address.suite},{' '}
-                  {book.address.zipcode} {book.address.city}
-                </p>
-              </div>
-              <p className="card-text">{book.event.note}</p>
-              <p className="card-text">{book.event.promo}</p>
+  const bookmarkList =
+    bookmarks &&
+    bookmarks.map((book, idx) => {
+      const ddd = `book${book._id}`;
+      const comment = commentObj[ddd];
+      const showMessage = saved && messErrTarget === ddd && (
+        <div className="alert alert-success" role="alert">
+          Saved!
+        </div>
+      );
+      const notsaved = error && messErrTarget === ddd && (
+        <div className="alert alert-danger" role="alert">
+          An error occured!!!
+        </div>
+      );
+      return (
+        <div className="col mb-4" key={ddd}>
+          <div className="card h-100">
+            <div className="card-body-wrap h-100 no-image">
+              <div className="card-header">Bookmark</div>
+              <div className="card-body">
+                <h5 className="card-title">{book.address.name}</h5>
+                <div className="card-text">
+                  <p>
+                    {book.address.street} {book.address.suite},{' '}
+                    {book.address.zipcode} {book.address.city}
+                  </p>
+                </div>
+                <p className="card-text">{book.event.note}</p>
+                <p className="card-text">{book.event.promo}</p>
 
-              <div className="card-text">
-                <form
-                  className="m-1"
-                  id={`form-${ddd}`}
-                  onSubmit={handleSubmit}
-                >
-                  <label>Personal Comment</label>
-                  <textarea
-                    name={ddd}
-                    type="text"
-                    className="form-control"
-                    rows="3"
-                    value={comment}
-                    onChange={handleChange}
-                  ></textarea>
-                  {showMessage} {notsaved}
-                  <button
-                    className="btn btn-secondary mb-2 mt-2 btn-sm"
-                    type="submit"
+                <div className="card-text">
+                  <form
+                    className="m-1"
+                    id={`form-${ddd}`}
+                    onSubmit={handleSubmit}
                   >
-                    Submit
-                  </button>
-                </form>
+                    <label>Personal Comment</label>
+                    <textarea
+                      name={ddd}
+                      type="text"
+                      className="form-control"
+                      rows="3"
+                      value={comment}
+                      onChange={handleChange}
+                    ></textarea>
+                    {showMessage} {notsaved}
+                    <button
+                      className="btn btn-secondary mb-2 mt-2 btn-sm"
+                      type="submit"
+                    >
+                      Submit
+                    </button>
+                  </form>
+                </div>
               </div>
-            </div>
-            <div className="card-footer">
-              <Link
-                className="btn btn-secondary text-white"
-                to={`/bookmarkview/${book._id}`}
-              >
-                Communicate
-              </Link>
+              <div className="card-footer">
+                <Link
+                  className="btn btn-secondary text-white"
+                  to={`/bookmarkview/${book._id}`}
+                >
+                  Communicate
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
-  });
+      );
+    });
 
   return (
     <div>

@@ -31,7 +31,7 @@
   color: #747474;
   display: block;
   font-size: 12px;
-  margin: 8px 0 0;
+  margin: 4px 0 0;
 }
 .received_withd_msg {
   width: 70%;
@@ -49,9 +49,11 @@
   padding: 5px 10px 5px 12px;
   width: 100%;
 }
+.outer_msg {
+  margin: 15px 0 5px;
+}
 .outgoing_msg {
   overflow: hidden;
-  margin: 26px 0 26px;
 }
 .sent_msg {
   float: right;
@@ -62,7 +64,7 @@
 }
 .input_msg_write input {
   box-shadow: inset 0px 0px 0px 0px;
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+  /*background: rgba(0, 0, 0, 0) none repeat scroll 0 0;*/
   border: medium none;
   color: #4c4c4c;
   font-size: 15px;
@@ -88,7 +90,7 @@
   font-size: 17px;
   height: 33px;
   position: absolute;
-  right: 0;
+  right: 9px;
   top: 11px;
   width: 33px;
 }

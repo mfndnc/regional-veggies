@@ -7,6 +7,7 @@ import Chat from '../components/Chat';
 export default function ChatClient() {
   let { bookmarkId } = useParams();
   const [loading, setLoading] = useState(true);
+  const [chatObj, setChatObj] = useState({});
   const [address, setAddress] = useState({});
   const [bookmarkOrig, setBookmarkOrig] = useState({});
   const [messages, setMessages] = useState([]);
@@ -34,13 +35,11 @@ export default function ChatClient() {
       setJustSaved(message);
     });
   };
-  const getMessageFromFullChat = (getMessageFromFullChat, aaaaaaaaa) => {
-    console.log(getMessageFromFullChat, aaaaaaaaa);
-    if (getMessageFromFullChat) {
-      if (getMessageFromFullChat.conversation)
-        setMessages(getMessageFromFullChat.conversation);
-      if (chatId === null && getMessageFromFullChat._id)
-        setChatId(getMessageFromFullChat._id);
+  const saveFullChat = (fullChat) => {
+    if (fullChat) {
+      setChatObj(fullChat);
+      if (fullChat.conversation) setMessages(fullChat.conversation);
+      if (chatId === null && fullChat._id) setChatId(fullChat._id);
     }
   };
 
@@ -55,20 +54,57 @@ export default function ChatClient() {
             setAddress(res.data);
             api
               .getAlls(`chat/user/bookmark/${bookmarkId}`)
-              .then((res) => getMessageFromFullChat(res.data, 'nochatis'));
+              .then((res) => saveFullChat(res.data, 'nochatis'));
           });
         })
         .finally(() => setLoading(false));
     } else {
       api
         .getById('chat', chatId)
-        .then((res) => getMessageFromFullChat(res.data, 'withchatid'));
+        .then((res) => saveFullChat(res.data, 'withchatid'));
     }
   }, [chatId, bookmarkId, justSaved]);
 
   if (loading) return <div>Loading ...</div>;
 
   return (
-    <Chat messages={messages} childtoParent={doChildtoParent} writer="client" />
+    <div className="container">
+      <div className="row">
+        <div className="colgrid col">
+          <div className="card-group modern row row-cols-1 row-cols-md-1">
+            <div className="col mb-4">
+              <div className="card classic h-100 text-left">
+                <div className="card-body">
+                  <h5 className="card-subtitle mb-2 text-muted">
+                    {address.name && `chatting with ${address.name}`} {'  '}
+                    <Button
+                      variant="info"
+                      size="sm"
+                      onClick={() => setJustSaved(Math.random())}
+                    >
+                      Refresh
+                    </Button>{' '}
+                    {'  '}
+                    <Link to="." className="btn btn-info btn-sm text-white ">
+                      Back
+                    </Link>
+                  </h5>
+                  <div className="card-text">
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>{' '}
+      <Chat
+        messages={messages}
+        childtoParent={doChildtoParent}
+        writer="client"
+      />
+    </div>
   );
 }

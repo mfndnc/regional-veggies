@@ -92,6 +92,9 @@ router.get('/', loginCheck(), (req, res, next) => {
 
 router.get('/:id', loginCheck(), (req, res, next) => {
   Chat.findById(req.params.id)
+    .populate('address')
+    .populate('event')
+    .populate('userclient', ['name', 'email', 'phone'])
     .then((chat) => {
       if (!chat) {
         return res.status(400).json(chat);
