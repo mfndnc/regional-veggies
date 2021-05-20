@@ -49,15 +49,17 @@ export default function GoogleMapComp(props) {
       zoom={15}
       options={options}
     >
-      {props.markers.map((marker) => (
-        <Marker
-          key={marker._id}
-          position={{ lat: marker.geo.lat, lng: marker.geo.lng }}
-          onClick={() => {
-            selectMarker(marker);
-          }}
-        />
-      ))}
+      {props.markers.map((marker) => {
+        marker.geo && marker.geo.lat && marker.geo.lng && (
+          <Marker
+            key={marker._id}
+            position={{ lat: marker.geo.lat, lng: marker.geo.lng }}
+            onClick={() => {
+              selectMarker(marker);
+            }}
+          />
+        );
+      })}
 
       {selected ? (
         <InfoWindow

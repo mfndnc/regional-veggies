@@ -51,7 +51,11 @@ export default function Explore() {
   }, [selected, loading]);
 
   const handleChange = (e) => setQuery(e.target.value);
-
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
   const handleSubmit = (e) => {
     const objquery = { bar: 'foo' };
     if (query) {
@@ -112,6 +116,7 @@ export default function Explore() {
                           placeholder="Search"
                           aria-label="Search"
                           onChange={handleChange}
+                          onKeyPress={handleKeyPress}
                         />
                         <InputGroup.Append>
                           <Button

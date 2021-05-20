@@ -25,8 +25,12 @@ export default function EventsViewStart() {
   }, [childTriggeredSave, loading]);
 
   const handleChange = (e) => setQuery(e.target.value);
-
-  const handleSubmit = (e) => {
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+  const handleSubmit = () => {
     const objquery = { bar: 'foo' };
     if (query) {
       objquery.query = query;
@@ -106,6 +110,7 @@ export default function EventsViewStart() {
                         placeholder="Search"
                         aria-label="Search"
                         onChange={handleChange}
+                        onKeyPress={handleKeyPress}
                       />
                       <InputGroup.Append>
                         <Button
