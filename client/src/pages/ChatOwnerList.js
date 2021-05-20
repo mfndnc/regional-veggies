@@ -52,10 +52,10 @@ export default function ChatOwner() {
           <div className="card h-100">
             <div className="card-body-wrap h-100 no-image">
               <div className="card-header">
-                {chat.userclient.name}{' '}
-                <Link className="btn btn-secondary text-white ml-4" to={linkTo}>
-                  Contact
-                </Link>
+                <Link className="btn btn-secondary text-white mr-4" to={linkTo}>
+                  Incoming Request
+                </Link>{' '}
+                from {chat.userclient.name}
               </div>
               <div className="card-body">
                 <h5 className="card-title">

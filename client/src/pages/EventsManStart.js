@@ -52,7 +52,7 @@ export default function EventsManStart() {
                 <div className="card-header">
                   Address - {addr.nickname ? addr.nickname : idx + 1}{' '}
                   {addr.countclientbookmarks > 0 && (
-                    <span className="badge badge-info">
+                    <span className="badge badge-success">
                       {addr.countclientbookmarks}
                     </span>
                   )}
@@ -138,9 +138,12 @@ export default function EventsManStart() {
                   </h5>
                   <div className="card-text">
                     <p>
-                      Offers can be bookmarked by your potential clients. Only
+                      Offers can be bookmarked by your potential clients and
+                      will appear like this:
+                      <span className="badge badge-success">1</span>. Only
                       addresses that you specified as available for offering
-                      will be included
+                      will be included. Clients can also contact you via our
+                      services.
                     </p>
                   </div>
                 </div>

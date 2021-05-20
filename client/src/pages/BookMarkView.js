@@ -117,7 +117,7 @@ export default function BookMarkView() {
                       type="submit"
                       className="mb-2 mt-2"
                     >
-                      Submit
+                      Save
                     </Button>
                   </form>
                 </div>
@@ -149,9 +149,9 @@ export default function BookMarkView() {
                   </h5>
                   <div className="card-text">
                     <p>
-                      The "Personal Comment" is only visible to you.
-                      "Contact" allows you to contact the owner with a one
-                      to one environment
+                      The "Personal Comment" is only visible to you. "Contact"
+                      allows you to contact the owner with a one to one
+                      environment
                     </p>
                   </div>
                 </div>

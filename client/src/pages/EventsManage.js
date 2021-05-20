@@ -83,7 +83,7 @@ export default function EventsManage() {
                 <div className="card-header">
                   Offer - {ev.nickname ? ev.nickname : idx + 1}{' '}
                   {ev.countclientbookmarks > 0 && (
-                    <span className="badge badge-info">
+                    <span className="badge badge-success">
                       {ev.countclientbookmarks}
                     </span>
                   )}
@@ -113,7 +113,7 @@ export default function EventsManage() {
                   className="btn btn-secondary text-white ml-4"
                   to={`/eventsmanage/${oneAddress._id}/${ev._id}`}
                 >
-                  Contact
+                  Incoming Request
                 </Link>
               )}
             </div>
@@ -146,34 +146,44 @@ export default function EventsManage() {
                 <div className="card-body">
                   <h5 className="card-subtitle mb-2 text-muted">
                     {oneAddress.name}{' '}
-                    <Button
-                      variant="info"
-                      size="sm"
-                      onClick={() => setOpenEvent(!openEvent)}
-                      aria-controls="collapseEventCard"
-                      aria-expanded={openEvent}
-                    >
-                      New Offer
-                    </Button>
-                    <Link
-                      className="btn btn-secondary text-white ml-2 btn-sm"
-                      to="."
-                    >
-                      Back
-                    </Link>
-                    {hasChat > 0 && (
-                      <Link
-                        className="btn btn-secondary text-white ml-4 btn-sm"
-                        to={`/eventsmanage/${oneAddress._id}/allchats`}
-                      >
-                        Contact
-                      </Link>
-                    )}
                   </h5>
                   <div className="card-text">
                     <p>
                       {oneAddress.street} {oneAddress.suite},
                       {oneAddress.zipcode} {oneAddress.city}
+                    </p>
+                    <p>
+                      <Button
+                        variant="info"
+                        size="sm"
+                        onClick={() => setOpenEvent(!openEvent)}
+                        aria-controls="collapseEventCard"
+                        aria-expanded={openEvent}
+                      >
+                        New Offer
+                      </Button>
+                      <Link
+                        className="btn btn-secondary text-white ml-2 btn-sm"
+                        to="."
+                      >
+                        Back
+                      </Link>
+
+                      {hasChat > 0 && (
+                        <>
+                          <Link
+                            className="btn btn-secondary text-white ml-2 btn-sm"
+                            to={`/eventsmanage/${oneAddress._id}/allchats`}
+                          >
+                            Incoming Request
+                          </Link>
+                          <p>
+                            You have been contacted by a client. Please click on
+                            "Incoming Request" to answer. Either above or for
+                            every offer specifically
+                          </p>
+                        </>
+                      )}
                     </p>
                   </div>
                 </div>
