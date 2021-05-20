@@ -248,7 +248,7 @@ export default function ProfileForm(props) {
 
           <div className="form-row">
             <div className="form-group col">
-              <label>Products offered</label>
+              <label>Note</label>
               <input
                 name="note"
                 type="text"
