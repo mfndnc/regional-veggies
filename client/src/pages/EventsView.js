@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../api';
+import CardAddress from '../components/CardAddress';
 
 export default function EventsView() {
   let { addressId } = useParams();
@@ -65,7 +66,7 @@ export default function EventsView() {
         <div className="card h-100">
           <div className="card-body-wrap h-100 no-image">
             <div className="card-header">
-              Event - {ev.nickname ? ev.nickname : idx + 1}
+              Offer - {ev.nickname ? ev.nickname : idx + 1}
             </div>
             <div className="card-body">
               <h5 className="card-title">{ev.note}</h5>
@@ -91,23 +92,7 @@ export default function EventsView() {
     <div className="container">
       <div className="row">
         <div className="colgrid col">
-          <div className="card-group modern row row-cols-1 row-cols-md-1">
-            <div className="col mb-4">
-              <div className="card classic h-100 text-left">
-                <div className="card-body">
-                  <h5 className="card-subtitle mb-2 text-muted">
-                    {oneAddress.name}{' '}
-                  </h5>
-                  <div className="card-text">
-                    <p>
-                      {oneAddress.street} {oneAddress.suite},
-                      {oneAddress.zipcode} {oneAddress.city}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <CardAddress address={oneAddress} />
         </div>
       </div>
 

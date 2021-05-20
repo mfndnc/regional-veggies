@@ -22,6 +22,8 @@ const center = {
   lng: 9.73201,
 };
 
+let zoommap = 9;
+
 export default function GoogleMapComp(props) {
   const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
@@ -46,19 +48,23 @@ export default function GoogleMapComp(props) {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={15}
+      zoom={zoommap}
       options={options}
     >
       {props.markers.map((marker) => {
-        marker.geo && marker.geo.lat && marker.geo.lng && (
-          <Marker
-            key={marker._id}
-            position={{ lat: marker.geo.lat, lng: marker.geo.lng }}
-            onClick={() => {
-              selectMarker(marker);
-            }}
-          />
-        );
+        if (marker.geo && marker.geo.lat && marker.geo.lng) {
+          return (
+            <Marker
+              key={marker._id}
+              position={{ lat: marker.geo.lat, lng: marker.geo.lng }}
+              onClick={() => {
+                selectMarker(marker);
+              }}
+            />
+          );
+        } else {
+          return '';
+        }
       })}
 
       {selected ? (
@@ -70,7 +76,6 @@ export default function GoogleMapComp(props) {
         >
           <div>
             <p>{selected.name}</p>
-            <p>{selected.note}</p>
           </div>
         </InfoWindow>
       ) : null}

@@ -36,7 +36,8 @@ export default function ProfileForm(props) {
   };
 
   function onSubmit(data) {
-    const formdata = { ...data, imagefile };
+    //const formdata = { ...data, imagefile };
+    const formdata = data;
     api
       .modifyUser(formdata)
       .then(() => setJustSaved(true))
@@ -69,6 +70,21 @@ export default function ProfileForm(props) {
         });
       });
   };
+
+  const fileuploadblock = (
+    <div className="form-row">
+      <div className="form-group col">
+        <label>Picture</label>
+        <input
+          onChange={handleFileUpload}
+          name="imagefile"
+          type="file"
+          className="form-control"
+        />
+        <div className="invalid-feedback">{errors.imagefile?.message}</div>
+      </div>
+    </div>
+  );
 
   useEffect(() => {
     api.getUser().then((res) => {
@@ -240,21 +256,6 @@ export default function ProfileForm(props) {
                 className={`form-control ${errors.note ? 'is-invalid' : ''}`}
               />
               <div className="invalid-feedback">{errors.note?.message}</div>
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group col">
-              <label>Picture</label>
-              <input
-                onChange={handleFileUpload}
-                name="imagefile"
-                type="file"
-                className="form-control"
-              />
-              <div className="invalid-feedback">
-                {errors.imagefile?.message}
-              </div>
             </div>
           </div>
 

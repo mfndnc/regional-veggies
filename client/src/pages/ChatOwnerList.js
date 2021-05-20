@@ -54,7 +54,7 @@ export default function ChatOwner() {
               <div className="card-header">
                 {chat.userclient.name}{' '}
                 <Link className="btn btn-secondary text-white ml-4" to={linkTo}>
-                  Communicate
+                  Contact
                 </Link>
               </div>
               <div className="card-body">

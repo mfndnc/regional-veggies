@@ -28,7 +28,7 @@ export const countEventForAddress = (id) =>
   api.get(`/event/address/${id}/count`);
 
 export const searchAddresses = (options) => {
-  const URL = '/address/business';
+  const URL = options && options.query ? '/misc/search' : '/address/business';
   const optionStr = qs.stringify(options);
   const fullURL = URL + (options ? ['?', optionStr].join('') : '');
   return api.get(fullURL);

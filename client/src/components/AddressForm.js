@@ -48,7 +48,8 @@ export default function AddressForm(props) {
   };
 
   function onSubmit(data) {
-    const formdata = { ...data, imagefile };
+    //const formdata = { ...data, imagefile };
+    const formdata = data;
     //console.log('onSubmit AddressForm', formdata, addressId);
     const doSave = isAddMode
       ? api.insert('address', formdata)
@@ -96,6 +97,21 @@ export default function AddressForm(props) {
         });
       });
   };
+
+  const fileuploadblock = (
+    <div className="form-row">
+      <div className="form-group col">
+        <label>Picture</label>
+        <input
+          onChange={handleFileUpload}
+          name="imagefile"
+          type="file"
+          className="form-control"
+        />
+        <div className="invalid-feedback">{errors.imagefile?.message}</div>
+      </div>
+    </div>
+  );
 
   useEffect(() => {
     //console.log('useEffect AddressForm', addressId);
@@ -341,20 +357,6 @@ export default function AddressForm(props) {
                 className={`form-control ${errors.promo ? 'is-invalid' : ''}`}
               />
               <div className="invalid-feedback">{errors.promo?.message}</div>
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-group col">
-              <label>Picture</label>
-              <input
-                onChange={handleFileUpload}
-                name="imagefile"
-                type="file"
-                className="form-control"
-              />
-              <div className="invalid-feedback">
-                {errors.imagefile?.message}
-              </div>
             </div>
           </div>
           <div className="form-group">

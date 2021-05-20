@@ -28,6 +28,7 @@ const eventSchema = new Schema(
   }
 );
 
+eventSchema.index({ '$**': 'text' });
 
 eventSchema.static(
   'findOneOrCreate',

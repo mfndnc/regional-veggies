@@ -81,7 +81,7 @@ export default function EventsManage() {
             <Collapse in={!openEventObj[`id${idx}`]}>
               <div id={`collapseEventY${idx}`}>
                 <div className="card-header">
-                  Event - {ev.nickname ? ev.nickname : idx + 1}{' '}
+                  Offer - {ev.nickname ? ev.nickname : idx + 1}{' '}
                   {ev.countclientbookmarks > 0 && (
                     <span className="badge badge-info">
                       {ev.countclientbookmarks}
@@ -113,7 +113,7 @@ export default function EventsManage() {
                   className="btn btn-secondary text-white ml-4"
                   to={`/eventsmanage/${oneAddress._id}/${ev._id}`}
                 >
-                  Communicate
+                  Contact
                 </Link>
               )}
             </div>
@@ -155,12 +155,18 @@ export default function EventsManage() {
                     >
                       New Offer
                     </Button>
+                    <Link
+                      className="btn btn-secondary text-white ml-2 btn-sm"
+                      to="."
+                    >
+                      Back
+                    </Link>
                     {hasChat > 0 && (
                       <Link
                         className="btn btn-secondary text-white ml-4 btn-sm"
                         to={`/eventsmanage/${oneAddress._id}/allchats`}
                       >
-                        Communicate
+                        Contact
                       </Link>
                     )}
                   </h5>

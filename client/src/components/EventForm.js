@@ -156,7 +156,7 @@ export default function EventForm(props) {
   const dateDOMnotworking = (
     <>
       <div className="form-row mb-2 mt-2">
-        <div className="col-sm-10">Calendar Event</div>
+        <div className="col-sm-10">Calendar Offer</div>
         <div className="col-sm-2 pl-4">
           <button
             type="button"
@@ -238,7 +238,7 @@ export default function EventForm(props) {
 
   return (
     <div className={props.accordion ? 'col' : 'card m-3'}>
-      {!props.accordion && <h5 className="card-header">Event</h5>}
+      {!props.accordion && <h5 className="card-header">Offer</h5>}
       <div className="card-body">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-row">

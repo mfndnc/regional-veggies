@@ -127,7 +127,7 @@ export default function BookMarkView() {
                   className="btn btn-secondary text-white"
                   to={`/bookmarkview/${book._id}`}
                 >
-                  Communicate
+                  Contact
                 </Link>
               </div>
             </div>
@@ -150,7 +150,7 @@ export default function BookMarkView() {
                   <div className="card-text">
                     <p>
                       The "Personal Comment" is only visible to you.
-                      "Communicate" allows you to contact the owner with a one
+                      "Contact" allows you to contact the owner with a one
                       to one environment
                     </p>
                   </div>

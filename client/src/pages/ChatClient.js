@@ -80,7 +80,7 @@ export default function ChatClient() {
               <div className="card classic h-100 text-left">
                 <div className="card-body">
                   <h5 className="card-subtitle mb-2 text-muted">
-                    {address.name && `chatting with ${address.name}`} {'  '}
+                    {address.name && `Chatting with ${address.name}`} {'  '}
                     <Button
                       variant="info"
                       size="sm"

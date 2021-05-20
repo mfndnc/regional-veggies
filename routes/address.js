@@ -76,7 +76,7 @@ router.get('/business', loginCheck(), (req, res, next) => {
   if (req.query.query) {
     fullquery.$and[2] = { $text: { $search: req.query.query } };
   }
-  Address.find(fullquery)
+  Address.find(fullquery).sort('name')
     .then((address) => res.status(200).json(address))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });

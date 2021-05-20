@@ -51,7 +51,7 @@ export default function ChatOwner() {
                   <h5 className="card-subtitle mb-2 text-muted">
                     {chatObj.userclient &&
                       chatObj.userclient.name &&
-                      `chatting with ${chatObj.userclient.name}`}{' '}
+                      `Chatting with ${chatObj.userclient.name}`}{' '}
                     {'  '}
                     <Button
                       variant="info"

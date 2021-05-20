@@ -131,17 +131,6 @@ export default function Profile() {
                         <p className="card-text">
                           {authObj.email} {authObj.phone} ...
                         </p>
-                        {!openAddress && (
-                          <Button
-                            variant="info"
-                            size="sm"
-                            onClick={() => setOpenAddress(!openAddress)}
-                            aria-controls="collapseAddressCard"
-                            aria-expanded={openAddress}
-                          >
-                            New Address
-                          </Button>
-                        )}
                       </div>
                     </div>
                   </Collapse>
@@ -173,6 +162,38 @@ export default function Profile() {
         </div>
       </div>
 
+      <div className="row">
+        <div className="colgrid col">
+          <div className="card-group modern row row-cols-1 row-cols-md-2">
+            {addressAccordion}
+          </div>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="colgrid col">
+          <div className="card-group modern row row-cols-1 row-cols-md-1">
+            <div className="col mb-4">
+              <div className="card h-100">
+                <div className="card-body-wrap h-100 no-image">
+                  {!openAddress && (
+                    <Button
+                      variant="info"
+                      size="sm"
+                      onClick={() => setOpenAddress(!openAddress)}
+                      aria-controls="collapseAddressCard"
+                      aria-expanded={openAddress}
+                    >
+                      New Address
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Collapse in={openAddress}>
         <div id="collapseAddressCard" className="row">
           <div className="colgrid col">
@@ -197,14 +218,6 @@ export default function Profile() {
           </div>
         </div>
       </Collapse>
-
-      <div className="row">
-        <div className="colgrid col">
-          <div className="card-group modern row row-cols-1 row-cols-md-2">
-            {addressAccordion}
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
