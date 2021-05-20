@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Collapse, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import api from '../api';
 import GoogleMap from '../components/GoogleMap';
 

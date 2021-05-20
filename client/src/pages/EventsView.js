@@ -1,10 +1,6 @@
-import { useState, useEffect, useContext } from 'react';
-import { useParams, useHistory, Link } from 'react-router-dom';
-import { Collapse, Button } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import api from '../api';
-import auth from '../api/auth';
-import { AuthContext } from '../context/auth';
-import EventForm from '../components/EventForm';
 
 export default function EventsView() {
   let { addressId } = useParams();

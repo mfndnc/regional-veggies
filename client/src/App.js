@@ -17,11 +17,6 @@ import ChatClient from './pages/ChatClient';
 import ChatOwner from './pages/ChatOwner';
 import ChatOwnerList from './pages/ChatOwnerList';
 
-import AddressForm from './components/AddressForm';
-import ProfileForm from './components/ProfileForm';
-import EventForm from './components/EventForm';
-import ChatTemplate from './aaaaaaaaa/ChatTemplate';
-
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthContext } from './context/auth';
 
@@ -111,25 +106,6 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute exact path="/bookmarkview/:bookmarkId">
           <ChatClient />
-        </ProtectedRoute>
-
-        <ProtectedRoute exact path="/testchat">
-          <ChatTemplate />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/test1">
-          <ProfileForm />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/test2">
-          <AddressForm />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/test2/:addressId">
-          <AddressForm />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/test2/:addressId/event">
-          <EventForm />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/test3/:eventId">
-          <EventForm />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>

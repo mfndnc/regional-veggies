@@ -1,24 +1,13 @@
-import { useState, useEffect, useContext } from 'react';
-import { useParams, useHistory, Link } from 'react-router-dom';
-import { Collapse, Button } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import api from '../api';
-import Chat from '../components/Chat';
 
 export default function ChatOwner() {
   let { addressId, eventId } = useParams();
   const [loading, setLoading] = useState(true);
-  const [address, setAddress] = useState({});
-  const [bookmarkOrig, setBookmarkOrig] = useState({});
-  const [messages, setMessages] = useState([]);
   const [chats, setChats] = useState([]);
-  const [chatId, setChatId] = useState(null);
-  const [justSaved, setJustSaved] = useState(false);
-  const [error, setError] = useState(false);
-
-  const doChildtoParent = (arg) => {};
 
   useEffect(() => {
-    //console.log(addressId, eventId);
     const doApi =
       eventId === undefined
         ? api.getAlls(`chat/address/${addressId}`)

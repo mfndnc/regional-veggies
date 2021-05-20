@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useParams, useHistory, Link } from 'react-router-dom';
-import { Collapse, Button } from 'react-bootstrap';
+import { useParams, Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import api from '../api';
 import Chat from '../components/Chat';
 

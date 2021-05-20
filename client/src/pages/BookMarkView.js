@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
-import { useParams, useHistory, Link } from 'react-router-dom';
-import { Collapse, Button } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import api from '../api';
 
 export default function BookMarkView() {
   const [loading, setLoading] = useState(true);
-  const [bookmarks, setBookmarks] = useState({});
+  const [bookmarks, setBookmarks] = useState([]);
   const [commentObj, setCommentObj] = useState({});
   const [messErrTarget, setMessErrTarget] = useState('');
   const [saved, setSaved] = useState(false);
@@ -111,12 +111,14 @@ export default function BookMarkView() {
                       onChange={handleChange}
                     ></textarea>
                     {showMessage} {notsaved}
-                    <button
-                      className="btn btn-secondary mb-2 mt-2 btn-sm"
+                    <Button
+                      variant="secondary"
+                      size="sm"
                       type="submit"
+                      className="mb-2 mt-2"
                     >
                       Submit
-                    </button>
+                    </Button>
                   </form>
                 </div>
               </div>

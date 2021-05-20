@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -126,26 +127,18 @@ export default function AddressForm(props) {
   );
 
   const resetButton = props.accordion ? (
-    <button
-      type="button"
-      onClick={() => doCloseAccordion()}
-      className="btn btn-secondary"
-    >
+    <Button variant="secondary" onClick={() => doCloseAccordion()}>
       Close
-    </button>
+    </Button>
   ) : (
-    <button type="button" onClick={() => reset()} className="btn btn-secondary">
+    <Button variant="secondary" onClick={() => reset()}>
       Reset
-    </button>
+    </Button>
   );
   const deletebutton = !isAddMode && (
-    <button
-      type="button"
-      onClick={() => doDelete()}
-      className="btn btn-secondary mr-1"
-    >
+    <Button variant="secondary" onClick={() => doDelete()} className="mr-1">
       Delete
-    </button>
+    </Button>
   );
 
   return (
