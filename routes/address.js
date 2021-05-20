@@ -61,7 +61,7 @@ router.get('/user/:userid', loginCheck(), (req, res, next) => {
 });
 
 router.get('/business', loginCheck(), (req, res, next) => {
-  console.log('address business GET', req.query);
+  //console.log('address business GET', req.query);
   const fullquery = {
     $and: [
       {
