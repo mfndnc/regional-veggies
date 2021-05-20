@@ -10,7 +10,7 @@ export default function HomePage() {
               <div className="card h-100 text-left">
                 <div className="card-img-top">
                   <img
-                    src="https://res.cloudinary.com/mfnpers/image/upload/c_thumb,e_improve,g_auto,h_300,w_600/v1621233368/samples/food/fish-vegetables.jpg"
+                    src="https://res.cloudinary.com/mfnpers/image/upload/c_scale,w_600/v1621521612/regional-veggies/438285_tprl8r.jpg"
                     alt="aa"
                   />
                 </div>
