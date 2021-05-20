@@ -145,15 +145,13 @@ export default function BookMarkView() {
               <div className="card classic h-100 text-left">
                 <div className="card-body">
                   <h5 className="card-subtitle mb-2 text-muted">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quas, perspiciatis.
+                    Here you view the items you have bookmarked
                   </h5>
                   <div className="card-text">
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Error, repellat id at natus dolorum aliquam quae vitae.
-                      Quam, nihil labore nemo, ex ipsum delectus a illo,
-                      doloribus eaque repellat nobis!
+                      The "Personal Comment" is only visible to you.
+                      "Communicate" allows you to contact the owner with a one
+                      to one environment
                     </p>
                   </div>
                 </div>

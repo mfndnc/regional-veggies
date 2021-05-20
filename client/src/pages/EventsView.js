@@ -68,8 +68,7 @@ export default function EventsView() {
               Event - {ev.nickname ? ev.nickname : idx + 1}
             </div>
             <div className="card-body">
-              <h5 className="card-title">Lorem, ipsum.</h5>
-              <p className="card-text">{ev.note}</p>
+              <h5 className="card-title">{ev.note}</h5>
               <p className="card-text">{ev.promo}</p>
             </div>
             <div className="card-footer">

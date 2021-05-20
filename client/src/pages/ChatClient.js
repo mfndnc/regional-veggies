@@ -95,7 +95,8 @@ export default function ChatClient() {
                   </h5>
                   <div className="card-text">
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Just type your request and wait for the owner to answer
+                      you.
                     </p>
                   </div>
                 </div>

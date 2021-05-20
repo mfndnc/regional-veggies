@@ -125,8 +125,7 @@ export default function EventsManStart() {
               <div className="card classic h-100 text-left">
                 <div className="card-body">
                   <h5 className="card-subtitle mb-2 text-muted">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quas, perspiciatis.
+                    Promote your products / Inform your availability{'  '}
                     <Button
                       variant="info"
                       size="sm"
@@ -139,10 +138,9 @@ export default function EventsManStart() {
                   </h5>
                   <div className="card-text">
                     <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Error, repellat id at natus dolorum aliquam quae vitae.
-                      Quam, nihil labore nemo, ex ipsum delectus a illo,
-                      doloribus eaque repellat nobis!
+                      Offers can be bookmarked by your potential clients. Only
+                      addresses that you specified as available for offering
+                      will be included
                     </p>
                   </div>
                 </div>
