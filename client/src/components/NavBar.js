@@ -9,6 +9,46 @@ import { faHome } from '@fortawesome/free-solid-svg-icons';
 const elfahome = <FontAwesomeIcon icon={faHome} />;
 
 export default function NavbarApp() {
+  /*const unused = (
+    <NavDropdown title="test links" id="basic-nav-dropdown">
+      <NavDropdown.Item as={NavLink} to="/testchat">
+        test chat
+      </NavDropdown.Item>
+      <NavDropdown.Item as={NavLink} to="/test1">
+        f User
+      </NavDropdown.Item>
+      <NavDropdown.Item as={NavLink} to="/test2">
+        f addr
+      </NavDropdown.Item>
+      <NavDropdown.Item as={NavLink} to="/test2/60a13dc2c63cd551eca2150a">
+        addrID 1
+      </NavDropdown.Item>
+      <NavDropdown.Item as={NavLink} to="/test2/60a144a4ef25851fccd0acb9">
+        addrID 2
+      </NavDropdown.Item>
+
+      <NavDropdown.Item as={NavLink} to="/test2/60a13dc2c63cd551eca2150a">
+        addrID
+      </NavDropdown.Item>
+
+      <NavDropdown.Item as={NavLink} to="/test3/60a244b285d2cc2234d3b45f">
+        eventID id1
+      </NavDropdown.Item>
+      <NavDropdown.Item as={NavLink} to="/test3/60a24539570bca64c4f2def8">
+        eventID id2
+      </NavDropdown.Item>
+      <Nav.Link as={NavLink} to="/test2/60a13dc2c63cd551eca2150a/event">
+        add event addr1
+      </Nav.Link>
+      <Nav.Link as={NavLink} to="/test2/60a144a4ef25851fccd0acb9/event">
+        add event addr2
+      </Nav.Link>
+      <NavDropdown.Divider />
+      <NavDropdown.Item as={NavLink} to="/">
+        Separated link
+      </NavDropdown.Item>
+    </NavDropdown>
+  );*/
   const {
     authObj: { logged },
   } = useContext(AuthContext);
@@ -24,44 +64,6 @@ export default function NavbarApp() {
         <Nav.Link as={NavLink} to="/bookmarkview">
           Bookmarked
         </Nav.Link>
-        <NavDropdown title="test links" id="basic-nav-dropdown">
-          <NavDropdown.Item as={NavLink} to="/testchat">
-            test chat
-          </NavDropdown.Item>
-          <NavDropdown.Item as={NavLink} to="/test1">
-            f User
-          </NavDropdown.Item>
-          <NavDropdown.Item as={NavLink} to="/test2">
-            f addr
-          </NavDropdown.Item>
-          <NavDropdown.Item as={NavLink} to="/test2/60a13dc2c63cd551eca2150a">
-            addrID 1
-          </NavDropdown.Item>
-          <NavDropdown.Item as={NavLink} to="/test2/60a144a4ef25851fccd0acb9">
-            addrID 2
-          </NavDropdown.Item>
-
-          <NavDropdown.Item as={NavLink} to="/test2/60a13dc2c63cd551eca2150a">
-            addrID
-          </NavDropdown.Item>
-
-          <NavDropdown.Item as={NavLink} to="/test3/60a244b285d2cc2234d3b45f">
-            eventID id1
-          </NavDropdown.Item>
-          <NavDropdown.Item as={NavLink} to="/test3/60a24539570bca64c4f2def8">
-            eventID id2
-          </NavDropdown.Item>
-          <Nav.Link as={NavLink} to="/test2/60a13dc2c63cd551eca2150a/event">
-            add event addr1
-          </Nav.Link>
-          <Nav.Link as={NavLink} to="/test2/60a144a4ef25851fccd0acb9/event">
-            add event addr2
-          </Nav.Link>
-          <NavDropdown.Divider />
-          <NavDropdown.Item as={NavLink} to="/">
-            Separated link
-          </NavDropdown.Item>
-        </NavDropdown>
       </Nav>
       <NavDropdown.Divider />
       <Nav>

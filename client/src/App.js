@@ -35,22 +35,22 @@ function App() {
 
   // important - since it takes that mili second for cookes to be detected - on page refresh it was redirecting to home
   let notReadyToStart = true;
-  console.log('notReadyToStart');
+  //console.log('notReadyToStart');
   if (authObj.logged === true || authObj.logged === false) {
     notReadyToStart = false;
-    console.log('can START');
+    //console.log('can START');
   }
 
   /*if (authObj.loading === true) {
-    console.log('AUTH LOADING', authObj.error);
+    //console.log('AUTH LOADING', authObj.error);
   } else if (authObj.logged === true) {
-    console.log('AUTH logged', authObj.error);
+    //console.log('AUTH logged', authObj.error);
     notReadyToStart = false;
   } else if (authObj.logged === false) {
-    console.log('AUTH not logged', authObj.error);
+    //console.log('AUTH not logged', authObj.error);
     notReadyToStart = false;
   } else {
-    console.log('AUTH REST');
+    //console.log('AUTH REST');
   }*/
 
   if (notReadyToStart) return <div>...loading</div>;

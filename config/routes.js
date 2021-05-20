@@ -15,7 +15,7 @@ module.exports = (app) => {
   app.use('/api/chat', require('../routes/chat'));
 
   if (process.env.ENVLOCAL && process.env.ENVLOCAL === 'local') {
-    console.log('local app');
+    //console.log('local app');
     app.get('/', (req, res) => {
       res.send('Hello World!');
     });

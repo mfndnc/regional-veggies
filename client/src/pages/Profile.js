@@ -37,6 +37,7 @@ export default function Profile() {
   };
   const afterChildSave = (args) => {
     if (args === 'user') {
+      setOpenProfile(false);
       auth.loggedContext(setAuthObj);
     } else {
       setChildTriggeredSave(!childTriggeredSave);

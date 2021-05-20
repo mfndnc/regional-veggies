@@ -27,7 +27,7 @@ export default function EventsManage() {
         setOneAddress(oneaddr.data);
         setFullEvent(event.data);
         if (chats.data > 0) setHasChat(true);
-        console.log('chats', chats.data);
+        //console.log('chats', chats.data);
         if (event && event.data && event.data.length > 0) {
           const apiscount2d = event.data.map((el) => [
             api.countAlls(`bookmark/event/${el._id}`),
@@ -50,12 +50,12 @@ export default function EventsManage() {
               tmpdt[`id${idx}`] = false;
             });
             setOpenEventObj(tmpdt);
-            console.log('fullarr', fullarr);
+            //console.log('fullarr', fullarr);
           });
         }
       })
       .finally(() => setLoading(false));
-  }, [childTriggeredSave]);
+  }, [childTriggeredSave, addressId]);
 
   const doCloseAccordionEvent = (args) => {
     setOpenEventObj((prevSt) => ({

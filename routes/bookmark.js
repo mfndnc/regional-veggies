@@ -32,7 +32,7 @@ router.get('/user/event/:eventid', loginCheck(), (req, res, next) => {
 });
 
 router.get('/save', loginCheck(), (req, res, next) => {
-  console.log('sabe bookmark with url queries GET', req.params, req.query);
+  //console.log('sabe bookmark with url queries GET', req.params, req.query);
   if (req.query.eventid) {
     BookMark.findOneOrCreate({ user: req.user._id, event: req.query.eventid })
       .then((bookmarks) => res.status(200).json(bookmarks))
@@ -68,7 +68,7 @@ router.get('/event/:eventid/count', loginCheck(), (req, res, next) => {
 });
 
 router.delete('/', loginCheck(), (req, res, next) => {
-  console.log('bookmark DELETE', req.query);
+  //console.log('bookmark DELETE', req.query);
   if (req.query.event) {
     const deletedata = { event: req.query.event, user: req.user._id };
     BookMark.findOneAndDelete(deletedata)
@@ -82,7 +82,7 @@ router.delete('/', loginCheck(), (req, res, next) => {
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 router.post('/', loginCheck(), (req, res, next) => {
-  console.log('bookmark POST', req.body);
+  //console.log('bookmark POST', req.body);
   const { event, address, comment, tag } = req.body;
   const savedata = { event, address, comment, tag };
   if (req.body.user) {
@@ -133,7 +133,7 @@ router.get('/:id', loginCheck(), (req, res, next) => {
 });
 
 router.put('/:id', loginCheck(), (req, res, next) => {
-  console.log('bookmark PUT', req.body);
+  //console.log('bookmark PUT', req.body);
   const { event } = req.body;
   BookMark.findOneAndUpdate(
     { _id: req.params.id, user: req.user._id },
@@ -154,7 +154,7 @@ router.put('/:id', loginCheck(), (req, res, next) => {
 });
 
 router.patch('/:id', loginCheck(), (req, res, next) => {
-  console.log('bookmark PATCH', req.body);
+  //console.log('bookmark PATCH', req.body);
   // to update only one item in
   const { what, newvalue } = req.body;
   BookMark.findOneAndUpdate(

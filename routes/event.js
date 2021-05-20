@@ -13,7 +13,7 @@ router.get('/user', loginCheck(), (req, res, next) => {
 });
 
 router.get('/address/:addrid', loginCheck(), (req, res, next) => {
-  console.log('event for address GET', req.params , req.query );
+  //console.log('event for address GET', req.params , req.query );
   Event.find({address: req.params.addrid})
     .then((events) => res.status(200).json(events))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
@@ -28,7 +28,7 @@ router.get('/address/:addrid/count', loginCheck(), (req, res, next) => {
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 router.post('/', loginCheck(), (req, res, next) => {
-console.log("event POST",req.body);
+//console.log("event POST",req.body);
   const { address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange } = req.body;
   const savedata = {address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange};
   if (req.body.user) {
@@ -59,7 +59,7 @@ router.get('/:id', loginCheck(), (req, res, next) => {
 });
 
 router.put('/:id', loginCheck(), (req, res, next) => {
-console.log("event PUT",req.body);
+//console.log("event PUT",req.body);
   const { address,address2,isFromToAddr,showoffline,note,promo,calendar,danteRange } = req.body;
   Event.findOneAndUpdate(
     {_id: req.params.id, user: req.user._id},
@@ -71,7 +71,7 @@ console.log("event PUT",req.body);
 });
 
 router.patch('/:id', loginCheck(), (req, res, next) => {
-console.log("event PATCH",req.body);
+//console.log("event PATCH",req.body);
 	// to update only one item in 
   const { what,newvalue } = req.body;
   Event.findOneAndUpdate(

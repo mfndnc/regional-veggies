@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import api from '../api';
@@ -22,12 +22,13 @@ export default function ChatOwner() {
       .then((res) => setJustSaved(message))
       .catch((_) => setError(true));
   };
-  const saveFullChat = (fullChat) => {
+
+  const saveFullChat = useCallback((fullChat) => {
     if (fullChat) {
       setChatObj(fullChat);
       if (fullChat.conversation) setMessages(fullChat.conversation);
     }
-  };
+  }, []);
 
   useEffect(() => {
     api
@@ -35,7 +36,7 @@ export default function ChatOwner() {
       .then((res) => saveFullChat(res.data))
       .catch((_) => setError(true))
       .finally(() => setLoading(false));
-  }, [chatId, justSaved]);
+  }, [chatId, justSaved, saveFullChat]);
 
   if (loading) return <div>Loading ...</div>;
 

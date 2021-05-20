@@ -7,7 +7,7 @@ export default function Chat(props) {
   const [message, setMessage] = useState('');
 
   const handleSubmit = (e) => {
-    console.log('handleSubmit', message);
+    //console.log('handleSubmit', message);
     e.preventDefault();
     if (message) {
       props.childtoParent(message);

@@ -34,7 +34,7 @@ export default function GoogleMapComp(props) {
   const [selected, setSelected] = useState(iniSelected);
 
   const selectMarker = (marker) => {
-    console.log('GGGGGGGGG', marker, props.selectedMarker);
+    //console.log('GGGGGGGGG', marker, props.selectedMarker);
     props.childtoParent(marker);
     setSelected(marker);
   };

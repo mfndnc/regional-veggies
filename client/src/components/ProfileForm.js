@@ -39,7 +39,7 @@ export default function ProfileForm(props) {
       .finally(() => {
         if (props.accordion) {
           props.onSave('user');
-          doCloseAccordion();
+          //doCloseAccordion();
         } else {
           setTimeout(() => {
             setJustSaved(false);
@@ -52,7 +52,7 @@ export default function ProfileForm(props) {
 
   useEffect(() => {
     api.getUser().then((res) => {
-      console.log('useEffect getUser', res.data);
+      //console.log('useEffect getUser', res.data);
       const fields = [
         'name',
         'note',

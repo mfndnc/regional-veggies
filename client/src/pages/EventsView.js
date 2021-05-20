@@ -25,7 +25,7 @@ export default function EventsView() {
       api.getAlls(`bookmark/user/address/${addressId}`),
     ])
       .then(([addr, ev, bookm]) => {
-        console.log(addr, ev, bookm);
+        //console.log(addr, ev, bookm);
         const tmpdt = {};
         ev.data.forEach((event) => {
           tmpdt[`ev${event._id}`] = false;
@@ -40,10 +40,10 @@ export default function EventsView() {
         setBookmarks(bookm.data);
       })
       .finally(() => setLoading(false));
-  }, [childTriggeredSave]);
+  }, [childTriggeredSave, addressId]);
 
   const handleReserve = (checked, eventid) => {
-    console.log('handleReserve', checked, eventid);
+    //console.log('handleReserve', checked, eventid);
     const doSave = checked
       ? api.insert('bookmark', { event: eventid, address: oneAddress._id })
       : api.findDelete('bookmark', { event: eventid });

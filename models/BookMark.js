@@ -24,7 +24,7 @@ const bookMarkSchema = new Schema(
 bookMarkSchema.static('findOneOrCreate', async function findOneOrCreate(data) {
   const { event, user } = data;
   const one = await this.findOne({ event, user });
-  console.log('bookMarkSchema one', one);
+  //console.log('bookMarkSchema one', one);
 
   return one || this.create(data);
 });
@@ -56,22 +56,22 @@ bookMarkSchema.statics.updateOneOrCreatex = function updateOneOrCreatex(data) {
       .findAndUpdate(condition, newDocument, { new: true })
       .then((result) => {
         if (result) {
-          console.log(1);
+          //console.log(1);
           return resolve(result);
         }
         return self
           .create(newDocument)
           .then((result) => {
-            console.log(2);
+            //console.log(2);
             return resolve(result);
           })
           .catch((error) => {
-            console.log(3);
+            //console.log(3);
             return reject(error);
           });
       })
       .catch((error) => {
-        console.log(4);
+        //console.log(4);
         return reject(error);
       });
   });

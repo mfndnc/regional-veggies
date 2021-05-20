@@ -18,7 +18,7 @@ export default function ChatOwner() {
   const doChildtoParent = (arg) => {};
 
   useEffect(() => {
-    console.log(addressId, eventId);
+    //console.log(addressId, eventId);
     const doApi =
       eventId === undefined
         ? api.getAlls(`chat/address/${addressId}`)
@@ -29,7 +29,7 @@ export default function ChatOwner() {
         setChats(chats.data);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [addressId, eventId]);
 
   if (loading) return <div>Loading ...</div>;
   const showAddressTop = eventId === undefined && chats[0] && chats.length > 1;

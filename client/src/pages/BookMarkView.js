@@ -18,7 +18,7 @@ export default function BookMarkView() {
           const sortedBookmarked = bookm.data.sort((a, b) =>
             a.address.name.localeCompare(b.address.name)
           );
-          console.log(sortedBookmarked);
+          //console.log(sortedBookmarked);
           const tmpdt = {};
           sortedBookmarked.forEach((book) => {
             tmpdt[`book${book._id}`] = book.comment;
@@ -47,8 +47,8 @@ export default function BookMarkView() {
     const comment = commentObj[tmp];
     const bookmarkid = tmp.substr(4);
     const payload = { what: 'comment', newvalue: comment };
-    console.log(formid, tmp, bookmarkid, comment);
-    console.log(e);
+    //console.log(formid, tmp, bookmarkid, comment);
+    //console.log(e);
     setMessErrTarget(tmp);
     api
       .updateById('bookmark', bookmarkid, payload)

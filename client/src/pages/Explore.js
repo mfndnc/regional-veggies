@@ -50,11 +50,11 @@ export default function Explore() {
   const handleChange = (e) => setQuery(e.target.value);
 
   const doChildtoParent = (args) => {
-    console.log(args);
+    //console.log(args);
     setSelected(args);
   };
   const clickNameList = (e) => {
-    console.log(e.target.dataset.id);
+    //console.log(e.target.dataset.id);
     api
       .getById('address', e.target.dataset.id)
       .then((res) => setSelected(res.data))

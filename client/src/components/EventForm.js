@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
-import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
@@ -91,7 +91,7 @@ export default function EventForm(props) {
     const calendar = calarr.map((cal) => cal.val);
     const submitdata = { ...data, calendar, address: addressId };
     //alert('SUCCESS!! :-)\n\n' + JSON.stringify(submitdata, null, 4));
-    console.log('onSubmit EventForm', submitdata, eventId, addressId);
+    //console.log('onSubmit EventForm', submitdata, eventId, addressId);
     const doSave = isAddMode
       ? api.insert('event', submitdata)
       : api.modifyById('event', eventId, submitdata);
@@ -113,7 +113,7 @@ export default function EventForm(props) {
   }
   function doDelete() {
     api.deleteById('event', eventId).then((res) => {
-      console.log('DELETED', eventId, res.data);
+      //console.log('DELETED', eventId, res.data);
       if (props.accordion) {
         props.onSave('event');
         doCloseAccordion();
@@ -123,10 +123,9 @@ export default function EventForm(props) {
     });
   }
   useEffect(() => {
-    console.log('useEffect EventForm', eventId, addressId);
+    //console.log('useEffect EventForm', eventId, addressId);
     if (!isAddMode) {
       api.getById('event', eventId).then((res) => {
-        console.log('getById EventForm', res.data);
         ['note', 'promo'].forEach((field) => setValue(field, res.data[field]));
         ////////remove(0);
         ////////res.data['calendar'].forEach((el) => append({ val: el }));
@@ -139,7 +138,6 @@ export default function EventForm(props) {
     } else {
       setLoading(false);
     }
-    console.log('fields', fields);
   }, [addressId, eventId, isAddMode, setValue]);
 
   if (loading) return <div>Loading ...</div>;

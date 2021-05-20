@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory, Link } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -43,7 +43,7 @@ export default function AddressForm(props) {
   };
 
   function onSubmit(data) {
-    console.log('onSubmit AddressForm', data, addressId);
+    //console.log('onSubmit AddressForm', data, addressId);
     const doSave = isAddMode
       ? api.insert('address', data)
       : api.modifyById('address', addressId, data);
@@ -66,7 +66,7 @@ export default function AddressForm(props) {
 
   function doDelete() {
     api.deleteById('address', addressId).then((res) => {
-      console.log('DELETED addressId', addressId, res.data);
+      //console.log('DELETED addressId', addressId, res.data);
       if (props.accordion) {
         props.onSave('address');
         doCloseAccordion();
@@ -77,18 +77,17 @@ export default function AddressForm(props) {
   }
 
   useEffect(() => {
-    console.log('useEffect AddressForm', addressId);
+    //console.log('useEffect AddressForm', addressId);
     api
       .getAlls('misc/addrtypes')
       .then((addrtypes) => {
-        console.log(addrtypes);
+        //console.log(addrtypes);
         setAddressTypes(addrtypes.data);
       })
       .finally(() => {
         if (!isAddMode) {
           api.getById('address', addressId).then((res) => {
-            console.log('getById AddressForm', res.data);
-            const fields = [
+            [
               'note',
               'promo',
               'street',
@@ -103,8 +102,7 @@ export default function AddressForm(props) {
               'name',
               'nickname',
               'addrtype',
-            ];
-            fields.forEach((field) => setValue(field, res.data[field]));
+            ].forEach((field) => setValue(field, res.data[field]));
             //setFullAddress(res.data);
             setLoading(false);
           });

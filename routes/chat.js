@@ -66,10 +66,10 @@ router.get('/event/:eventid/count', loginCheck(), (req, res, next) => {
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 router.post('/', loginCheck(), (req, res, next) => {
-  console.log('chat POST', req.body);
+  //console.log('chat POST', req.body);
   const { message, origin, _id, __v, ...rest } = req.body;
   const conversation = [{ message, origin, time: Date.now(), read: false }];
-  console.log('chat POST', rest, conversation);
+  //console.log('chat POST', rest, conversation);
   const savedata = { ...rest, conversation };
   Chat.findOneOrCreate(savedata)
     .then((chats) => res.status(200).json(chats))
@@ -106,7 +106,7 @@ router.get('/:id', loginCheck(), (req, res, next) => {
 });
 
 router.put('/:id', loginCheck(), (req, res, next) => {
-  console.log('chat PUT', req.body);
+  //console.log('chat PUT', req.body);
   const { event } = req.body;
   Chat.findOneAndUpdate(
     { _id: req.params.id, user: req.user._id },
@@ -127,7 +127,7 @@ router.put('/:id', loginCheck(), (req, res, next) => {
 });
 
 router.patch('/:id', loginCheck(), (req, res, next) => {
-  console.log('chat PATCH', req.body);
+  //console.log('chat PATCH', req.body);
   // to update only one item in
   const { what, newvalue } = req.body;
   Chat.findOneAndUpdate(

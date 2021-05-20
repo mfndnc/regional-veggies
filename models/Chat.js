@@ -45,7 +45,7 @@ const chatSchema = new Schema(
 chatSchema.static('findOneOrCreate', async function findOneOrCreate(data) {
   const { bookmark, userclient } = data;
   const one = await this.findOne({ bookmark, userclient, closed: false });
-  console.log('chatSchema ONE', one);
+  //console.log('chatSchema ONE', one);
 
   return one || this.create(data);
 });

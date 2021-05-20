@@ -24,7 +24,7 @@ export default function EventsManStart() {
               return { ...el, countclientbookmarks: arrres[idx].data };
             });
             setFullAddress(fullarr);
-            console.log(fullarr);
+            //console.log(fullarr);
           });
         }
       })

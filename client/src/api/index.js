@@ -37,7 +37,7 @@ export const searchAddresses = (options) => {
 export const findDelete = (base, options) => {
   const optionStr = qs.stringify(options);
   const fullURL = '/' + base + (options ? ['?', optionStr].join('') : '');
-  console.log(base, options, fullURL);
+  //console.log(base, options, fullURL);
   return api.delete(fullURL);
 };
 

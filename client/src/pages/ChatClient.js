@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { Collapse, Button } from 'react-bootstrap';
 import api from '../api';
@@ -35,20 +35,24 @@ export default function ChatClient() {
       setJustSaved(message);
     });
   };
-  const saveFullChat = (fullChat) => {
-    if (fullChat) {
-      setChatObj(fullChat);
-      if (fullChat.conversation) setMessages(fullChat.conversation);
-      if (chatId === null && fullChat._id) setChatId(fullChat._id);
-    }
-  };
+
+  const saveFullChat = useCallback(
+    (fullChat) => {
+      if (fullChat) {
+        setChatObj(fullChat);
+        if (fullChat.conversation) setMessages(fullChat.conversation);
+        if (chatId === null && fullChat._id) setChatId(fullChat._id);
+      }
+    },
+    [chatId]
+  );
 
   useEffect(() => {
     if (chatId === null) {
       api
         .getById('bookmark', bookmarkId)
         .then((res) => {
-          console.log('bookmark', res);
+          //console.log('bookmark', res);
           setBookmarkOrig(res.data);
           api.getById('address', res.data.address).then((res) => {
             setAddress(res.data);
@@ -63,7 +67,7 @@ export default function ChatClient() {
         .getById('chat', chatId)
         .then((res) => saveFullChat(res.data, 'withchatid'));
     }
-  }, [chatId, bookmarkId, justSaved]);
+  }, [chatId, bookmarkId, justSaved, saveFullChat]);
 
   if (loading) return <div>Loading ...</div>;
 

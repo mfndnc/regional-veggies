@@ -10,7 +10,7 @@ function setGeoCode(address, forgoogle = '') {
   }
   if (forgoogle.length > 0) {
     geoCodeApi(forgoogle).then((el) => {
-      console.log(el.data);
+      //console.log(el.data);
       if (
         el &&
         el.data &&
@@ -61,7 +61,7 @@ router.get('/user/:userid', loginCheck(), (req, res, next) => {
 });
 
 router.get('/business', loginCheck(), (req, res, next) => {
-  console.log('address business GET', req.query);
+  //console.log('address business GET', req.query);
   Address.find({
     $and: [
       {
@@ -81,7 +81,7 @@ router.get('/business', loginCheck(), (req, res, next) => {
 
 
 router.post('/', loginCheck(), (req, res, next) => {
-  console.log('address POST', req.body);
+  //console.log('address POST', req.body);
   const { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
   Address.create({user: req.user._id,showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter })
     .then((address) => {
@@ -92,7 +92,7 @@ router.post('/', loginCheck(), (req, res, next) => {
 });
 
 router.get('/', loginCheck(), (req, res, next) => {
-  console.log('address GET', req.query);
+  //console.log('address GET', req.query);
   Address.find()
     .then((address) => res.status(200).json(address))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
@@ -110,7 +110,7 @@ router.get('/:id', loginCheck(), (req, res, next) => {
 });
 
 router.put('/:id', loginCheck(), (req, res, next) => {
-console.log("address PUT",req.body);
+//console.log("address PUT",req.body);
   const { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,phone,website,skype,whatsapp,twitter } = req.body;
   Address.findOneAndUpdate(
     {_id: req.params.id, user: req.user._id},
@@ -132,7 +132,7 @@ console.log("address PUT",req.body);
 });
 
 router.patch('/:id', loginCheck(), (req, res, next) => {
-console.log("address patch",req.body);
+//console.log("address patch",req.body);
 	// to update only one item in 
   const { what,newvalue } = req.body;
   Address.findOneAndUpdate(

@@ -26,7 +26,7 @@ require('./config/passport')(app);
 require('./config/routes')(app);
 
 if (process.env.ENVLOCAL && process.env.ENVLOCAL === 'local') {
-  console.log('local app');
+  //console.log('local app');
   app.get('/', (req, res) => {
     res.send('Hello World!');
   });
