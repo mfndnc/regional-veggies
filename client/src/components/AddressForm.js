@@ -219,7 +219,7 @@ export default function AddressForm(props) {
           </div>{' '}
           <div className="form-row">
             <div className="form-group col-9">
-              <label>Street</label>
+              <label>Street & Number</label>
               <input
                 name="street"
                 type="text"
@@ -229,7 +229,7 @@ export default function AddressForm(props) {
               <div className="invalid-feedback">{errors.street?.message}</div>
             </div>
             <div className="form-group col">
-              <label>Suite</label>
+              <label>Addition</label>
               <input
                 name="suite"
                 type="text"
