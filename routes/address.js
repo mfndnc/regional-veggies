@@ -61,8 +61,8 @@ router.get('/user/:userid', loginCheck(), (req, res, next) => {
 });
 
 router.get('/business', loginCheck(), (req, res, next) => {
-  //console.log('address business GET', req.query);
-  Address.find({
+  console.log('address business GET', req.query);
+  const fullquery = {
     $and: [
       {
         $nor: [
@@ -72,10 +72,15 @@ router.get('/business', loginCheck(), (req, res, next) => {
       },
       { name: { $exists: true, $ne: null, $ne: '' } },
     ],
-  })
+  };
+  if (req.query.query) {
+    fullquery.$and[2] = { $text: { $search: req.query.query } };
+  }
+  Address.find(fullquery)
     .then((address) => res.status(200).json(address))
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
 });
+
 /* ***** SPECIAL to this router - actions on the logged user * no id required */
 
 

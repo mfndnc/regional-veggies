@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import api from '../api';
 
 export default function EventsViewStart() {
@@ -8,14 +9,36 @@ export default function EventsViewStart() {
   const [openAddress, setOpenAddress] = useState(false);
   const [openAddressObj, setOpenAddressObj] = useState({});
   const [childTriggeredSave, setChildTriggeredSave] = useState(false);
+  const [query, setQuery] = useState('');
+  const [error, setError] = useState(false);
+
   useEffect(() => {
+    // CAN NOT use the same function (via useCallback or otherwise) of it keeps tryimng to send the query at all keyboard press
+    if (loading)
+      api
+        .searchAddresses()
+        .then((res) => {
+          setFullAddress(res.data);
+        })
+        .catch((_) => setError(true))
+        .finally(() => setLoading(false));
+  }, [childTriggeredSave]);
+
+  const handleChange = (e) => setQuery(e.target.value);
+
+  const handleSubmit = (e) => {
+    const objquery = { bar: 'foo' };
+    if (query) {
+      objquery.query = query;
+    }
+    //console.log(objquery);
     api
-      .searchAddresses()
+      .searchAddresses(objquery)
       .then((res) => {
         setFullAddress(res.data);
       })
-      .finally(() => setLoading(false));
-  }, [childTriggeredSave]);
+      .catch((_) => setError(true));
+  };
 
   const doCloseAccordionAddress = (args) => {
     setOpenAddressObj((prevSt) => ({
@@ -78,7 +101,21 @@ export default function EventsViewStart() {
                     View all offers available
                   </h5>
                   <div className="card-text">
-                    <p>Click on ""offers"</p>
+                    <InputGroup className="mb-3">
+                      <FormControl
+                        placeholder="Search"
+                        aria-label="Search"
+                        onChange={handleChange}
+                      />
+                      <InputGroup.Append>
+                        <Button
+                          variant="outline-secondary"
+                          onClick={handleSubmit}
+                        >
+                          Search
+                        </Button>
+                      </InputGroup.Append>
+                    </InputGroup>
                   </div>
                 </div>
               </div>

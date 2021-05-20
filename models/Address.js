@@ -40,6 +40,8 @@ const addressSchema = new Schema(
   }
 );
 
+addressSchema.index({ '$**': 'text' });
+
 addressSchema.static(
   'findOneOrCreate',
   async function findOneOrCreate(condition, address) {

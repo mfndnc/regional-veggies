@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import api from '../api';
 import GoogleMap from '../components/GoogleMap';
 
@@ -29,25 +29,42 @@ export default function Explore() {
   const [selected, setSelected] = useState(null);
   const [selectedEvents, setSelectedEvents] = useState(null);
   const [query, setQuery] = useState('');
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    let objquery = { bar: 'foo' };
-    api
-      .searchAddresses(objquery)
-      .then((res) => {
-        setFullAddress(res.data);
-      })
-      .finally(() => setLoading(false));
+    // CAN NOT use the same function (via useCallback or otherwise) of it keeps tryimng to send the query at all keyboard press
+    if (loading)
+      api
+        .searchAddresses()
+        .then((res) => {
+          setFullAddress(res.data);
+        })
+        .catch((_) => setError(true))
+        .finally(() => setLoading(false));
     if (selected)
       api
         .getEventForAddress(selected._id)
         .then((res) => {
           setSelectedEvents(res.data);
         })
-        .finally(() => setLoading(false));
-  }, [selected]);
+        .catch((_) => setError(true));
+  }, [selected, loading]);
 
   const handleChange = (e) => setQuery(e.target.value);
+
+  const handleSubmit = (e) => {
+    const objquery = { bar: 'foo' };
+    if (query) {
+      objquery.query = query;
+    }
+    //console.log(objquery);
+    api
+      .searchAddresses(objquery)
+      .then((res) => {
+        setFullAddress(res.data);
+      })
+      .catch((_) => setError(true));
+  };
 
   const doChildtoParent = (args) => {
     //console.log(args);
@@ -90,19 +107,21 @@ export default function Explore() {
                   <div className="card-body">
                     <h4 className="card-title">Search Addresses</h4>
                     <h5 className="card-subtitle mb-2 text-muted">
-                      <div className="form-group">
-                        <div className="form-label-group">
-                          <input
-                            placeholder="Search"
-                            className="form-control"
-                            id="query"
-                            type="text"
-                            name="query"
-                            value={query}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
+                      <InputGroup className="mb-3">
+                        <FormControl
+                          placeholder="Search"
+                          aria-label="Search"
+                          onChange={handleChange}
+                        />
+                        <InputGroup.Append>
+                          <Button
+                            variant="outline-secondary"
+                            onClick={handleSubmit}
+                          >
+                            Search
+                          </Button>
+                        </InputGroup.Append>
+                      </InputGroup>
                     </h5>
                     <div className="card-text">
                       <ul className="list-group explore">
