@@ -25,6 +25,7 @@ const addressSchema = new Schema(
     twitter: String,
     addrtype: String,
     imagefile: Schema.Types.Mixed,
+    googleimage: Schema.Types.Mixed,
     country: {
       type: String,
       default: 'Germany',

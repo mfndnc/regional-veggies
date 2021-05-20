@@ -87,8 +87,8 @@ router.get('/business', loginCheck(), (req, res, next) => {
 
 router.post('/', loginCheck(), (req, res, next) => {
   //console.log('address POST', req.body);
-  const { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,imagefile,phone,website,skype,whatsapp,twitter } = req.body;
-  Address.create({user: req.user._id,showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,imagefile,phone,website,skype,whatsapp,twitter })
+  const { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,imagefile,googleimage,phone,website,skype,whatsapp,twitter } = req.body;
+  Address.create({user: req.user._id,showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,imagefile,googleimage,phone,website,skype,whatsapp,twitter })
     .then((address) => {
       setGeoCode(address);
       return res.status(201).json(address);
@@ -116,10 +116,10 @@ router.get('/:id', loginCheck(), (req, res, next) => {
 
 router.put('/:id', loginCheck(), (req, res, next) => {
 //console.log("address PUT",req.body);
-  const { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,imagefile,phone,website,skype,whatsapp,twitter } = req.body;
+  const { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,imagefile,googleimage,phone,website,skype,whatsapp,twitter } = req.body;
   Address.findOneAndUpdate(
     {_id: req.params.id, user: req.user._id},
-    { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,imagefile,phone,website,skype,whatsapp,twitter }
+    { showoffline,note,promo,addrtype,nickname,name,street,suite,city,zipcode,imagefile,googleimage,phone,website,skype,whatsapp,twitter }
   )
     .then((address) => {
       // getting former document to compare with request

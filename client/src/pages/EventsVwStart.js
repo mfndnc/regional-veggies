@@ -56,6 +56,9 @@ export default function EventsViewStart() {
 
   const addressList = fullAddress.map((addr, idx) => {
     let ddd = `id${idx}`;
+    if (addr.googleimage || addr.imagefile) {
+      //console.log(addr.googleimage, addr.imagefile);
+    }
     return (
       <div className="col mb-4" key={`addr${addr._id}`}>
         <div className="card h-100">
