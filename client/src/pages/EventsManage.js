@@ -106,7 +106,7 @@ export default function EventsManage() {
                 aria-controls={`collapseEvent${idx} collapseEventY${idx}`}
                 aria-expanded={openEventObj[ddd]}
               >
-                {openEventObj[ddd] ? 'Close' : 'Mofidy'}
+                {openEventObj[ddd] ? 'Close' : 'Modify'}
               </Button>
               {ev.countclientchats > 0 && (
                 <Link

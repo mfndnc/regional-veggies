@@ -85,7 +85,7 @@ export default function EventsManStart() {
                 aria-controls={`collapseAddress${idx} collapseAddressY${idx}`}
                 aria-expanded={openAddressObj[ddd]}
               >
-                {openAddressObj[ddd] ? 'Close' : 'Mofidy'}
+                {openAddressObj[ddd] ? 'Close' : 'Modify'}
               </Button>
               {addr.addrtype.indexOf('user') === -1 && (
                 <Link
@@ -125,7 +125,7 @@ export default function EventsManStart() {
               <div className="card classic h-100 text-left">
                 <div className="card-body">
                   <h5 className="card-subtitle mb-2 text-muted">
-                    Promote your products / Inform your availability{'  '}
+                    Offer your products{'  '}
                     <Button
                       variant="info"
                       size="sm"

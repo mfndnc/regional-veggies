@@ -83,7 +83,7 @@ export default function Profile() {
                 aria-controls={`collapseAddress${idx} collapseAddressY${idx}`}
                 aria-expanded={openAddressObj[ddd]}
               >
-                {openAddressObj[ddd] ? 'Close' : 'Mofidy'}
+                {openAddressObj[ddd] ? 'Close' : 'Modify'}
               </Button>
               {addr.addrtype.indexOf('user') === -1 && (
                 <Link
@@ -152,7 +152,7 @@ export default function Profile() {
                       aria-controls="collapseProfile collapseProfileY"
                       aria-expanded={openProfile}
                     >
-                      {openProfile ? 'Close' : 'Mofidy'}
+                      {openProfile ? 'Close' : 'Modify'}
                     </Button>
                   </div>
                   <Collapse in={openProfile}>

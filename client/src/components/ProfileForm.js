@@ -232,7 +232,7 @@ export default function ProfileForm(props) {
 
           <div className="form-row">
             <div className="form-group col">
-              <label>Note</label>
+              <label>Products offered</label>
               <input
                 name="note"
                 type="text"

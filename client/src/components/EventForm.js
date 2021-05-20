@@ -243,7 +243,7 @@ export default function EventForm(props) {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-row">
             <div className="form-group col">
-              <label>Note</label>
+              <label>Products offered</label>
               <input
                 name="note"
                 type="text"
@@ -256,7 +256,7 @@ export default function EventForm(props) {
 
           <div className="form-row">
             <div className="form-group col">
-              <label>Promo</label>
+              <label>Additional Info</label>
               <input
                 name="promo"
                 type="text"

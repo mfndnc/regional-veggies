@@ -321,7 +321,7 @@ export default function AddressForm(props) {
           </div>
           <div className="form-row">
             <div className="form-group col">
-              <label>Note</label>
+              <label>Products offered</label>
               <input
                 name="note"
                 type="text"
@@ -333,7 +333,7 @@ export default function AddressForm(props) {
           </div>
           <div className="form-row">
             <div className="form-group col">
-              <label>Promo</label>
+              <label>Additional Info</label>
               <input
                 name="promo"
                 type="text"
