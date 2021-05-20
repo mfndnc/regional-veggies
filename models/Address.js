@@ -24,6 +24,7 @@ const addressSchema = new Schema(
     whatsapp: String,
     twitter: String,
     addrtype: String,
+    imagefile: Schema.Types.Mixed,
     country: {
       type: String,
       default: 'Germany',

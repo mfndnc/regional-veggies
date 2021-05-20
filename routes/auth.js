@@ -29,8 +29,8 @@ router.post('/signup', (req, res, next) => {
                 .status(500)
                 .json({ message: 'Error while attempting to login' });
             } else {
-              const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = createdUser;
-              const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+              const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, _id: id } = createdUser;
+              const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, id };
               return res.status(200).json(exportuser);
             }
           });
@@ -49,8 +49,8 @@ router.post('/login', (req, res, next) => {
       if (err) {
         return res.status(500).json({ message: 'Error while logging in' });
       }
-      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = user;
-      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, _id: id } = user;
+      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, id };
       return res.status(200).json(exportuser);
     });
   })(req, res);
@@ -59,8 +59,8 @@ router.post('/login', (req, res, next) => {
 router.get('/loggedin', (req, res) => {
   	let exportuser;
 	if(req.user) {
-  		const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = req.user;
-  		exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+  		const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, _id: id } = req.user;
+  		exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, id };
 	} else {
 		exportuser = null;
 	}

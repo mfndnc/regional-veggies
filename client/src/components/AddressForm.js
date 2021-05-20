@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
+import service from '../api/fileupload';
 
 export default function AddressForm(props) {
   let { addressId: addressIdParam } = useParams();
@@ -17,6 +18,8 @@ export default function AddressForm(props) {
   const [justSaved, setJustSaved] = useState(false);
   const [genError, setGenError] = useState(false);
   const [addressTypes, setAddressTypes] = useState([]);
+  const [imagefile, setImagefile] = useState('');
+  const [imgError, setImgError] = useState(false);
 
   const validationSchema = Yup.object().shape({
     addrtype: Yup.string().required(),
@@ -31,6 +34,7 @@ export default function AddressForm(props) {
     handleSubmit,
     reset,
     setValue,
+    setError,
     formState,
     formState: { errors },
   } = useForm(formOptions);
@@ -44,10 +48,11 @@ export default function AddressForm(props) {
   };
 
   function onSubmit(data) {
-    //console.log('onSubmit AddressForm', data, addressId);
+    const formdata = { ...data, imagefile };
+    //console.log('onSubmit AddressForm', formdata, addressId);
     const doSave = isAddMode
-      ? api.insert('address', data)
-      : api.modifyById('address', addressId, data);
+      ? api.insert('address', formdata)
+      : api.modifyById('address', addressId, formdata);
     doSave
       .then(() => setJustSaved(true))
       .catch(() => setGenError(true))
@@ -76,6 +81,21 @@ export default function AddressForm(props) {
       }
     });
   }
+
+  const handleFileUpload = (e) => {
+    const uploadData = new FormData();
+    uploadData.append('imageUrl', e.target.files[0]);
+    service
+      .handleUpload(uploadData)
+      .then((fileinfo) => setImagefile(fileinfo))
+      .catch((err) => {
+        setImgError(true);
+        setError('imagefile', {
+          type: 'server',
+          message: err.response.data.message || 'Invalid!',
+        });
+      });
+  };
 
   useEffect(() => {
     //console.log('useEffect AddressForm', addressId);
@@ -123,6 +143,11 @@ export default function AddressForm(props) {
   const showGenError = genError && (
     <div className="alert alert-danger" role="alert">
       An error occured!!!
+    </div>
+  );
+  const showImgError = imgError && (
+    <div className="alert alert-danger" role="alert">
+      Unable to Upload your file!!!
     </div>
   );
 
@@ -318,8 +343,22 @@ export default function AddressForm(props) {
               <div className="invalid-feedback">{errors.promo?.message}</div>
             </div>
           </div>
+          <div className="form-row">
+            <div className="form-group col">
+              <label>Picture</label>
+              <input
+                onChange={handleFileUpload}
+                name="imagefile"
+                type="file"
+                className="form-control"
+              />
+              <div className="invalid-feedback">
+                {errors.imagefile?.message}
+              </div>
+            </div>
+          </div>
           <div className="form-group">
-            {showSavedMessage} {showGenError}
+            {showSavedMessage} {showGenError} {showImgError}
             <button
               disabled={formState.isSubmitting}
               type="submit"

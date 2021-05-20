@@ -14,6 +14,8 @@ module.exports = (app) => {
 
   app.use('/api/chat', require('../routes/chat'));
 
+  app.use('/api/file', require('../routes/file.upload'));
+
   if (process.env.ENVLOCAL && process.env.ENVLOCAL === 'local') {
     //console.log('local app');
     app.get('/', (req, res) => {

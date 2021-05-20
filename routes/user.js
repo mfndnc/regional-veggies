@@ -8,8 +8,8 @@ const { loginCheck } = require('./midlware/middlewares');
 router.get('/user', loginCheck(), (req, res, next) => {
   User.findOne({_id: req.user._id})
     .then((user) => {
-      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = user;
-      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, _id: id } = user;
+      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, id };
       res.status(200).json(exportuser);
     })
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
@@ -25,8 +25,8 @@ router.get('/', loginCheck(), (req, res, next) => {
   User.find()
     .then((users) => {
       const exportedUsers = users.map((el) => {
-        const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = el;
-        return { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+        const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, _id: id } = el;
+        return { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, id };
       });
       return res.status(200).json(exportedUsers);
     })
@@ -40,8 +40,8 @@ router.get('/:id', loginCheck(), (req, res, next) => {
     if (!user) {
       res.status(400).json({});
     } else {
-      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = user;
-      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, _id: id } = user;
+      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, id };
       res.status(200).json(exportuser);
     }
   });
@@ -51,16 +51,16 @@ router.get('/:id', loginCheck(), (req, res, next) => {
 /* ***** !!! it will ignore the ID. keep it for backward compatibility  */
 
 router.put('/:id', loginCheck(), (req, res, next) => {
-  const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role } = req.body;
+  const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile } = req.body;
   User.findOneAndUpdate(
     {_id: req.user._id},
-    { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role },
+    { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile },
     // if the return value of the mongoose should be the updated document you need to add this
     { new: true }
   )
     .then((user) => {
-      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = user;
-      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, _id: id } = user;
+      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, id };
       res.status(200).json(exportuser);
     })
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
@@ -74,8 +74,8 @@ router.patch('/:id', loginCheck(), (req, res, next) => {
     { new: true }
   )
     .then((user) => {
-      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = user;
-      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, _id: id } = user;
+      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, id };
       res.status(200).json(exportuser);
     })
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
@@ -97,8 +97,8 @@ router.put('/', loginCheck(), (req, res, next) => {
     { new: true }
   )
     .then((user) => {
-      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = user;
-      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, _id: id } = user;
+      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, id };
       res.status(200).json(exportuser);
     })
     .catch((err) => res.status(400).json({ message: 'An error occured' }));
@@ -112,8 +112,8 @@ router.patch('/', loginCheck(), (req, res, next) => {
     { new: true }
   )
     .then((user) => {
-      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, _id: id } = user;
-      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role, createdAt, id };
+      const { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, _id: id } = user;
+      const exportuser = { username,name,note,email,phone,phonesecond,website,skype,whatsapp,twitter,role,imagefile, createdAt, id };
       res.status(200).json(exportuser);
     })
     .catch((err) => res.status(400).json({ message: 'An error occured' }));

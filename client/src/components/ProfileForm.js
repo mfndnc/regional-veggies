@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
+import service from '../api/fileupload';
 
 export default function ProfileForm(props) {
   //let history = useHistory();
@@ -12,6 +13,8 @@ export default function ProfileForm(props) {
   const [user, setUser] = useState({});
   const [justSaved, setJustSaved] = useState(false);
   const [genError, setGenError] = useState(false);
+  const [imagefile, setImagefile] = useState('');
+  const [imgError, setImgError] = useState(false);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Email is invalid'),
@@ -23,6 +26,7 @@ export default function ProfileForm(props) {
     handleSubmit,
     reset,
     setValue,
+    setError,
     formState,
     formState: { errors },
   } = useForm(formOptions);
@@ -32,8 +36,9 @@ export default function ProfileForm(props) {
   };
 
   function onSubmit(data) {
+    const formdata = { ...data, imagefile };
     api
-      .modifyUser(data)
+      .modifyUser(formdata)
       .then(() => setJustSaved(true))
       .catch(() => setGenError(true))
       .finally(() => {
@@ -49,6 +54,21 @@ export default function ProfileForm(props) {
       });
     return false;
   }
+
+  const handleFileUpload = (e) => {
+    const uploadData = new FormData();
+    uploadData.append('imageUrl', e.target.files[0]);
+    service
+      .handleUpload(uploadData)
+      .then((fileinfo) => setImagefile(fileinfo))
+      .catch((err) => {
+        setImgError(true);
+        setError('imagefile', {
+          type: 'server',
+          message: err.response.data.message || 'Invalid!',
+        });
+      });
+  };
 
   useEffect(() => {
     api.getUser().then((res) => {
@@ -80,6 +100,11 @@ export default function ProfileForm(props) {
   const showGenError = genError && (
     <div className="alert alert-danger" role="alert">
       An error occured!!!
+    </div>
+  );
+  const showImgError = imgError && (
+    <div className="alert alert-danger" role="alert">
+      Unable to Upload your file!!!
     </div>
   );
 
@@ -218,8 +243,23 @@ export default function ProfileForm(props) {
             </div>
           </div>
 
+          <div className="form-row">
+            <div className="form-group col">
+              <label>Picture</label>
+              <input
+                onChange={handleFileUpload}
+                name="imagefile"
+                type="file"
+                className="form-control"
+              />
+              <div className="invalid-feedback">
+                {errors.imagefile?.message}
+              </div>
+            </div>
+          </div>
+
           <div className="form-group">
-            {showSavedMessage} {showGenError}
+            {showSavedMessage} {showGenError} {showImgError}
             <button
               disabled={formState.isSubmitting}
               type="submit"

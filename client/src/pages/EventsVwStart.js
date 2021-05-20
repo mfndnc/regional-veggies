@@ -22,7 +22,7 @@ export default function EventsViewStart() {
         })
         .catch((_) => setError(true))
         .finally(() => setLoading(false));
-  }, [childTriggeredSave]);
+  }, [childTriggeredSave, loading]);
 
   const handleChange = (e) => setQuery(e.target.value);
 
