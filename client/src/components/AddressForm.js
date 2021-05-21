@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
 import service from '../api/fileupload';
+import ShowImage from './ShowImage';
 
 export default function AddressForm(props) {
   let { addressId: addressIdParam } = useParams();
@@ -14,7 +15,7 @@ export default function AddressForm(props) {
   let history = useHistory();
 
   const [loading, setLoading] = useState(true);
-  //const [fullAddress, setFullAddress] = useState({});
+  const [fullAddress, setFullAddress] = useState({});
   const [justSaved, setJustSaved] = useState(false);
   const [genError, setGenError] = useState(false);
   const [addressTypes, setAddressTypes] = useState([]);
@@ -48,8 +49,7 @@ export default function AddressForm(props) {
   };
 
   function onSubmit(data) {
-    //const formdata = { ...data, imagefile };
-    const formdata = data;
+    const formdata = { ...data, imagefile };
     //console.log('onSubmit AddressForm', formdata, addressId);
     const doSave = isAddMode
       ? api.insert('address', formdata)
@@ -109,6 +109,7 @@ export default function AddressForm(props) {
           className="form-control"
         />
         <div className="invalid-feedback">{errors.imagefile?.message}</div>
+        <ShowImage maindata={fullAddress} imagefile={imagefile} />
       </div>
     </div>
   );
@@ -140,7 +141,7 @@ export default function AddressForm(props) {
               'nickname',
               'addrtype',
             ].forEach((field) => setValue(field, res.data[field]));
-            //setFullAddress(res.data);
+            setFullAddress(res.data);
             setLoading(false);
           });
         } else {
@@ -359,6 +360,7 @@ export default function AddressForm(props) {
               <div className="invalid-feedback">{errors.promo?.message}</div>
             </div>
           </div>
+          {fileuploadblock}
           <div className="form-group">
             {showSavedMessage} {showGenError} {showImgError}
             <button

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../services/functions';
+import './Chat.css';
 
 export default function Chat(props) {
   const [message, setMessage] = useState('');

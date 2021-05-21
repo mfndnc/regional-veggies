@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import api from '../api';
 import service from '../api/fileupload';
+import ShowImage from './ShowImage';
 
 export default function ProfileForm(props) {
   //let history = useHistory();
@@ -36,8 +37,8 @@ export default function ProfileForm(props) {
   };
 
   function onSubmit(data) {
-    //const formdata = { ...data, imagefile };
-    const formdata = data;
+    const formdata = { ...data, imagefile };
+    //console.log(formdata);
     api
       .modifyUser(formdata)
       .then(() => setJustSaved(true))
@@ -82,6 +83,7 @@ export default function ProfileForm(props) {
           className="form-control"
         />
         <div className="invalid-feedback">{errors.imagefile?.message}</div>
+        <ShowImage maindata={user} imagefile={imagefile} />
       </div>
     </div>
   );
@@ -258,7 +260,7 @@ export default function ProfileForm(props) {
               <div className="invalid-feedback">{errors.note?.message}</div>
             </div>
           </div>
-
+          {fileuploadblock}
           <div className="form-group">
             {showSavedMessage} {showGenError} {showImgError}
             <button

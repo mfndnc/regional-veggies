@@ -16,6 +16,7 @@ import BookMarkView from './pages/BookMarkView';
 import ChatClient from './pages/ChatClient';
 import ChatOwner from './pages/ChatOwner';
 import ChatOwnerList from './pages/ChatOwnerList';
+import P404 from './pages/P404';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthContext } from './context/auth';
@@ -23,7 +24,6 @@ import { AuthContext } from './context/auth';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.css';
-import './components/Chat.css';
 
 function App() {
   const { authObj } = useContext(AuthContext);
@@ -107,6 +107,10 @@ function App() {
         <ProtectedRoute exact path="/bookmarkview/:bookmarkId">
           <ChatClient />
         </ProtectedRoute>
+
+        <Route path="*">
+          <P404 />
+        </Route>
       </Switch>
     </BrowserRouter>
   );

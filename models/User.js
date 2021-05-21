@@ -17,7 +17,7 @@ const userSchema = new Schema(
     whatsapp: String,
     twitter: String,
     password: String,
-    imageurl: Schema.Types.Mixed,
+    imagefile: Schema.Types.Mixed,
     role: {
       type: [String],
       enum: ['admin', 'moderator', 'farm', 'shop', 'private', 'user'],
